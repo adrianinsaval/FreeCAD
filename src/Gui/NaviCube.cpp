@@ -221,7 +221,7 @@ public:
 	vector<GLubyte> m_IndexArray;
 	vector<Vector2f> m_TextureCoordArray;
 	vector<Vector3f> m_VertexArray;
-	vector<Vector3f> m_VertexArray2;
+	map<int, vector<Vector3f>> m_VertexArrays2;
 	map<int, GLuint> m_Textures;
 	vector<Face*> m_Faces;
 	vector<int> m_Buttons;
@@ -650,20 +650,30 @@ void NaviCubeImplementation::addFace(float gap, const Vector3f& x, const Vector3
 
 	int t = m_VertexArray.size();
 
-	m_VertexArray.emplace_back(z - x - y);
-	m_VertexArray2.emplace_back(z - x2 - y2);
-	m_TextureCoordArray.emplace_back(0, 0);
-	m_VertexArray.emplace_back(z + x - y);
-	m_VertexArray2.emplace_back(z + x2 - y2);
-	m_TextureCoordArray.emplace_back(1, 0);
-	m_VertexArray.emplace_back(z + x + y);
-	m_VertexArray2.emplace_back(z + x2 + y2);
-	m_TextureCoordArray.emplace_back(1, 1);
-	m_VertexArray.emplace_back(z - x + y);
-	m_VertexArray2.emplace_back(z - x2 + y2);
-	m_TextureCoordArray.emplace_back(0, 1);
+    m_VertexArray.emplace_back(z - x - y);
+    m_TextureCoordArray.emplace_back(0, 0);
+    m_VertexArray.emplace_back(z + x - y);
+    m_TextureCoordArray.emplace_back(1, 0);
+    m_VertexArray.emplace_back(z + x + y);
+    m_TextureCoordArray.emplace_back(1, 1);
+    m_VertexArray.emplace_back(z - x + y);
+    m_TextureCoordArray.emplace_back(0, 1);
 
-	// TEX_TOP, TEX_FRONT_FACE, TEX_TOP
+    if (pickTex == TEX_FRONT_FACE) {
+        auto x4 = x * (1 - gap * 4);
+        auto y4 = y * (1 - gap * 4);
+        m_VertexArrays2[pickId].emplace_back(z - x2 - y4);
+        m_VertexArrays2[pickId].emplace_back(z - x4 - y2);
+        m_VertexArrays2[pickId].emplace_back(z + x4 - y2);
+        m_VertexArrays2[pickId].emplace_back(z + x2 - y4);
+
+        m_VertexArrays2[pickId].emplace_back(z + x2 + y4);
+        m_VertexArrays2[pickId].emplace_back(z + x4 + y2);
+        m_VertexArrays2[pickId].emplace_back(z - x4 + y2);
+        m_VertexArrays2[pickId].emplace_back(z - x2 + y4);
+    }
+	
+    // TEX_TOP, TEX_FRONT_FACE, TEX_TOP
 	// TEX_TOP 			frontTex,
 	// TEX_FRONT_FACE	pickTex,
 	// TEX_TOP 			pickId
@@ -1098,27 +1108,21 @@ void NaviCubeImplementation::drawNaviCube(bool pickMode) {
 		glColor4f(c.redF(), c.greenF(), c.blueF(), c.alphaF());
 		glLineWidth(m_BorderWidth);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		glBegin(GL_QUADS);
 		for (int pass = 0; pass < 3; pass++) {
 			for (const auto& f : m_Faces) {
 				if (pass != f->m_RenderPass)
 					continue;
-				if (f->m_TextureId == f->m_PickTextureId) {
-					if (f->m_PickTexId == TEX_FRONT_FACE) {
-						int idx = f->m_FirstVertex;
-						const Vector3f& mv1 = m_VertexArray2[m_IndexArray[idx]];
-						const Vector3f& mv2 = m_VertexArray2[m_IndexArray[idx + 1]];
-						const Vector3f& mv3 = m_VertexArray2[m_IndexArray[idx + 2]];
-						const Vector3f& mv4 = m_VertexArray2[m_IndexArray[idx + 3]];
-						glVertex3f(mv1[0], mv1[1], mv1[2]);
-						glVertex3f(mv2[0], mv2[1], mv2[2]);
-						glVertex3f(mv3[0], mv3[1], mv3[2]);
-						glVertex3f(mv4[0], mv4[1], mv4[2]);
-					}
-				}
-			}
+                if (f->m_TextureId == f->m_PickTextureId) {
+                    if (f->m_PickTexId == TEX_FRONT_FACE) {
+                        glBegin(GL_POLYGON);
+                        for (const Vector3f& v : m_VertexArrays2[f->m_PickId]) {
+                            glVertex3f(v[0], v[1], v[2]);
+                        }
+                        glEnd();
+                    }
+                }
+            }
 		}
-		glEnd();
 		glEnable(GL_TEXTURE_2D);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
