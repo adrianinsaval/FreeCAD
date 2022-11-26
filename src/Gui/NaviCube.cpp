@@ -659,6 +659,7 @@ void NaviCubeImplementation::addFace(float gap, const Vector3f& x, const Vector3
     if (pickTex == TEX_FRONT_FACE) {
         auto x4 = x * (1 - gap * 4);
         auto y4 = y * (1 - gap * 4);
+        m_VertexArrays2[pickId].reserve(8);
         m_VertexArrays2[pickId].emplace_back(z - x2 - y4);
         m_VertexArrays2[pickId].emplace_back(z - x4 - y2);
         m_VertexArrays2[pickId].emplace_back(z + x4 - y2);
@@ -668,16 +669,17 @@ void NaviCubeImplementation::addFace(float gap, const Vector3f& x, const Vector3
         m_VertexArrays2[pickId].emplace_back(z + x4 + y2);
         m_VertexArrays2[pickId].emplace_back(z - x4 + y2);
         m_VertexArrays2[pickId].emplace_back(z - x2 + y4);
-	}
-	else if (pickTex == TEX_EDGE_FACE){
+    }
+    else if (pickTex == TEX_EDGE_FACE) {
         auto x4 = x * (1 - gap * 4);
         auto y4 = y * sqrt(2) * gap;
+        m_VertexArrays2[pickId].reserve(4);
         m_VertexArrays2[pickId].emplace_back(z - x4 - y4);
         m_VertexArrays2[pickId].emplace_back(z + x4 - y4);
         m_VertexArrays2[pickId].emplace_back(z + x4 + y4);
         m_VertexArrays2[pickId].emplace_back(z - x4 + y4);
-	}
-	
+    }
+
     // TEX_TOP, TEX_FRONT_FACE, TEX_TOP
 	// TEX_TOP 			frontTex,
 	// TEX_FRONT_FACE	pickTex,
