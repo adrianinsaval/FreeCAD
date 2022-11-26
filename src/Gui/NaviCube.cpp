@@ -387,7 +387,6 @@ GLuint NaviCubeImplementation::createCubeFaceTex(QtGLWidget* gl, float gap, cons
 	QImage image(texSize, texSize, QImage::Format_ARGB32);
 	image.fill(qRgba(255, 255, 255, 0));
 	QPainter paint;
-	QPen pen(Qt::black, 10);
 	paint.begin(&image);
 	paint.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 
@@ -441,8 +440,6 @@ GLuint NaviCubeImplementation::createCubeFaceTex(QtGLWidget* gl, float gap, cons
 		pathCorner.lineTo(rectCorner.left() + rectCorner.width() * 0.25 , rectCorner.top());
 		pathCorner.lineTo(rectCorner.left()                             , rectCorner.bottom() - rectCorner.height() / 2);
 		paint.fillPath(pathCorner, Qt::white);
-		paint.setPen(pen);
-		paint.drawPath(pathCorner);
 	}
 	else if (shape == SHAPE_EDGE) {
 		QPainterPath pathEdge;
@@ -671,7 +668,15 @@ void NaviCubeImplementation::addFace(float gap, const Vector3f& x, const Vector3
         m_VertexArrays2[pickId].emplace_back(z + x4 + y2);
         m_VertexArrays2[pickId].emplace_back(z - x4 + y2);
         m_VertexArrays2[pickId].emplace_back(z - x2 + y4);
-    }
+	}
+	else if (pickTex == TEX_EDGE_FACE){
+        auto x4 = x * (1 - gap * 4);
+        auto y4 = y * sqrt(2) * gap;
+        m_VertexArrays2[pickId].emplace_back(z - x4 - y4);
+        m_VertexArrays2[pickId].emplace_back(z + x4 - y4);
+        m_VertexArrays2[pickId].emplace_back(z + x4 + y4);
+        m_VertexArrays2[pickId].emplace_back(z - x4 + y4);
+	}
 	
     // TEX_TOP, TEX_FRONT_FACE, TEX_TOP
 	// TEX_TOP 			frontTex,
@@ -1113,7 +1118,7 @@ void NaviCubeImplementation::drawNaviCube(bool pickMode) {
 				if (pass != f->m_RenderPass)
 					continue;
                 if (f->m_TextureId == f->m_PickTextureId) {
-                    if (f->m_PickTexId == TEX_FRONT_FACE) {
+                    if (f->m_PickTexId == TEX_FRONT_FACE || f->m_PickTexId == TEX_EDGE_FACE) {
                         glBegin(GL_POLYGON);
                         for (const Vector3f& v : m_VertexArrays2[f->m_PickId]) {
                             glVertex3f(v[0], v[1], v[2]);
