@@ -416,16 +416,30 @@ GLuint NaviCubeImplementation::createCubeFaceTex(QtGLWidget* gl, float gap, cons
 	}
 	else if (shape == SHAPE_SQUARE) {
 		QPainterPath pathSquare;
-		pathSquare.addRect(QRectF(gapi, gapi, (qreal)texSize - 2.0 * gapi, (qreal)texSize - 2.0 * gapi));
+		auto rectSquare = QRectF(gapi, gapi, (qreal)texSize - 2.0 * gapi, (qreal)texSize - 2.0 * gapi);
+		// Qt's coordinate system is x->left y->down, this must be taken into account on operations
+		pathSquare.moveTo(rectSquare.left()         , rectSquare.bottom() - gapi);
+		pathSquare.lineTo(rectSquare.left() + gapi  , rectSquare.bottom());
+		pathSquare.lineTo(rectSquare.right() - gapi , rectSquare.bottom());
+		pathSquare.lineTo(rectSquare.right()        , rectSquare.bottom() - gapi);
+		pathSquare.lineTo(rectSquare.right()        , rectSquare.top() + gapi);
+		pathSquare.lineTo(rectSquare.right() - gapi , rectSquare.top());
+		pathSquare.lineTo(rectSquare.left() + gapi  , rectSquare.top());
+		pathSquare.lineTo(rectSquare.left()         , rectSquare.top() + gapi);
+		pathSquare.lineTo(rectSquare.left()         , rectSquare.bottom() - gapi);
 		paint.fillPath(pathSquare, Qt::white);
 	}
 	else if (shape == SHAPE_CORNER) {
 		QPainterPath pathCorner;
-		QRectF rectCorner = QRectF(3.46 * gapi, 3.31 * gapi, sqrt(2) * gapi, 1.3 * gapi);
-		pathCorner.moveTo(rectCorner.left() + (rectCorner.width() / 2), rectCorner.top());
-		pathCorner.lineTo(rectCorner.bottomLeft());
-		pathCorner.lineTo(rectCorner.bottomRight());
-		pathCorner.lineTo(rectCorner.left() + (rectCorner.width() / 2), rectCorner.top());
+		auto rectCorner = QRectF((texSize - 2 * sqrt(2) * gapi) / 2, (texSize - sqrt(6) * gapi) / 2, 2 * sqrt(2) * gapi, sqrt(3) * sqrt(2) * gapi);
+		// Qt's coordinate system is x->left y->down, this must be taken into account on operations
+		pathCorner.moveTo(rectCorner.left()                             , rectCorner.bottom() - rectCorner.height() / 2);
+		pathCorner.lineTo(rectCorner.left() + rectCorner.width() * 0.25 , rectCorner.bottom());
+		pathCorner.lineTo(rectCorner.left() + rectCorner.width() * 0.75 , rectCorner.bottom());
+		pathCorner.lineTo(rectCorner.right()                            , rectCorner.bottom() - rectCorner.height() / 2);
+		pathCorner.lineTo(rectCorner.left() + rectCorner.width() * 0.75 , rectCorner.top());
+		pathCorner.lineTo(rectCorner.left() + rectCorner.width() * 0.25 , rectCorner.top());
+		pathCorner.lineTo(rectCorner.left()                             , rectCorner.bottom() - rectCorner.height() / 2);
 		paint.fillPath(pathCorner, Qt::white);
 		paint.setPen(pen);
 		paint.drawPath(pathCorner);
@@ -433,7 +447,7 @@ GLuint NaviCubeImplementation::createCubeFaceTex(QtGLWidget* gl, float gap, cons
 	else if (shape == SHAPE_EDGE) {
 		QPainterPath pathEdge;
 		// since the gap is 0.12, the rect must be geometriclly shifted up with a factor
-		pathEdge.addRect(QRectF(gapi, ((qreal)texSize - sqrt(2) * gapi) * 0.5, (qreal)texSize - 2.0 * gapi, sqrt(2) * gapi));
+		pathEdge.addRect(QRectF(2 * gapi, ((qreal)texSize - sqrt(2) * gapi) * 0.5, (qreal)texSize - 4.0 * gapi, sqrt(2) * gapi));
 		paint.fillPath(pathEdge, Qt::white);
 	}
 
@@ -782,7 +796,8 @@ void NaviCubeImplementation::initNaviCube(QtGLWidget* gl) {
 
 	z = r45z * r54x * z;
 	x = r45z * r54x * x;
-	z *= sqrt(3) * (1 - 4 * gap / 3); // corner face position
+	z *= sqrt(3) * (1 - 2 * gap); // corner face position along the cube diagonal
+
 
 	addFace(gap, x, z, TEX_CORNER_FACE, TEX_CORNER_FACE, TEX_BOTTOM_RIGHT_REAR);
 	x = r90z * x;
