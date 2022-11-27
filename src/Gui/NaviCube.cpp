@@ -641,10 +641,6 @@ void NaviCubeImplementation::addFace(float gap, const Vector3f& x, const Vector3
 	Vector3f y = x.cross(-z);
 	y = y / y.norm() * x.norm();
 
-	auto x2 = x * (1 - gap * 2);
-	auto y2 = x2.cross(-z);
-	y2 = y2 / y2.norm() * x2.norm();
-
 	int t = m_VertexArray.size();
 
     m_VertexArray.emplace_back(z - x - y);
@@ -657,6 +653,8 @@ void NaviCubeImplementation::addFace(float gap, const Vector3f& x, const Vector3
     m_TextureCoordArray.emplace_back(0, 1);
 
     if (pickTex == TEX_FRONT_FACE) {
+        auto x2 = x * (1 - gap * 2);
+        auto y2 = y * (1 - gap * 2);
         auto x4 = x * (1 - gap * 4);
         auto y4 = y * (1 - gap * 4);
         m_VertexArrays2[pickId].reserve(8);
@@ -672,12 +670,23 @@ void NaviCubeImplementation::addFace(float gap, const Vector3f& x, const Vector3
     }
     else if (pickTex == TEX_EDGE_FACE) {
         auto x4 = x * (1 - gap * 4);
-        auto y4 = y * sqrt(2) * gap;
+        auto y_sqrt2 = y * sqrt(2) * gap;
         m_VertexArrays2[pickId].reserve(4);
-        m_VertexArrays2[pickId].emplace_back(z - x4 - y4);
-        m_VertexArrays2[pickId].emplace_back(z + x4 - y4);
-        m_VertexArrays2[pickId].emplace_back(z + x4 + y4);
-        m_VertexArrays2[pickId].emplace_back(z - x4 + y4);
+        m_VertexArrays2[pickId].emplace_back(z - x4 - y_sqrt2);
+        m_VertexArrays2[pickId].emplace_back(z + x4 - y_sqrt2);
+        m_VertexArrays2[pickId].emplace_back(z + x4 + y_sqrt2);
+        m_VertexArrays2[pickId].emplace_back(z - x4 + y_sqrt2);
+    }
+    else if (pickTex == TEX_CORNER_FACE) {
+        auto x_sqrt2 = x * sqrt(2) * gap;
+        auto y_sqrt6 = y * sqrt(6) * gap;
+        m_VertexArrays2[pickId].reserve(6);
+        m_VertexArrays2[pickId].emplace_back(z - 2 * x_sqrt2);
+        m_VertexArrays2[pickId].emplace_back(z - x_sqrt2 - y_sqrt6);
+        m_VertexArrays2[pickId].emplace_back(z + x_sqrt2 - y_sqrt6);
+        m_VertexArrays2[pickId].emplace_back(z + 2 * x_sqrt2);
+        m_VertexArrays2[pickId].emplace_back(z + x_sqrt2 + y_sqrt6);
+        m_VertexArrays2[pickId].emplace_back(z - x_sqrt2 + y_sqrt6);
     }
 
     // TEX_TOP, TEX_FRONT_FACE, TEX_TOP
@@ -1120,7 +1129,7 @@ void NaviCubeImplementation::drawNaviCube(bool pickMode) {
 				if (pass != f->m_RenderPass)
 					continue;
                 if (f->m_TextureId == f->m_PickTextureId) {
-                    if (f->m_PickTexId == TEX_FRONT_FACE || f->m_PickTexId == TEX_EDGE_FACE) {
+                    if (f->m_PickTexId == TEX_FRONT_FACE || f->m_PickTexId == TEX_EDGE_FACE || f->m_PickTexId == TEX_CORNER_FACE) {
                         glBegin(GL_POLYGON);
                         for (const Vector3f& v : m_VertexArrays2[f->m_PickId]) {
                             glVertex3f(v[0], v[1], v[2]);
