@@ -702,6 +702,7 @@ void AboutDialog::copyToClipboard()
     if (it != config.end())
         str << "Hash: " << it->second.c_str() << '\n';
     // report also the version numbers of the most important libraries in FreeCAD
+    str << "Libs: "
     str << "Python " << PY_VERSION << ", ";
     str << "Qt " << QT_VERSION_STR << ", ";
     str << "Coin " << COIN_VERSION << ", ";
@@ -773,7 +774,7 @@ void AboutDialog::copyToClipboard()
                 firstMod = false;
                 str << "Installed mods: \n";
             }
-            str << "  * " << QString::fromStdString(mod.path().filename().string());
+            str << "  - " << QString::fromStdString(mod.path().filename().string());
             auto metadataFile = mod.path() / "package.xml";
             if (fs::exists(metadataFile)) {
                 App::Metadata metadata(metadataFile);
