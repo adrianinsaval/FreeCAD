@@ -26,7 +26,7 @@ body:
     attributes:
       label: Full version info
       description: Please use the About FreeCAD dialog to copy your full version information and paste it here.
-      render: shell
+      render: yml
     validations:
       required: true
   - type: dropdown
