@@ -54,9 +54,10 @@ dependencies:
 - sysroot_linux-aarch64                # [linux and aarch64]
 - xorg-x11-server-common-cos7-aarch64  # [linux and aarch64]
 - xorg-x11-server-xvfb-cos7-aarch64    # [linux and aarch64]
+- libspnav                             # [linux]
+- ccache                               # [unix]
 - sed                                  # [unix]
-- boost
-- boost-cpp
+- boa
 - cmake
 - coin3d==4.0.0
 - compilers
@@ -72,6 +73,7 @@ dependencies:
 - gmsh
 - graphviz
 - hdf5
+- libboost-devel
 - libcxx
 - mamba==1.4.9
 - matplotlib
