@@ -38,8 +38,10 @@ Section -ProgramFiles SecProgramFiles
   File /r "${FILES_FREECAD}\bin\*.*"
   
   # MSVC redistributable DLLs
-  SetOutPath "$INSTDIR\bin"
-  File "${FILES_DEPS}\*.*"
+  ${If} ${Defined} FILES_DEPS
+    SetOutPath "$INSTDIR\bin"
+    File "${FILES_DEPS}\*.*"
+  ${EndIf}
   
   # Others
   SetOutPath "$INSTDIR\data"
