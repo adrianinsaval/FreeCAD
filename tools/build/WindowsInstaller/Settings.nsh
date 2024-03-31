@@ -41,6 +41,12 @@ SetCompressor /SOLID lzma
 # File locations
 # !!! you need to adjust them to the folders in your Windows system !!!
 
-!define FILES_FREECAD "G:\FreeCADInst\Installer\FreeCAD"
-!define FILES_DEPS "G:\FreeCADInst\Installer\MSVCRedist"
-!define FILES_THUMBS "G:\FreeCADInst\Installer\thumbnail"
+!define FILES_FREECAD "${__FILEDIR__}\..\FreeCAD"
+!define FILES_THUMBS "${__FILEDIR__}\thumbnail"
+
+# msvc redistributables location is required for LibPack builds but not conda
+# leave commented or define env variable FC_IS_CONDA before running if FILES_FREECAD
+# points to a conda based bundle.
+!if $%FC_IS_CONDA%$ == 1
+	!define FILES_DEPS "${__FILEDIR__}\MSVCRedist"
+!endif
