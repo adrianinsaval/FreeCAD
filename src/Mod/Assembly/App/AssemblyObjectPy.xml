@@ -38,6 +38,30 @@
         </UserDocu>
       </Documentation>
     </Methode>
+    <Methode Name="updateForFrame">
+      <Documentation>
+        <UserDocu>
+          Update entire assembly to frame number specified.
+
+          updateForFrame(index)
+
+          Args: index of frame.
+
+          Returns: None
+        </UserDocu>
+      </Documentation>
+    </Methode>
+    <Methode Name="numberOfFrames">
+      <Documentation>
+        <UserDocu>
+          numberOfFrames()
+
+          Args: None
+
+          Returns: Number of frames
+        </UserDocu>
+      </Documentation>
+    </Methode>
     <Methode Name="undoSolve">
       <Documentation>
         <UserDocu>

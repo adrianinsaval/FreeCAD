@@ -42,6 +42,25 @@ import Preferences
 
 from SoSwitchMarker import SoSwitchMarker
 
+try:
+    import sys, os, traceback, inspect
+    from datetime import datetime
+except ImportError:
+    App.Console.PrintError("\n\nSeems the python standard libs are not installed, bailing out!\n\n")
+    raise
+
+
+def trace():
+    print("Trace Begin")
+    # logger = App.Logger('MyModule')
+    # logger.info('log test {}',1)
+    # App.setLogLevel('MyModule','Trace')
+    # logger.trace('trace test {}',1)
+    lines = traceback.format_stack()
+    for i in range(0, len(lines) - 1):
+        print(lines[i].strip().split("\n", 1)[0])
+
+
 translate = App.Qt.translate
 
 TranslatedJointTypes = [
@@ -412,6 +431,28 @@ class Joint:
                 QT_TRANSLATE_NOOP(
                     "App::Property",
                     "This is the maximum limit for the angle between both coordinate systems (between their X axis).",
+                ),
+            )
+
+        if not hasattr(joint, "LinearMotionFormula"):
+            joint.addProperty(
+                "App::PropertyString",
+                "LinearMotionFormula",
+                "Motions",
+                QT_TRANSLATE_NOOP(
+                    "App::Property",
+                    "Linear Motion function of time.",
+                ),
+            )
+
+        if not hasattr(joint, "AngularMotionFormula"):
+            joint.addProperty(
+                "App::PropertyString",
+                "AngularMotionFormula",
+                "Motions",
+                QT_TRANSLATE_NOOP(
+                    "App::Property",
+                    "Angular Motion function of time.",
                 ),
             )
 
@@ -1236,6 +1277,7 @@ class TaskAssemblyCreateJoint(QtCore.QObject):
             Gui.Selection.clearSelection()
             self.creating = False
             self.joint = jointObj
+            print("self.joint = jointObj")
             self.jointName = jointObj.Label
             App.setActiveTransaction("Edit " + self.jointName + " Joint")
 

@@ -77,6 +77,31 @@ PyObject* AssemblyObjectPy::ensureIdentityPlacements(PyObject* args)
     Py_Return;
 }
 
+PyObject* AssemblyObjectPy::updateForFrame(PyObject* args)
+{
+    unsigned long index {};
+
+    if (!PyArg_ParseTuple(args, "k", &index)) {
+        throw Py::RuntimeError("updateForFrame requires an integer index");
+    }
+    PY_TRY
+    {
+        this->getAssemblyObjectPtr()->updateForFrame(index);
+    }
+    PY_CATCH;
+
+    Py_Return;
+}
+
+PyObject* AssemblyObjectPy::numberOfFrames(PyObject* args)
+{
+    if (!PyArg_ParseTuple(args, "")) {
+        return nullptr;
+    }
+    size_t ret = this->getAssemblyObjectPtr()->numberOfFrames();
+    return Py_BuildValue("k", ret);
+}
+
 PyObject* AssemblyObjectPy::undoSolve(PyObject* args)
 {
     if (!PyArg_ParseTuple(args, "")) {
