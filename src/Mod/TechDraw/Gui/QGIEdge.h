@@ -51,7 +51,13 @@ public:
     bool getSmoothEdge() { return(isSmoothEdge); }
     void setPrettyNormal() override;
 
-    double getEdgeFuzz(void) const;
+    double getEdgeFuzz() const;
+
+    void setLinePen(QPen isoPen);
+
+    void setSource(int source) { m_source = source; }
+    int getSource() const { return m_source;}
+
 
 protected:
 
@@ -68,6 +74,7 @@ protected:
     Qt::PenStyle getHiddenStyle();
 
 private:
+    int m_source{0};
 };
 
 }

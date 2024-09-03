@@ -31,6 +31,7 @@
 
 #include <App/Application.h>
 #include <App/Document.h>
+#include <App/Link.h>
 #include <Base/Reader.h>
 #include <Base/Tools.h>
 #include <Mod/TechDraw/App/DrawViewPy.h>  // generated from DrawViewPy.xml
@@ -136,6 +137,31 @@ void DrawView::checkScale()
     }
 }
 
+void DrawView::touchTreeOwner(App::DocumentObject *owner) const
+{
+    auto ownerView = dynamic_cast<DrawView *>(owner);
+    if (ownerView) {
+        ownerView->touch();
+    }
+    else { // If no owner is specified, touch all parent pages
+        for (auto page : findAllParentPages()) {
+            page->touch();
+        }
+    }
+}
+
+void DrawView::onBeforeChange(const App::Property *prop)
+{
+    // To avoid keeping the previous parent in some extra variable, we will mark
+    // the previous owner for update before the property is actually changed.
+    App::PropertyLink *ownerProp = getOwnerProperty();
+    if (ownerProp && prop == ownerProp  && !isRestoring()) {
+        touchTreeOwner(ownerProp->getValue());
+    }
+
+    App::DocumentObject::onBeforeChange(prop);
+}
+
 void DrawView::onChanged(const App::Property* prop)
 {
 //Coding note: calling execute, recompute or recomputeFeature inside an onChanged
@@ -173,7 +199,7 @@ void DrawView::onChanged(const App::Property* prop)
             Scale.setStatus(App::Property::ReadOnly, true);
             if (!checkFit(page)) {
                 double newScale = autoScale(page->getPageWidth(), page->getPageHeight());
-                if(std::abs(newScale - getScale()) > FLT_EPSILON) {           //stops onChanged/execute loop
+                if(std::abs(newScale - getScale()) > FLT_EPSILON) {
                     Scale.setValue(newScale);
                 }
             }
@@ -190,6 +216,11 @@ void DrawView::onChanged(const App::Property* prop)
         //X,Y changes are only interesting to DPGI and Gui side
         X.purgeTouched();
         Y.purgeTouched();
+    }
+
+    App::PropertyLink *ownerProp = getOwnerProperty();
+    if (ownerProp && prop == ownerProp) {
+        touchTreeOwner(ownerProp->getValue());
     }
 
     App::DocumentObject::onChanged(prop);
@@ -294,7 +325,22 @@ void DrawView::validateScale()
 int DrawView::countParentPages() const
 {
     int count = 0;
-    std::vector<App::DocumentObject*> parentAll = getInList();
+    std::vector<App::DocumentObject*> parentRaw = getInList();
+    std::vector<App::DocumentObject*> parentAll;
+
+    // Some parents are Links, we need the pages.
+    for (auto& parent : parentRaw) {
+        if (parent->isDerivedFrom<App::Link>()) {
+            for (auto& linkParent : parent->getInList()) {
+                if (linkParent->isDerivedFrom<DrawPage>()) {
+                    parentAll.push_back(linkParent);
+                }
+            }
+        }
+        else {
+            parentAll.push_back(parent);
+        }
+    }
 
     //it can happen that a page is repeated in the InList, so we need to
     //prune the duplicates
@@ -337,54 +383,75 @@ DrawPage* DrawView::findParentPage() const
 
 std::vector<DrawPage*> DrawView::findAllParentPages() const
 {
-    // Get Feature Page
-    std::vector<DrawPage*> result;
-    DrawPage *page = nullptr;
-    DrawViewCollection *collection = nullptr;
-    std::vector<App::DocumentObject*> parentsAll = getInList();
+    std::vector<DrawPage*> pages;
 
-   for (auto& parent : parentsAll) {
-        if (parent->isDerivedFrom<DrawPage>()) {
-            page = static_cast<TechDraw::DrawPage*>(parent);
-        } else if (parent->isDerivedFrom<DrawViewCollection>()) {
-            collection = static_cast<TechDraw::DrawViewCollection *>(parent);
-            page = collection->findParentPage();
+    for (auto parent : getInList()) {
+        if (parent->isDerivedFrom<App::Link>()) {
+            for (auto& linkParent : parent->getInList()) {
+                if (linkParent->isDerivedFrom<DrawPage>()
+                    || linkParent->isDerivedFrom<DrawViewCollection>()) {
+                    parent = linkParent;
+                    break;
+                }
+            }
         }
 
-        if(page) {
-            result.emplace_back(page);
+        if (parent->isDerivedFrom<DrawPage>()) {
+            pages.emplace_back(static_cast<TechDraw::DrawPage*>(parent));
+        }
+        else if (parent->isDerivedFrom<DrawViewCollection>()) {
+            auto* collection = static_cast<TechDraw::DrawViewCollection*>(parent);
+            pages.emplace_back(collection->findParentPage());
         }
     }
 
     //prune the duplicates
-    std::sort(result.begin(), result.end());
-    auto last = std::unique(result.begin(), result.end());
-    result.erase(last, result.end());
+    std::sort(pages.begin(), pages.end());
+    auto last = std::unique(pages.begin(), pages.end());
+    pages.erase(last, pages.end());
 
-    return result;
+    return pages;
 }
 
 bool DrawView::isInClip()
 {
-    std::vector<App::DocumentObject*> parent = getInList();
-    for (std::vector<App::DocumentObject*>::iterator it = parent.begin(); it != parent.end(); ++it) {
-        if ((*it)->isDerivedFrom<DrawViewClip>()) {
+    for (auto* parent : getInList()) {
+        if (parent->isDerivedFrom<DrawViewClip>()) {
             return true;
         }
     }
     return false;
 }
 
+DrawView *DrawView::claimParent() const
+{
+    App::PropertyLink *ownerProp = const_cast<DrawView *>(this)->getOwnerProperty();
+    if (ownerProp) {
+        auto ownerView = dynamic_cast<DrawView *>(ownerProp->getValue());
+        if (ownerView) {
+            return ownerView;
+        }
+    }
+
+    // If there is no parent view we are aware of, return the view collection we may belong to
+    return getCollection();
+}
+
 DrawViewClip* DrawView::getClipGroup()
 {
-    std::vector<App::DocumentObject*> parent = getInList();
-    App::DocumentObject* obj = nullptr;
-    for (std::vector<App::DocumentObject*>::iterator it = parent.begin(); it != parent.end(); ++it) {
-        if ((*it)->isDerivedFrom<DrawViewClip>()) {
-            obj = (*it);
-            DrawViewClip* result = dynamic_cast<DrawViewClip*>(obj);
-            return result;
+    for (auto* obj : getInList()) {
+        if (obj->isDerivedFrom<DrawViewClip>()) {
+            return dynamic_cast<DrawViewClip*>(obj);
+        }
+    }
+    return nullptr;
+}
 
+DrawViewCollection *DrawView::getCollection() const
+{
+    for (auto* obj : getInList()) {
+        if (obj->isDerivedFrom<DrawViewCollection>()) {
+            return dynamic_cast<DrawViewCollection*>(obj);
         }
     }
     return nullptr;
@@ -402,7 +469,6 @@ double DrawView::autoScale() const
 double DrawView::autoScale(double pw, double ph) const
 {
 //    Base::Console().Message("DV::autoScale(Page: %.3f, %.3f) - %s\n", pw, ph, getNameInDocument());
-    double fudgeFactor = 1.0;  //make it a bit smaller just in case.
     QRectF viewBox = getRect();           //getRect is scaled (ie current actual size)
     if (!viewBox.isValid()) {
         return 1.0;
@@ -412,7 +478,7 @@ double DrawView::autoScale(double pw, double ph) const
     double vbh = viewBox.height()/getScale();
     double xScale = pw/vbw;           // > 1 page bigger than figure
     double yScale = ph/vbh;           // < 1 page is smaller than figure
-    double newScale = std::min(xScale, yScale) * fudgeFactor;
+    double newScale = std::min(xScale, yScale);
     double sensibleScale = DrawUtil::sensibleScale(newScale);
     return sensibleScale;
 }
@@ -429,7 +495,6 @@ bool DrawView::checkFit(TechDraw::DrawPage* p) const
 {
 //    Base::Console().Message("DV::checkFit(page) - %s\n", getNameInDocument());
     bool result = true;
-    double fudge = 1.1;
 
     double width = 0.0;
     double height = 0.0;
@@ -439,8 +504,6 @@ bool DrawView::checkFit(TechDraw::DrawPage* p) const
     } else {
         width = viewBox.width();        //scaled rect w x h
         height = viewBox.height();
-        width *= fudge;
-        height *= fudge;
         if ( (width > p->getPageWidth()) ||
              (height > p->getPageHeight()) ) {
             result = false;

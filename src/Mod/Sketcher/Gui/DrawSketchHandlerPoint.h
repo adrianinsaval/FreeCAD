@@ -67,10 +67,9 @@ private:
 
                 editPoint = onSketchPos;
 
-                if (seekAutoConstraint(sugConstraints[0], onSketchPos, Base::Vector2d(0.f, 0.f))) {
-                    renderSuggestConstraintsCursor(sugConstraints[0]);
-                    return;
-                }
+                seekAndRenderAutoConstraint(sugConstraints[0],
+                                            onSketchPos,
+                                            Base::Vector2d(0.f, 0.f));
             } break;
             default:
                 break;
@@ -85,6 +84,12 @@ private:
                                   "addGeometry(Part.Point(App.Vector(%f,%f,0)))",
                                   editPoint.x,
                                   editPoint.y);
+
+            if (!isConstructionMode()) {
+                Gui::cmdAppObjectArgs(sketchgui->getObject(),
+                                      "toggleConstruction(%d)",
+                                      getHighestCurveIndex());
+            }
 
             Gui::Command::commitCommand();
         }

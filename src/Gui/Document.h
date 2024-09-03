@@ -298,11 +298,8 @@ public:
     const char *getCameraSettings() const;
     bool saveCameraSettings(const char *) const;
 
-    void setProjectUnitSystem(int);
-    int getProjectUnitSystem() const;
-
-    void setProjectUnitSystemIgnore(bool);
-    bool getProjectUnitSystemIgnore() const;
+    /// get all tree root objects (objects that are at the root of the object tree)
+    std::vector<App::DocumentObject*> getTreeRootObjects() const;
 
 protected:
     // pointer to the python class

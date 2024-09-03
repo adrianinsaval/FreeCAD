@@ -44,6 +44,8 @@ __url__ = "https://www.freecad.org"
 import FreeCAD, os, Part, DraftVecUtils, DraftGeomUtils
 from FreeCAD import Vector
 from FreeCAD import Console as FCC
+from draftutils import params
+from builtins import open as pyopen
 
 if FreeCAD.GuiUp:
     from draftutils.translate import translate
@@ -51,11 +53,7 @@ else:
     def translate(context, txt):
         return txt
 
-# Save the native open function to avoid collisions
-if open.__module__ in ['__builtin__', 'io']:
-    pythonopen = open
 
-params = FreeCAD.ParamGet("User parameter:BaseApp/Preferences/Mod/Draft")
 
 
 def getpoint(data):
@@ -287,7 +285,7 @@ def parse(filename, doc):
     -------
     None
     """
-    filebuffer = pythonopen(filename)
+    filebuffer = pyopen(filename)
     global objects
     objects = {}
     global color
@@ -306,7 +304,7 @@ def parse(filename, doc):
             if _id[0] == "P":
                 # point
                 objects[_id] = getpoint(data)
-            elif ((_id[0] == "A") and params.GetBool("ocaareas")):
+            elif ((_id[0] == "A") and params.get_param("ocaareas")):
                 # area
                 objects[_id] = getarea(data)
                 createobject(_id, doc)
@@ -417,7 +415,7 @@ def export(exportList, filename):
         return
 
     # writing file
-    oca = pythonopen(filename, 'w')
+    oca = pyopen(filename, 'w')
     oca.write("#oca file generated from FreeCAD\r\n")
     oca.write("# edges\r\n")
     count = 1

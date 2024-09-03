@@ -146,6 +146,18 @@ void GeometryFacade::copyId(const Part::Geometry* src, Part::Geometry* dst)
     gfdst->setId(gfsrc->getId());
 }
 
+int GeometryFacade::getId(const Part::Geometry* geometry)
+{
+    auto gf = GeometryFacade::getFacade(geometry);
+    return gf->getId();
+}
+
+void GeometryFacade::setId(Part::Geometry* geometry, int id)
+{
+    auto gf = GeometryFacade::getFacade(geometry);
+    return gf->setId(id);
+}
+
 bool GeometryFacade::getConstruction(const Part::Geometry* geometry)
 {
     throwOnNullPtr(geometry);
@@ -176,6 +188,22 @@ bool GeometryFacade::isInternalAligned(const Part::Geometry* geometry)
 
     auto gf = GeometryFacade::getFacade(geometry);
     return gf->isInternalAligned();
+}
+
+InternalType::InternalType GeometryFacade::getInternalType(const Part::Geometry* geometry)
+{
+    throwOnNullPtr(geometry);
+
+    auto gf = GeometryFacade::getFacade(geometry);
+    return gf->getInternalType();
+}
+
+void GeometryFacade::setInternalType(Part::Geometry* geometry, InternalType::InternalType type)
+{
+    throwOnNullPtr(geometry);
+
+    auto gf = GeometryFacade::getFacade(geometry);
+    gf->setInternalType(type);
 }
 
 bool GeometryFacade::getBlocked(const Part::Geometry* geometry)

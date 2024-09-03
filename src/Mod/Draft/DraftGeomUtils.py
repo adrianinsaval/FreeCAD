@@ -44,7 +44,6 @@ from draftgeoutils.linear_algebra import (linearFromPoints,
                                           determinant)
 
 # Needs math, Part, and vector tools
-from draftgeoutils.general import PARAMGRP as params
 from draftgeoutils.general import NORM
 
 from draftgeoutils.general import (precision,
@@ -71,6 +70,7 @@ from draftgeoutils.geometry import (findPerpendicular,
                                     get_spline_normal,
                                     getNormal,
                                     get_normal,
+                                    get_shape_normal,
                                     getRotation,
                                     isPlanar,
                                     is_planar,

@@ -42,6 +42,7 @@
 #include "PreferencesGui.h"
 #include "QGIView.h"
 #include "ViewProviderViewPart.h"
+#include "DrawGuiUtil.h"
 
 
 using namespace Gui;
@@ -177,7 +178,11 @@ void TaskCenterLine::setUiPrimary()
     }
     ui->cpLineColor->setColor(getCenterColor());
     ui->dsbWeight->setValue(getCenterWidth());
-    ui->cboxStyle->setCurrentIndex(getCenterStyle() - 1);
+
+    DrawGuiUtil::loadLineStyleChoices(ui->cboxStyle);
+    if (ui->cboxStyle->count() >= Preferences::CenterLineStyle() ) {
+        ui->cboxStyle->setCurrentIndex(Preferences::CenterLineStyle() - 1);
+    }
 
     ui->qsbVertShift->setUnit(Base::Unit::Length);
     ui->qsbHorizShift->setUnit(Base::Unit::Length);
@@ -211,9 +216,13 @@ void TaskCenterLine::setUiEdit()
         QString listItem = Base::Tools::fromStdString(m_edgeName);
         ui->lstSubList->addItem(listItem);
     }
-    ui->cpLineColor->setColor(m_cl->m_format.m_color.asValue<QColor>());
-    ui->dsbWeight->setValue(m_cl->m_format.m_weight);
-    ui->cboxStyle->setCurrentIndex(m_cl->m_format.m_style - 1);
+    ui->cpLineColor->setColor(m_cl->m_format.getColor().asValue<QColor>());
+    ui->dsbWeight->setValue(m_cl->m_format.getWidth());
+
+    DrawGuiUtil::loadLineStyleChoices(ui->cboxStyle);
+    if (ui->cboxStyle->count() >= m_cl->m_format.getStyle() ) {
+        ui->cboxStyle->setCurrentIndex(m_cl->m_format.getStyle() - 1);
+    }
 
     ui->rbVertical->setChecked(false);
     ui->rbHorizontal->setChecked(false);
@@ -309,7 +318,7 @@ void TaskCenterLine::onColorChanged()
 
     App::Color ac;
     ac.setValue<QColor>(ui->cpLineColor->color());
-    m_cl->m_format.m_color.setValue<QColor>(ui->cpLineColor->color());
+    m_cl->m_format.getColor().setValue<QColor>(ui->cpLineColor->color());
     m_partFeat->recomputeFeature();
 }
 
@@ -319,7 +328,7 @@ void TaskCenterLine::onWeightChanged()
         return;
     }
 
-    m_cl->m_format.m_weight = ui->dsbWeight->value().getValue();
+    m_cl->m_format.setWidth(ui->dsbWeight->value().getValue());
     m_partFeat->recomputeFeature();
 }
 
@@ -329,7 +338,7 @@ void TaskCenterLine::onStyleChanged()
         return;
     }
 
-    m_cl->m_format.m_style = ui->cboxStyle->currentIndex() + 1;
+    m_cl->m_format.setLineNumber(ui->cboxStyle->currentIndex() + 1);
     m_partFeat->recomputeFeature();
 }
 
@@ -394,7 +403,7 @@ int TaskCenterLine::checkPathologicalVertices(int inMode)
 //******************************************************************************
 void TaskCenterLine::createCenterLine()
 {
-    Gui::Command::openCommand(QT_TRANSLATE_NOOP("Command", "Create CenterLine"));
+    Gui::Command::openCommand(QT_TRANSLATE_NOOP("Command", "Create Centerline"));
 
     // check for illogical parameters
     if (m_type == CenterLine::EDGE) {
@@ -422,10 +431,10 @@ void TaskCenterLine::createCenterLine()
     cl->m_flip2Line = false;
     App::Color ac;
     ac.setValue<QColor>(ui->cpLineColor->color());
-    cl->m_format.m_color = ac;
-    cl->m_format.m_weight = ui->dsbWeight->value().getValue();
-    cl->m_format.m_style = ui->cboxStyle->currentIndex() + 1;  //Qt Styles start at 0:NoLine
-    cl->m_format.m_visible = true;
+    cl->m_format.setColor(ac);
+    cl->m_format.setWidth(ui->dsbWeight->value().getValue());
+    cl->m_format.setLineNumber(ui->cboxStyle->currentIndex() + 1);
+    cl->m_format.setVisible(true);
     m_partFeat->addCenterLine(cl);
 
     m_partFeat->recomputeFeature();
@@ -510,12 +519,6 @@ double TaskCenterLine::getCenterWidth()
     return partVP->IsoWidth.getValue();
 }
 
-Qt::PenStyle TaskCenterLine::getCenterStyle()
-{
-    Qt::PenStyle centerStyle = static_cast<Qt::PenStyle> (Preferences::getPreferenceGroup("Decorations")->GetInt("CenterLine", 2));
-    return centerStyle;
-}
-
 QColor TaskCenterLine::getCenterColor()
 {
     return PreferencesGui::centerQColor();
@@ -553,10 +556,10 @@ bool TaskCenterLine::reject()
     }
     else if (!getCreateMode() && m_partFeat) {
         // restore the initial centerline
-        m_cl->m_format.m_color = (&orig_cl)->m_format.m_color;
-        m_cl->m_format.m_weight = (&orig_cl)->m_format.m_weight;
-        m_cl->m_format.m_style = (&orig_cl)->m_format.m_style;
-        m_cl->m_format.m_visible = (&orig_cl)->m_format.m_visible;
+        m_cl->m_format.setColor((&orig_cl)->m_format.getColor());
+        m_cl->m_format.setWidth((&orig_cl)->m_format.getWidth());
+        m_cl->m_format.setLineNumber((&orig_cl)->m_format.getLineNumber());
+        m_cl->m_format.setVisible((&orig_cl)->m_format.getVisible());
         m_cl->m_mode = (&orig_cl)->m_mode;
         m_cl->m_rotate = (&orig_cl)->m_rotate;
         m_cl->m_vShift = (&orig_cl)->m_vShift;

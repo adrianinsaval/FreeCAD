@@ -221,6 +221,10 @@ public Q_SLOTS:
      */
     void setPaneText(int i, QString text);
     /**
+     * Sets the userschema in the status bar
+    */
+    void setUserSchema(int userSchema);
+    /**
      * Arranges all child windows in a tile pattern.
      */
     void tile();
@@ -261,6 +265,10 @@ public Q_SLOTS:
     void statusMessageChanged();
 
     void showMessage (const QString & message, int timeout = 0);
+    void setRightSideMessage(const QString & message);
+
+    // Set main window title
+    void setWindowTitle(const QString& string);
 
 protected:
     /**
@@ -301,6 +309,9 @@ private:
     bool updateComboView(bool show);
     bool updateDAGView(bool show);
 
+    void populateToolBarMenu(QMenu *);
+    void populateDockWindowMenu(QMenu *);
+
     static void renderDevBuildWarning(QPainter &painter, const QPoint startPosition, const QSize maxSize);
 
 private Q_SLOTS:
@@ -339,7 +350,7 @@ private Q_SLOTS:
     /**
      * \internal
      */
-    void processMessages(const QList<QByteArray> &);
+    void processMessages(const QList<QString> &);
     /**
      * \internal
      */

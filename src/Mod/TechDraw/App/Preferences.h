@@ -64,7 +64,6 @@ public:
     static bool keepPagesUpToDate();
 
     static int projectionAngle();
-    static int lineGroup();
 
     static int balloonArrow();
     static double balloonKinkLength();
@@ -72,7 +71,6 @@ public:
 
     static QString defaultTemplate();
     static QString defaultTemplateDir();
-    static std::string lineGroupFile();
 
     static const double DefaultFontSizeInMM;
     static const double DefaultArrowSize;
@@ -81,9 +79,13 @@ public:
     static int altDecimals();
 
     static int mattingStyle();
+    static bool showDetailMatting();
+    static bool showDetailHighlight();
 
     static std::string svgFile();
     static std::string patFile();
+
+    static QString defaultSymbolDir();
 
     static std::string bitmapFill();
 
@@ -105,6 +107,37 @@ public:
 
     static double svgHatchFactor();
     static bool SectionUsePreviousCut();
+
+    static int lineStandard();
+    static void setLineStandard(int index);
+    static std::string lineDefinitionLocation();
+    static std::string lineElementsLocation();
+
+    static std::string lineGroupFile();
+    static int lineGroup();
+    static int SectionLineStyle();
+    static int CenterLineStyle();
+    static int HighlightLineStyle();
+    static int HiddenLineStyle();
+    static int BreakLineStyle();
+    static int LineCapStyle();
+    static int LineCapIndex();
+
+    static int LineSpacingISO();
+
+    static std::string currentLineDefFile();
+    static std::string currentElementDefFile();
+
+    static int sectionLineConvention();
+    static bool showSectionLine();
+    static bool includeCutLine();
+
+    static int BreakType();
+
+    static bool useExactMatchOnDims();
+
+    static bool useCameraDirection();
+    static bool alwaysShowLabel();
 };
 
 

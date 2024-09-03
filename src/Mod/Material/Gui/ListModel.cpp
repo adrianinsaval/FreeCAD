@@ -21,9 +21,8 @@
 
 #include "PreCompiled.h"
 #ifndef _PreComp_
-#endif
-
 #include <QMetaType>
+#endif
 
 #include <Base/Console.h>
 #include <Gui/MainWindow.h>
@@ -83,20 +82,6 @@ QVariant ListModel::data(const QModelIndex& index, int role) const
 
 QVariant ListModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    // if (role == Qt::DisplayRole) {
-    //     if (orientation == Qt::Horizontal) {
-    //         const Materials::MaterialProperty& column = _property->getColumn(section);
-    //         return QVariant(column.getName());
-    //     }
-    //     else if (orientation == Qt::Vertical) {
-    //         // Vertical header
-    //         if (section == (rowCount() - 1)) {
-    //             return QVariant(QString::fromStdString("*"));
-    //         }
-    //         return QVariant(section + 1);
-    //     }
-    // }
-
     return QAbstractListModel::headerData(section, orientation, role);
 }
 
@@ -104,7 +89,7 @@ bool ListModel::setData(const QModelIndex& index, const QVariant& value, int rol
 {
     Q_UNUSED(role);
 
-    if (index.row() == _valuePtr->size()) {
+    if (newRow(index)) {
         insertRows(index.row(), 1);
     }
     (*_valuePtr)[index.row()] = value;
@@ -125,18 +110,24 @@ bool ListModel::insertRows(int row, int count, const QModelIndex& parent)
     beginInsertRows(parent, row, row + count - 1);
 
     QVariant newRow = QString();
-    _valuePtr->insert(row, newRow);
+    while (count--) {
+        _valuePtr->insert(row, newRow);
+    }
 
     endInsertRows();
 
-    return false;
+    return true;
 }
 
 bool ListModel::removeRows(int row, int count, const QModelIndex& parent)
 {
     beginRemoveRows(parent, row, row + count - 1);
 
-    _valuePtr->removeAt(row);
+    while (count--) {
+        _valuePtr->removeAt(row);
+    }
 
-    return false;
+    endRemoveRows();
+
+    return true;
 }

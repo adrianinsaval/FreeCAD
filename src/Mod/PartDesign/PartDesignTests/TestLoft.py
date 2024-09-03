@@ -41,7 +41,7 @@ class TestLoft(unittest.TestCase):
         self.LoftSketch = self.Doc.addObject('Sketcher::SketchObject', 'LoftSketch')
         self.Body.addObject(self.LoftSketch)
         self.LoftSketch.MapMode = 'FlatFace'
-        self.LoftSketch.Support = (self.Doc.XZ_Plane, [''])
+        self.LoftSketch.AttachmentSupport = (self.Doc.XZ_Plane, [''])
         self.Doc.recompute()
         TestSketcherApp.CreateRectangleSketch(self.LoftSketch, (0, 1), (1, 1))
         self.Doc.recompute()
@@ -70,7 +70,7 @@ class TestLoft(unittest.TestCase):
         self.LoftSketch = self.Doc.addObject('Sketcher::SketchObject', 'LoftSketch')
         self.Body.addObject(self.LoftSketch)
         self.LoftSketch.MapMode = 'FlatFace'
-        self.LoftSketch.Support = (self.Doc.XZ_Plane, [''])
+        self.LoftSketch.AttachmentSupport = (self.Doc.XZ_Plane, [''])
         self.Doc.recompute()
         TestSketcherApp.CreateRectangleSketch(self.LoftSketch, (0, 1), (1, 1))
         self.Doc.recompute()
@@ -86,7 +86,7 @@ class TestLoft(unittest.TestCase):
         body = self.Doc.addObject('PartDesign::Body','Body')
 
         sketch1 = body.newObject('Sketcher::SketchObject','Sketch')
-        sketch1.Support = (self.Doc.XZ_Plane,[''])
+        sketch1.AttachmentSupport = (self.Doc.XZ_Plane,[''])
         sketch1.MapMode = 'FlatFace'
         sketch1.addGeometry(Part.Circle(Base.Vector(-40.0,0.0,0.0),Base.Vector(0,0,1),10.0), False)
         sketch1.addConstraint(Sketcher.Constraint('PointOnObject',0,3,-1))
@@ -96,7 +96,7 @@ class TestLoft(unittest.TestCase):
         sketch1.setDatum(2,Units.Quantity('40.000000 mm'))
 
         sketch2 = body.newObject('Sketcher::SketchObject','Sketch001')
-        sketch2.Support = (self.Doc.YZ_Plane,'')
+        sketch2.AttachmentSupport = (self.Doc.YZ_Plane,'')
         sketch2.MapMode = 'FlatFace'
         sketch2.addGeometry(Part.Circle(Base.Vector(-10.0,0.0,0.0),Base.Vector(0,0,1),10.0),False)
         sketch2.addConstraint(Sketcher.Constraint('PointOnObject',0,3,-1))
@@ -106,7 +106,7 @@ class TestLoft(unittest.TestCase):
         sketch2.setDatum(2,Units.Quantity('40.000000 mm'))
 
         sketch3 = body.newObject('Sketcher::SketchObject','Sketch002')
-        sketch3.Support = (self.Doc.getObject('YZ_Plane'),'')
+        sketch3.AttachmentSupport = (self.Doc.getObject('YZ_Plane'),'')
         sketch3.MapMode = 'FlatFace'
         sketch3.addGeometry(Part.Circle(Base.Vector(40.0,0.0,0.0),Base.Vector(0,0,1),10.0),False)
         sketch3.addConstraint(Sketcher.Constraint('PointOnObject',0,3,-1))
@@ -116,7 +116,7 @@ class TestLoft(unittest.TestCase):
         sketch3.setDatum(2,Units.Quantity('20.000000 mm'))
 
         sketch4 = body.newObject('Sketcher::SketchObject','Sketch003')
-        sketch4.Support = (self.Doc.XZ_Plane,'')
+        sketch4.AttachmentSupport = (self.Doc.XZ_Plane,'')
         sketch4.MapMode = 'FlatFace'
         sketch4.addGeometry(Part.Circle(Base.Vector(40.0,0.0,0.0),Base.Vector(0,0,1),10.0),False)
         sketch4.addConstraint(Sketcher.Constraint('PointOnObject',0,3,-1))
@@ -140,6 +140,83 @@ class TestLoft(unittest.TestCase):
         self.Doc.recompute()
 
         self.assertGreater(loft.Shape.Volume, 80000.0) # 85105.5788704151
+
+    def testLoftBetweenCones(self):
+        """  Test issue #15138 adapted from a script by chennes """
+        body = self.Doc.addObject('PartDesign::Body','Body')
+        body.Label = 'Body'
+        coneBottomSketch = body.newObject('Sketcher::SketchObject','ConeBottomSketch')
+        coneBottomSketch.AttachmentSupport = (self.Doc.getObject('XY_Plane'),[''])
+        coneBottomSketch.MapMode = 'FlatFace'
+
+        geoList = []
+        geoList.append(Part.Circle(Base.Vector(0.000000, 0.000000, 0.000000), Base.Vector(0.000000, 0.000000, 1.000000), 25.000000))
+        coneBottomSketch.addGeometry(geoList,False)
+        del geoList
+
+        constraintList = []
+        coneBottomSketch.addConstraint(Sketcher.Constraint('Diameter',0,25.000000))
+        coneBottomSketch.addConstraint(Sketcher.Constraint('Coincident', 0, 3, -1, 1))
+
+        geoList = []
+        geoList.append(Part.Circle(Base.Vector(0.000000, 0.000000, 0.000000), Base.Vector(0.000000, 0.000000, 1.000000), 40.000000))
+        coneBottomSketch.addGeometry(geoList,False)
+        del geoList
+
+        constraintList = []
+        coneBottomSketch.addConstraint(Sketcher.Constraint('Diameter',1,40.000000))
+        coneBottomSketch.addConstraint(Sketcher.Constraint('Coincident', 1, 3, 0, 3))
+
+        coneTopSketch = body.newObject('Sketcher::SketchObject','ConeTopSketch')
+        coneTopSketch.AttachmentSupport = (self.Doc.getObject('XY_Plane'),[''])
+        coneTopSketch.MapMode = 'FlatFace'
+
+        geoList = []
+        geoList.append(Part.Circle(Base.Vector(0.000000, 0.000000, 0.000000), Base.Vector(0.000000, 0.000000, 1.000000), 8.000000))
+        coneTopSketch.addGeometry(geoList,False)
+        del geoList
+
+        constraintList = []
+        coneTopSketch.addConstraint(Sketcher.Constraint('Diameter',0,8.000000))
+        coneTopSketch.addConstraint(Sketcher.Constraint('Coincident', 0, 3, -1, 1))
+
+        geoList = []
+        geoList.append(Part.Circle(Base.Vector(0.000000, 0.000000, 0.000000), Base.Vector(0.000000, 0.000000, 1.000000), 15.000000))
+        coneTopSketch.addGeometry(geoList,False)
+        del geoList
+
+        constraintList = []
+        coneTopSketch.addConstraint(Sketcher.Constraint('Diameter',1,15.000000))
+        coneTopSketch.addConstraint(Sketcher.Constraint('Coincident', 1, 3, 0, 3))
+        coneTopSketch.AttachmentOffset = Base.Placement(Base.Vector(0,0,20),Base.Rotation(Base.Vector(0,0,1),0))
+        self.Doc.recompute()
+
+        cone = body.newObject('PartDesign::AdditiveLoft','Cone')
+        cone.Profile = coneBottomSketch
+        cone.Sections += [(coneTopSketch, [''])]
+        coneBottomSketch.Visibility = False
+        coneTopSketch.Visibility = False
+        self.Doc.recompute()
+
+        pad = body.newObject('PartDesign::Pad','Pad')
+        pad.Profile = (cone, ['Face4',])
+        pad.Length = 10.000000
+        pad.TaperAngle = 0.000000
+        pad.UseCustomVector = 0
+        pad.Direction = (0, 0, 1)
+        pad.ReferenceAxis = None
+        pad.AlongSketchNormal = 1
+        pad.Type = 0
+        pad.UpToFace = None
+        pad.Reversed = 0
+        pad.Midplane = 0
+        pad.Offset = 0
+        cone.Visibility = True
+        self.Doc.recompute()
+
+        self.assertAlmostEqual(cone.Shape.Volume, 5854.5823094398365)
+        # self.assertAlmostEqual(body.Shape.Volume, 5854.5823094398365)  # TODO: is this supposed to be?
+        # self.assertAlmostEqual(pad.Shape.Volume, 5854.5823094398365)  # TODO: how about this one?
 
     def tearDown(self):
         #closing doc

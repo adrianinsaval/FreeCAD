@@ -8,5 +8,7 @@
         <file>icons/preview-rendered.svg</file>
         <file>icons/preview-vector.svg</file>
         <file>icons/table.svg</file>
+        <file>images/default_image.png</file>
+        <file>ui/materials-editor.ui</file>
     </qresource>
 </RCC>

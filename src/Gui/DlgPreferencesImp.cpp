@@ -39,6 +39,7 @@
 # include <QToolTip>
 # include <QProcess>
 # include <QPushButton>
+# include <QWindow>
 #endif
 
 #include <App/Application.h>
@@ -54,6 +55,28 @@
 #include "WidgetFactory.h"
 
 using namespace Gui::Dialog;
+
+bool isParentOf(const QModelIndex& parent, const QModelIndex& child)
+{
+    for (auto it = child; it.isValid(); it = it.parent()) {
+        if (it == parent) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+QModelIndex findRootIndex(const QModelIndex& index)
+{
+    auto root = index;
+
+    while (root.parent().isValid()) {
+        root = root.parent();
+    }
+
+    return root;
+}
 
 QWidget* PreferencesPageItem::getWidget() const
 {
@@ -177,7 +200,7 @@ void DlgPreferencesImp::setupPages()
         }
     }
 
-    updatePageDependentLabels();
+    updatePageDependentWidgets();
 }
 
 QPixmap DlgPreferencesImp::loadIconForGroup(const std::string &name) const
@@ -264,9 +287,19 @@ PreferencePage* DlgPreferencesImp::createPreferencePage(const std::string& pageN
         return nullptr;
     }
 
+    auto resetMargins = [](QWidget* widget) {
+        widget->setContentsMargins(0, 0, 0, 0);
+        widget->layout()->setContentsMargins(0, 0, 0, 0);
+    };
+
     // settings layout already takes care for margins, we need to reset everything to 0
-    page->setContentsMargins(0, 0, 0, 0);
-    page->layout()->setContentsMargins(0, 0, 0, 0);
+    resetMargins(page);
+
+    // special handling for PreferenceUiForm to reset margins for forms too
+    if (auto uiFormPage = qobject_cast<PreferenceUiForm*>(page)) {
+        resetMargins(uiFormPage->form());
+    }
+
     page->setProperty(GroupNameProperty, QString::fromStdString(groupName));
     page->setProperty(PageNameProperty, QString::fromStdString(pageName));
 
@@ -306,6 +339,7 @@ void DlgPreferencesImp::createPageInGroup(PreferencesPageItem *groupItem, const 
         }
 
         pages->addWidget(page);
+        addSizeHint(page);
     }
     catch (const Base::Exception& e) {
         Base::Console().Error("Base exception thrown for '%s'\n", pageName.c_str());
@@ -316,11 +350,44 @@ void DlgPreferencesImp::createPageInGroup(PreferencesPageItem *groupItem, const 
     }
 }
 
-void DlgPreferencesImp::updatePageDependentLabels()
+void DlgPreferencesImp::addSizeHint(QWidget* page)
+{
+    _sizeHintOfPages = _sizeHintOfPages.expandedTo(page->minimumSizeHint());
+}
+
+int DlgPreferencesImp::minimumPageWidth() const
+{
+    return _sizeHintOfPages.width();
+}
+
+int DlgPreferencesImp::minimumDialogWidth(int pageWidth) const
+{
+    // this is additional safety spacing to ensure that everything fits with scrollbar etc.
+    const auto additionalMargin = style()->pixelMetric(QStyle::PM_ScrollBarExtent) + 8;
+    
+    QSize size = ui->groupWidgetStack->sizeHint();
+
+    int diff = pageWidth - size.width();
+    int dw = width();
+
+    if (diff > 0) {
+        const int offset = 2;
+        dw += diff + offset;
+    }
+
+    return dw + additionalMargin;
+}
+
+void DlgPreferencesImp::updatePageDependentWidgets()
 {
     auto currentPageItem = getCurrentPage();
 
+    // update header of the page
     ui->headerLabel->setText(currentPageItem->text());
+
+    // reset scroll area to start position
+    ui->scrollArea->horizontalScrollBar()->setValue(0);
+    ui->scrollArea->verticalScrollBar()->setValue(0);
 }
 
 /**
@@ -429,7 +496,7 @@ void DlgPreferencesImp::activateGroupPage(const QString& group, int index)
             ui->groupWidgetStack->setCurrentWidget(pageStackWidget);
             pageStackWidget->setCurrentIndex(index);
 
-            updatePageDependentLabels();
+            updatePageDependentWidgets();
             
             return;
         }
@@ -690,17 +757,36 @@ void DlgPreferencesImp::restartIfRequired()
 void DlgPreferencesImp::showEvent(QShowEvent* ev)
 {
     QDialog::showEvent(ev);
+
+    auto screen = windowHandle()->screen();
+    auto availableSize = screen->availableSize();
+
+    // leave at least 100 px of height so preferences window does not take
+    // entire screen height. User will still be able to resize the window,
+    // but it should never start too tall.
+    auto maxStartHeight = availableSize.height() - 100;
+
+    if (height() > maxStartHeight) {
+        auto heightDifference = availableSize.height() - maxStartHeight;
+
+        // resize and reposition window so it is fully visible
+        resize(width(), maxStartHeight);
+        move(x(), heightDifference / 2);
+    }
+
+    expandToMinimumDialogWidth();
 }
 
-QModelIndex findRootIndex(const QModelIndex& index)
+void DlgPreferencesImp::expandToMinimumDialogWidth()
 {
-    auto root = index;
+    auto screen = windowHandle()->screen();
+    auto availableSize = screen->availableSize();
 
-    while (root.parent().isValid()) {
-        root = root.parent();
+    // if the expanded dialog occupies less than 50% of the screen
+    int mw = minimumDialogWidth(minimumPageWidth());
+    if (availableSize.width() > 2 * mw) {
+        resize(mw, height());
     }
-    
-    return root;
 }
 
 void DlgPreferencesImp::onPageSelected(const QModelIndex& index)
@@ -728,7 +814,7 @@ void DlgPreferencesImp::onPageSelected(const QModelIndex& index)
         pagesStackWidget->setCurrentIndex(index.row());
     }
 
-    updatePageDependentLabels();
+    updatePageDependentWidgets();
 }
 
 void DlgPreferencesImp::onGroupExpanded(const QModelIndex& index)
@@ -768,14 +854,20 @@ void DlgPreferencesImp::onStackWidgetChange(int index)
         return;
     }
 
-    ui->groupsTreeView->selectionModel()->select(currentItem->index(), QItemSelectionModel::ClearAndSelect);
+    auto currentIndex = currentItem->index();
 
     auto root = _model.invisibleRootItem();
     for (int i = 0; i < root->rowCount(); i++) {
         auto currentGroup = static_cast<PreferencesPageItem*>(root->child(i));
+        auto currentGroupIndex = currentGroup->index();
+
+        // don't do anything to group of selected item
+        if (isParentOf(currentGroupIndex, currentIndex)) {
+            continue;
+        }
 
         if (!currentGroup->isExpanded()) {
-            ui->groupsTreeView->collapse(currentGroup->index());
+            ui->groupsTreeView->collapse(currentGroupIndex);
         }
     }
 
@@ -785,6 +877,8 @@ void DlgPreferencesImp::onStackWidgetChange(int index)
         ui->groupsTreeView->expand(parentItem->index());
         parentItem->setExpanded(wasExpanded);
     }
+    
+    ui->groupsTreeView->selectionModel()->select(currentIndex, QItemSelectionModel::ClearAndSelect);
 }
 
 void DlgPreferencesImp::changeEvent(QEvent *e)
@@ -807,8 +901,10 @@ void DlgPreferencesImp::changeEvent(QEvent *e)
             }
         }
 
-        updatePageDependentLabels();
-    } else {
+        expandToMinimumDialogWidth();
+        updatePageDependentWidgets();
+    }
+    else {
         QWidget::changeEvent(e);
     }
 }
@@ -844,6 +940,11 @@ void DlgPreferencesImp::restorePageDefaults(PreferencesPageItem* item)
         auto* page = qobject_cast<PreferencePage*>(item->getWidget());
 
         page->resetSettingsToDefaults();
+        /**
+         * Let's save the restart request before the page object is deleted and replaced with
+         * the newPage object (which has restartRequired initialized to false)
+         */
+        restartRequired = restartRequired || page->isRestartRequired();
         
         std::string pageName = page->property(PageNameProperty).toString().toStdString();
         std::string groupName = page->property(GroupNameProperty).toString().toStdString();

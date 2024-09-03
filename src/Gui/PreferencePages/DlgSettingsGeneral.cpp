@@ -31,14 +31,17 @@
 # include <QFileDialog>
 # include <QLocale>
 # include <QMessageBox>
+# include <QString>
 # include <algorithm>
 # include <boost/filesystem.hpp>
 #endif
 
+#include <App/Document.h>
 #include <Base/Parameter.h>
 #include <Base/UnitsApi.h>
 
 #include <Gui/Document.h>
+#include <Gui/Command.h>
 
 #include <Gui/Action.h>
 #include <Gui/Application.h>
@@ -82,6 +85,7 @@ DlgSettingsGeneral::DlgSettingsGeneral( QWidget* parent )
     connect(ui->ImportConfig, &QPushButton::clicked, this, &DlgSettingsGeneral::onImportConfigClicked);
     connect(ui->SaveNewPreferencePack, &QPushButton::clicked, this, &DlgSettingsGeneral::saveAsNewPreferencePack);
     connect(ui->themesCombobox, qOverload<int>(&QComboBox::activated), this, &DlgSettingsGeneral::onThemeChanged);
+    connect(ui->moreThemesLabel, &QLabel::linkActivated, this, &DlgSettingsGeneral::onLinkActivated);
 
     ui->ManagePreferencePacks->setToolTip(tr("Manage preference packs"));
     connect(ui->ManagePreferencePacks, &QPushButton::clicked, this, &DlgSettingsGeneral::onManagePreferencePacksClicked);
@@ -98,7 +102,6 @@ DlgSettingsGeneral::DlgSettingsGeneral( QWidget* parent )
     for (int i = 0; i < num; i++) {
         QString item = Base::UnitsApi::getDescription(static_cast<Base::UnitSystem>(i));
         ui->comboBox_UnitSystem->addItem(item, i);
-        ui->comboBox_projectUnitSystem->addItem(item, i);
     }
 
     // Enable/disable the fractional inch option depending on system
@@ -180,17 +183,13 @@ void DlgSettingsGeneral::setDecimalPointConversion(bool on)
     }
 }
 
-void DlgSettingsGeneral::saveSettings()
+void DlgSettingsGeneral::saveUnitSystemSettings()
 {
-    // must be done as very first because we create a new instance of NavigatorStyle
-    // where we set some attributes afterwards
-    int FracInch;  // minimum fractional inch to display
-    int viewSystemIndex; // currently selected View System (unit system)
-
     ParameterGrp::handle hGrpu = App::GetApplication().GetParameterGroupByPath
     ("User parameter:BaseApp/Preferences/Units");
     hGrpu->SetInt("UserSchema", ui->comboBox_UnitSystem->currentIndex());
     hGrpu->SetInt("Decimals", ui->spinBoxDecimals->value());
+    hGrpu->SetBool("IgnoreProjectSchema", ui->checkBox_projectUnitSystemIgnore->isChecked());
 
     // Set actual value
     Base::UnitsApi::setDecimals(ui->spinBoxDecimals->value());
@@ -201,32 +200,37 @@ void DlgSettingsGeneral::saveSettings()
     //
     // The inverse conversion is done when loaded. That way only one thing (the
     // numerical fractional inch value) needs to be stored.
-    FracInch = std::pow(2, ui->comboBox_FracInch->currentIndex() + 1);
+
+    // minimum fractional inch to display
+    int FracInch = std::pow(2, ui->comboBox_FracInch->currentIndex() + 1);
     hGrpu->SetInt("FracInch", FracInch);
 
     // Set the actual format value
     Base::QuantityFormat::setDefaultDenominator(FracInch);
 
     // Set and save the Unit System
-    viewSystemIndex = ui->comboBox_UnitSystem->currentIndex();
-    auto activeDoc = Gui::Application::Instance->activeDocument();
-    bool projectUnitSystemIgnore = ui->checkBox_projectUnitSystemIgnore->isChecked();
-    if(activeDoc){
-    	activeDoc->setProjectUnitSystemIgnore( projectUnitSystemIgnore );
-    	if(!projectUnitSystemIgnore){
-			int projectUnitSystemIndex = ui->comboBox_projectUnitSystem->currentIndex();
-			activeDoc->setProjectUnitSystem( projectUnitSystemIndex );
-			UnitsApi::setSchema(static_cast<UnitSystem>(projectUnitSystemIndex));
-    	}else{
-    		UnitsApi::setSchema(static_cast<UnitSystem>(viewSystemIndex));
-    	}
-    }else{
-    	UnitsApi::setSchema(static_cast<UnitSystem>(viewSystemIndex));
+    if (ui->checkBox_projectUnitSystemIgnore->isChecked()) {
+        // currently selected View System (unit system)
+        int viewSystemIndex = ui->comboBox_UnitSystem->currentIndex();
+        UnitsApi::setSchema(static_cast<UnitSystem>(viewSystemIndex));
     }
-    //
+    else if (App::Document* doc = App::GetApplication().getActiveDocument()) {
+        UnitsApi::setSchema(static_cast<UnitSystem>(doc->UnitSystem.getValue()));
+    }
+    else {
+        // if there is no existing document then the unit must still be set
+        int viewSystemIndex = ui->comboBox_UnitSystem->currentIndex();
+        UnitsApi::setSchema(static_cast<UnitSystem>(viewSystemIndex));
+    }
 
     ui->SubstituteDecimal->onSave();
     ui->UseLocaleFormatting->onSave();
+}
+
+void DlgSettingsGeneral::saveSettings()
+{
+    saveUnitSystemSettings();
+
     ui->RecentFiles->onSave();
     ui->EnableCursorBlinking->onSave();
     ui->SplashScreen->onSave();
@@ -255,8 +259,12 @@ void DlgSettingsGeneral::saveSettings()
     hGrp = App::GetApplication().GetParameterGroupByPath("User parameter:BaseApp/Preferences/MainWindow");
     hGrp->SetBool("TiledBackground", ui->tiledBackground->isChecked());
 
-    if (themeChanged)
+    if (themeChanged) {
+        auto qtStyle = QString::fromStdString(hGrp->GetASCII("QtStyle"));
+
         saveThemes();
+        qApp->setStyle(qtStyle);
+    }
 }
 
 void DlgSettingsGeneral::loadSettings()
@@ -268,6 +276,7 @@ void DlgSettingsGeneral::loadSettings()
     ("User parameter:BaseApp/Preferences/Units");
     ui->comboBox_UnitSystem->setCurrentIndex(hGrpu->GetInt("UserSchema", 0));
     ui->spinBoxDecimals->setValue(hGrpu->GetInt("Decimals", Base::UnitsApi::getDecimals()));
+    ui->checkBox_projectUnitSystemIgnore->setChecked(hGrpu->GetBool("IgnoreProjectSchema", false));
 
     // Get the current user setting for the minimum fractional inch
     FracInch = hGrpu->GetInt("FracInch", Base::QuantityFormat::getDefaultDenominator());
@@ -276,26 +285,6 @@ void DlgSettingsGeneral::loadSettings()
     // handy little equation.
     cbIndex = std::log2(FracInch) - 1;
     ui->comboBox_FracInch->setCurrentIndex(cbIndex);
-    
-    
-    auto activeDoc = Gui::Application::Instance->activeDocument();
-    if(activeDoc){
-		int us = activeDoc->getProjectUnitSystem();
-		if(us >= 0){//Valid unit system:
-			ui->comboBox_projectUnitSystem->setCurrentIndex( us );
-			int pusIgnore = activeDoc->getProjectUnitSystemIgnore();
-			ui->checkBox_projectUnitSystemIgnore->setChecked( pusIgnore );
-		}else{
-			ui->comboBox_projectUnitSystem->setCurrentIndex( 0 );
-			ui->checkBox_projectUnitSystemIgnore->setChecked( false );
-		}
-    }else{
-    	ui->checkBox_projectUnitSystemIgnore->setEnabled(false);
-		ui->comboBox_projectUnitSystem->setEnabled(false);
-    }
-
-
-
     ui->SubstituteDecimal->onRestore();
     ui->UseLocaleFormatting->onRestore();
     ui->RecentFiles->onRestore();
@@ -340,22 +329,11 @@ void DlgSettingsGeneral::loadSettings()
     }
 
     QAbstractItemModel* model = ui->Languages->model();
-    if (model)
+    if (model) {
         model->sort(0);
-
-    int current = getMainWindow()->iconSize().width();
-    current = hGrp->GetInt("ToolbarIconSize", current);
-    ui->toolbarIconSize->clear();
-    ui->toolbarIconSize->addItem(tr("Small (%1px)").arg(16), QVariant((int)16));
-    ui->toolbarIconSize->addItem(tr("Medium (%1px)").arg(24), QVariant((int)24));
-    ui->toolbarIconSize->addItem(tr("Large (%1px)").arg(32), QVariant((int)32));
-    ui->toolbarIconSize->addItem(tr("Extra large (%1px)").arg(48), QVariant((int)48));
-    index = ui->toolbarIconSize->findData(QVariant(current));
-    if (index < 0) {
-        ui->toolbarIconSize->addItem(tr("Custom (%1px)").arg(current), QVariant((int)current));
-        index = ui->toolbarIconSize->findData(QVariant(current));
     }
-    ui->toolbarIconSize->setCurrentIndex(index);
+
+    addIconSizes(getCurrentIconSize());
 
     //TreeMode combobox setup.
     loadDockWindowVisibility();
@@ -364,6 +342,44 @@ void DlgSettingsGeneral::loadSettings()
     ui->tiledBackground->setChecked(hGrp->GetBool("TiledBackground", false));
 
     loadThemes();
+}
+
+void DlgSettingsGeneral::resetSettingsToDefaults()
+{
+    ParameterGrp::handle hGrp;
+    hGrp = App::GetApplication().GetParameterGroupByPath("User parameter:BaseApp/Preferences/Units");
+    //reset "UserSchema" parameter
+    hGrp->RemoveInt("UserSchema");
+    //reset "Decimals" parameter
+    hGrp->RemoveInt("Decimals");
+    //reset "IgnoreProjectSchema" parameter
+    hGrp->RemoveBool("IgnoreProjectSchema");
+    //reset "FracInch" parameter
+    hGrp->RemoveInt("FracInch");
+
+    hGrp = App::GetApplication().GetParameterGroupByPath("User parameter:BaseApp/Preferences/MainWindow");
+    //reset "Theme" parameter
+    hGrp->RemoveASCII("Theme");
+    //reset "TiledBackground" parameter
+    hGrp->RemoveBool("TiledBackground");
+
+
+    hGrp = App::GetApplication().GetParameterGroupByPath("User parameter:BaseApp/Preferences/DockWindows");
+    //reset "ComboView" parameters
+    hGrp->GetGroup("ComboView")->RemoveBool("Enabled");
+    //reset "TreeView" parameters
+    hGrp->GetGroup("TreeView")->RemoveBool("Enabled");
+    //reset "PropertyView" parameters
+    hGrp->GetGroup("PropertyView")->RemoveBool("Enabled");
+
+    hGrp = WindowParameter::getDefaultParameter()->GetGroup("General");
+    //reset "Language" parameter
+    hGrp->RemoveASCII("Language");
+    //reset "ToolbarIconSize" parameter
+    hGrp->RemoveInt("ToolbarIconSize");
+
+    //finally reset all the parameters associated to Gui::Pref* widgets
+    PreferencePage::resetSettingsToDefaults();
 }
 
 void DlgSettingsGeneral::saveThemes()
@@ -410,15 +426,41 @@ void DlgSettingsGeneral::loadThemes()
 {
     ui->themesCombobox->clear();
 
-    ParameterGrp::handle hGrp = App::GetApplication().GetParameterGroupByPath("User parameter:BaseApp/Preferences/MainWindow");
+    ParameterGrp::handle hGrp = App::GetApplication().GetParameterGroupByPath(
+        "User parameter:BaseApp/Preferences/MainWindow");
 
     QString currentTheme = QString::fromLatin1(hGrp->GetASCII("Theme", "").c_str());
 
     Application::Instance->prefPackManager()->rescan();
     auto packs = Application::Instance->prefPackManager()->preferencePacks();
+    QString currentStyleSheet = QString::fromLatin1(hGrp->GetASCII("StyleSheet", "").c_str());
+    QFileInfo fi(currentStyleSheet);
+    currentStyleSheet = fi.baseName();
+    QString themeClassic = QStringLiteral("classic");  // handle the upcoming name change
+    QString similarTheme;
+    QString packName;
     for (const auto& pack : packs) {
         if (pack.second.metadata().type() == "Theme") {
+            packName = QString::fromStdString(pack.first);
+            if (packName.contains(themeClassic, Qt::CaseInsensitive)) {
+                themeClassic = QString::fromStdString(pack.first);
+            }
+            if (packName.contains(currentStyleSheet, Qt::CaseInsensitive)) {
+                similarTheme = QString::fromStdString(pack.first);
+            }
             ui->themesCombobox->addItem(QString::fromStdString(pack.first));
+        }
+    }
+
+    if (currentTheme.isEmpty()) {
+        if (!currentStyleSheet.isEmpty()
+            && !similarTheme.isEmpty()) {  // a user upgrading from 0.21 or earlier
+            hGrp->SetASCII("Theme", similarTheme.toStdString());
+            currentTheme = QString::fromLatin1(hGrp->GetASCII("Theme", "").c_str());
+        }
+        else {  // a brand new user
+            hGrp->SetASCII("Theme", themeClassic.toStdString());
+            currentTheme = QString::fromLatin1(hGrp->GetASCII("Theme", "").c_str());
         }
     }
 
@@ -428,16 +470,68 @@ void DlgSettingsGeneral::loadThemes()
     }
 }
 
+int DlgSettingsGeneral::getCurrentIconSize() const
+{
+    ParameterGrp::handle hGrp = WindowParameter::getDefaultParameter()->GetGroup("General");
+    int current = getMainWindow()->iconSize().width();
+    return hGrp->GetInt("ToolbarIconSize", current);
+}
+
+void DlgSettingsGeneral::addIconSizes(int current)
+{
+    ui->toolbarIconSize->clear();
+
+    QList<int> sizes{16, 24, 32, 48};
+    if (!sizes.contains(current)) {
+        sizes.append(current);
+    }
+
+    for (int size : sizes) {
+        ui->toolbarIconSize->addItem(QString(), QVariant(size));
+    }
+
+    int index = ui->toolbarIconSize->findData(QVariant(current));
+    ui->toolbarIconSize->setCurrentIndex(index);
+    translateIconSizes();
+}
+
+void DlgSettingsGeneral::translateIconSizes()
+{
+    auto getSize = [this](int index) {
+        return ui->toolbarIconSize->itemData(index).toInt();
+    };
+
+    QStringList sizes;
+    sizes << tr("Small (%1px)").arg(getSize(0));
+    sizes << tr("Medium (%1px)").arg(getSize(1));
+    sizes << tr("Large (%1px)").arg(getSize(2));
+    sizes << tr("Extra large (%1px)").arg(getSize(3));
+    if (ui->toolbarIconSize->count() > 4) {
+        sizes << tr("Custom (%1px)").arg(getSize(4));
+    }
+
+    for (int index = 0; index < sizes.size(); index++) {
+        ui->toolbarIconSize->setItemText(index, sizes[index]);
+    }
+}
+
+void DlgSettingsGeneral::retranslateUnits()
+{
+    int num = ui->comboBox_UnitSystem->count();
+    for (int i = 0; i < num; i++) {
+        QString item = Base::UnitsApi::getDescription(static_cast<Base::UnitSystem>(i));
+        ui->comboBox_UnitSystem->setItemText(i, item);
+    }
+}
+
 void DlgSettingsGeneral::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
+        translateIconSizes();
+        retranslateUnits();
         int index = ui->UseLocaleFormatting->currentIndex();
-        int index2 = ui->comboBox_UnitSystem->currentIndex();
-        int pusIndex = ui->comboBox_projectUnitSystem->currentIndex();
         ui->retranslateUi(this);
         ui->UseLocaleFormatting->setCurrentIndex(index);
-        ui->comboBox_UnitSystem->setCurrentIndex(index2);
-        ui->comboBox_projectUnitSystem->setCurrentIndex(pusIndex);
     }
     else {
         QWidget::changeEvent(event);
@@ -450,6 +544,19 @@ void DlgSettingsGeneral::saveDockWindowVisibility()
     bool treeView = hGrp->GetGroup("TreeView")->GetBool("Enabled", false);
     bool propertyView = hGrp->GetGroup("PropertyView")->GetBool("Enabled", false);
     bool comboView = hGrp->GetGroup("ComboView")->GetBool("Enabled", true);
+
+    int index = -1;
+    if (propertyView || treeView) {
+        index = 1;
+    }
+    else if (comboView) {
+        index = 0;
+    }
+
+    if (index != ui->treeMode->currentIndex()) {
+        requireRestart();
+    }
+
     switch (ui->treeMode->currentIndex()) {
     case 0:
         comboView = true;
@@ -469,8 +576,8 @@ void DlgSettingsGeneral::saveDockWindowVisibility()
 void DlgSettingsGeneral::loadDockWindowVisibility()
 {
     ui->treeMode->clear();
-    ui->treeMode->addItem(tr("Combo View"));
-    ui->treeMode->addItem(tr("TreeView and PropertyView"));
+    ui->treeMode->addItem(tr("Combined"));
+    ui->treeMode->addItem(tr("Independent"));
 
     auto hGrp = App::GetApplication().GetParameterGroupByPath("User parameter:BaseApp/Preferences/DockWindows");
     bool propertyView = hGrp->GetGroup("PropertyView")->GetBool("Enabled", false);
@@ -646,22 +753,26 @@ void DlgSettingsGeneral::onUnitSystemIndexChanged(int index)
     }
 }
 
-void DlgSettingsGeneral::on_checkBox_projectUnitSystemIgnore_stateChanged(int state)
-{
-    if (state < 0)
-        return; // happens when clearing the combo box in retranslateUi()
-
-    // Enable/disable the projectUnitSystem if being ignored:
-    if(state == 2){//ignore
-    	ui->comboBox_projectUnitSystem->setEnabled(false);
-    }else if(state == 0){
-    	ui->comboBox_projectUnitSystem->setEnabled(true);
-    }
-}
-
 void DlgSettingsGeneral::onThemeChanged(int index) {
     Q_UNUSED(index);
     themeChanged = true;
+}
+
+void DlgSettingsGeneral::onLinkActivated(const QString& link)
+{
+    auto const addonManagerLink = QStringLiteral("freecad:Std_AddonMgr");
+
+    if (link != addonManagerLink) {
+        return;
+    }
+
+    // Set the user preferences to include only preference packs.
+    // This is a quick and dirty way to open Addon Manager with only themes.
+    auto pref = App::GetApplication().GetParameterGroupByPath("User parameter:BaseApp/Preferences/Addons");
+    pref->SetInt("PackageTypeSelection", 3); // 3 stands for Preference Packs
+    pref->SetInt("StatusSelection", 0);      // 0 stands for any installation status 
+
+    Gui::Application::Instance->commandManager().runCommandByName("Std_AddonMgr");
 }
 
 ///////////////////////////////////////////////////////////

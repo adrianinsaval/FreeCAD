@@ -93,23 +93,17 @@ private:
                 if (constructionMethod() == ConstructionMethod::Center) {
                     centerPoint = onSketchPos;
 
-                    if (seekAutoConstraint(sugConstraints[0],
-                                           onSketchPos,
-                                           Base::Vector2d(0.f, 0.f))) {
-                        renderSuggestConstraintsCursor(sugConstraints[0]);
-                        return;
-                    }
+                    seekAndRenderAutoConstraint(sugConstraints[0],
+                                                onSketchPos,
+                                                Base::Vector2d(0.f, 0.f));
                 }
                 else {
                     apoapsis = onSketchPos;
 
-                    if (seekAutoConstraint(sugConstraints[0],
-                                           onSketchPos,
-                                           Base::Vector2d(0.f, 0.f),
-                                           AutoConstraint::CURVE)) {
-                        renderSuggestConstraintsCursor(sugConstraints[0]);
-                        return;
-                    }
+                    seekAndRenderAutoConstraint(sugConstraints[0],
+                                                onSketchPos,
+                                                Base::Vector2d(0.f, 0.f),
+                                                AutoConstraint::CURVE);
                 }
             } break;
             case SelectMode::SeekSecond: {
@@ -126,13 +120,10 @@ private:
                     toolWidgetManager.drawPositionAtCursor(onSketchPos);
                 }
 
-                if (seekAutoConstraint(sugConstraints[1],
-                                       onSketchPos,
-                                       Base::Vector2d(0.f, 0.f),
-                                       AutoConstraint::CURVE)) {
-                    renderSuggestConstraintsCursor(sugConstraints[1]);
-                    return;
-                }
+                seekAndRenderAutoConstraint(sugConstraints[1],
+                                            onSketchPos,
+                                            Base::Vector2d(0.f, 0.f),
+                                            AutoConstraint::CURVE);
             } break;
             case SelectMode::SeekThird: {
                 calculateThroughPointMinorAxisParameters(onSketchPos);
@@ -148,13 +139,10 @@ private:
                     toolWidgetManager.drawPositionAtCursor(onSketchPos);
                 }
 
-                if (seekAutoConstraint(sugConstraints[2],
-                                       onSketchPos,
-                                       Base::Vector2d(0.f, 0.f),
-                                       AutoConstraint::CURVE)) {
-                    renderSuggestConstraintsCursor(sugConstraints[2]);
-                    return;
-                }
+                seekAndRenderAutoConstraint(sugConstraints[2],
+                                            onSketchPos,
+                                            Base::Vector2d(0.f, 0.f),
+                                            AutoConstraint::CURVE);
             } break;
             default:
                 break;
@@ -261,7 +249,12 @@ private:
 
     QString getCrosshairCursorSVGName() const override
     {
-        return QString::fromLatin1("Sketcher_Pointer_Create_Ellipse");
+        if (constructionMethod() == DrawSketchHandlerEllipse::ConstructionMethod::Center) {
+            return QString::fromLatin1("Sketcher_Pointer_Create_EllipseByCenter");
+        }
+        else {
+            return QString::fromLatin1("Sketcher_Pointer_Create_Ellipse_3points");
+        }
     }
 
     std::unique_ptr<QWidget> createWidget() const override
@@ -425,7 +418,8 @@ void DSHEllipseController::configureToolWidget()
 {
 
     if (!init) {  // Code to be executed only upon initialisation
-        QStringList names = {QStringLiteral("Center"), QStringLiteral("Axis endpoints and radius")};
+        QStringList names = {QApplication::translate("Sketcher_CreateEllipse", "Center"),
+                             QApplication::translate("Sketcher_CreateEllipse", "Axis endpoints")};
         toolWidget->setComboboxElements(WCombobox::FirstCombo, names);
 
         if (isConstructionMode()) {
@@ -553,7 +547,7 @@ void DSHEllipseControllerBase::doEnforceControlParameters(Base::Vector2d& onSket
 
                 if (onViewParameters[OnViewParameter::Fifth]->isSet
                     && onViewParameters[OnViewParameter::Sixth]->isSet
-                    && areColinear(handler->apoapsis, handler->periapsis, onSketchPos)) {
+                    && areCollinear(handler->apoapsis, handler->periapsis, onSketchPos)) {
                     unsetOnViewParameter(onViewParameters[OnViewParameter::Fifth].get());
                     unsetOnViewParameter(onViewParameters[OnViewParameter::Sixth].get());
                 }

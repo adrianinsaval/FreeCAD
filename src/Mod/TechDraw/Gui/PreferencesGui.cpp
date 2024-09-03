@@ -33,7 +33,10 @@
 #include <App/Material.h>
 #include <Base/Console.h>
 #include <Base/Parameter.h>
+#include <Gui/Selection.h>
 #include <Mod/TechDraw/App/Preferences.h>
+#include <Mod/TechDraw/App/LineGenerator.h>
+
 
 #include "PreferencesGui.h"
 #include "Rez.h"
@@ -91,6 +94,21 @@ QColor PreferencesGui::sectionLineQColor()
 //if the App::Color version has already lightened the color, we don't want to do it again
     App::Color fcColor;
     fcColor.setPackedValue(Preferences::getPreferenceGroup("Decorations")->GetUnsigned("SectionColor", 0x000000FF));
+    return fcColor.asValue<QColor>();
+}
+
+App::Color PreferencesGui::breaklineColor()
+{
+    App::Color fcColor;
+    fcColor.setPackedValue(Preferences::getPreferenceGroup("Decorations")->GetUnsigned("BreaklineColor", 0x000000FF));
+    return fcColor;
+}
+
+QColor PreferencesGui::breaklineQColor()
+{
+//if the App::Color version has already lightened the color, we don't want to do it again
+    App::Color fcColor;
+    fcColor.setPackedValue(Preferences::getPreferenceGroup("Decorations")->GetUnsigned("BreaklineColor", 0x000000FF));
     return fcColor.asValue<QColor>();
 }
 
@@ -154,17 +172,6 @@ double PreferencesGui::edgeFuzz()
     return Preferences::getPreferenceGroup("General")->GetFloat("EdgeFuzz", 10.0);
 }
 
-Qt::PenStyle PreferencesGui::sectionLineStyle()
-{
-    Qt::PenStyle sectStyle = static_cast<Qt::PenStyle> (Preferences::getPreferenceGroup("Decorations")->GetInt("SectionLine", 2));
-    return sectStyle;
-}
-
-bool PreferencesGui::sectionLineMarks()
-{
-    return Preferences::getPreferenceGroup("Decorations")->GetBool("SectionLineMarks", true);
-}
-
 QString PreferencesGui::weldingDirectory()
 {
     std::string defaultDir = App::Application::getResourceDir() + "Mod/TechDraw/Symbols/Welding/AWS/";
@@ -208,7 +215,8 @@ bool PreferencesGui::showGrid()
 
 bool PreferencesGui::multiSelection()
 {
-  return Preferences::getPreferenceGroup("General")->GetBool("multiSelection", false);
+    bool greedy = Gui::Selection().getSelectionStyle() == Gui::SelectionSingleton::SelectionStyle::GreedySelection;
+    return greedy || Preferences::getPreferenceGroup("General")->GetBool("multiSelection", false);
 }
 
 App::Color PreferencesGui::pageColor()
@@ -274,3 +282,25 @@ QColor PreferencesGui::lightenColor(QColor orig)
 
     return QColor(red, green, blue, alpha);
 }
+
+
+double PreferencesGui::templateClickBoxSize()
+{
+    return Preferences::getPreferenceGroup("General")->GetFloat("TemplateDotSize", 5.0);
+}
+
+
+QColor PreferencesGui::templateClickBoxColor()
+{
+    App::Color fcColor;
+    fcColor.setPackedValue(Preferences::getPreferenceGroup("Colors")->GetUnsigned("TemplateUnderlineColor", 0x0000FFFF));  //#0000FF blue
+    return fcColor.asValue<QColor>();
+}
+
+int PreferencesGui::get3dMarkerSize()
+{
+    ParameterGrp::handle hGrp = App::GetApplication().GetParameterGroupByPath
+                                ("User parameter:BaseApp/Preferences/View");
+    return hGrp->GetInt("MarkerSize", 9L);
+}
+

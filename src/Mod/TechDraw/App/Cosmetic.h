@@ -23,42 +23,20 @@
 #ifndef TECHDRAW_COSMETIC_H
 #define TECHDRAW_COSMETIC_H
 
+#include <QColor>
+
 #include <App/FeaturePython.h>
+#include <App/Color.h>
 #include <Base/Persistence.h>
 #include <Base/Vector3D.h>
 
 #include "Geometry.h"
-
+#include "LineFormat.h"
 
 class TopoDS_Edge;
 
 namespace TechDraw {
 class DrawViewPart;
-
-
-//general purpose line format specifier
-class TechDrawExport LineFormat
-{
-public:
-    LineFormat();
-    LineFormat(const int style,
-               const double weight,
-               const App::Color& color,
-               const bool visible);
-    ~LineFormat() = default;
-
-    int m_style;
-    double m_weight;
-    App::Color m_color;
-    bool m_visible;
-
-    static double getDefEdgeWidth();
-    static App::Color getDefEdgeColor();
-    static int getDefEdgeStyle();
-
-    void dump(const char* title);
-    std::string toString() const;
-};
 
 //********** CosmeticEdge ******************************************************
 
@@ -79,6 +57,12 @@ public:
     TechDraw::BaseGeomPtr scaledGeometry(const double scale);
     TechDraw::BaseGeomPtr scaledAndRotatedGeometry(const double scale, const double rotDegrees);
 
+    static TechDraw::BaseGeomPtr makeCanonicalLine(DrawViewPart* dvp, Base::Vector3d start, Base::Vector3d end);
+    static TechDraw::BaseGeomPtr makeLineFromCanonicalPoints(Base::Vector3d start, Base::Vector3d end);
+
+    LineFormat format() const { return m_format; }
+    void setFormat(LineFormat newFormat) { m_format = newFormat; }
+
     std::string toString() const override;
     void dump(const char* title) const;
 
@@ -88,7 +72,6 @@ public:
     void Restore(Base::XMLReader &/*reader*/) override;
 
     PyObject *getPyObject() override;
-    CosmeticEdge* copy() const;
     CosmeticEdge* clone() const;
 
     Base::Vector3d permaStart;         //persistent unscaled start/end points in View coords

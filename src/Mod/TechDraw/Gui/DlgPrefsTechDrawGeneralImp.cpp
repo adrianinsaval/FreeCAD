@@ -27,6 +27,7 @@
 #include "DlgPrefsTechDrawGeneralImp.h"
 #include "ui_DlgPrefsTechDrawGeneral.h"
 #include "PreferencesGui.h"
+#include "DrawGuiUtil.h"
 
 
 using namespace TechDrawGui;
@@ -60,7 +61,7 @@ void DlgPrefsTechDrawGeneralImp::saveSettings()
     ui->plsb_LabelSize->onSave();
 
     ui->cbProjAngle->onSave();
-    ui->cbHiddenLineStyle->onSave();
+    ui->cbSectionLineStd->onSave();
 
     ui->pfc_DefTemp->onSave();
     ui->pfc_DefDir->onSave();
@@ -69,10 +70,15 @@ void DlgPrefsTechDrawGeneralImp::saveSettings()
     ui->pfc_Welding->onSave();
     ui->pfc_FilePattern->onSave();
     ui->le_NamePattern->onSave();
+    ui->fcSymbolDir->onSave();
+
     ui->cb_ShowGrid->onSave();
     ui->psb_GridSpacing->onSave();
 
     ui->cbMultiSelection->onSave();
+
+    ui->cb_useCameraDirection->onSave();
+    ui->cb_alwaysShowLabel->onSave();
 }
 
 void DlgPrefsTechDrawGeneralImp::loadSettings()
@@ -92,7 +98,7 @@ void DlgPrefsTechDrawGeneralImp::loadSettings()
     ui->plsb_LabelSize->onRestore();
 
     ui->cbProjAngle->onRestore();
-    ui->cbHiddenLineStyle->onRestore();
+    ui->cbSectionLineStd->onRestore();
 
     ui->pfc_DefTemp->onRestore();
     ui->pfc_DefDir->onRestore();
@@ -101,6 +107,8 @@ void DlgPrefsTechDrawGeneralImp::loadSettings()
     ui->pfc_Welding->onRestore();
     ui->pfc_FilePattern->onRestore();
     ui->le_NamePattern->onRestore();
+    ui->fcSymbolDir->onRestore();
+
 
     bool gridDefault = PreferencesGui::showGrid();
     ui->cb_ShowGrid->setChecked(gridDefault);
@@ -113,6 +121,9 @@ void DlgPrefsTechDrawGeneralImp::loadSettings()
     bool multiSelectionDefault = PreferencesGui::multiSelection();
     ui->cbMultiSelection->setChecked(multiSelectionDefault);
     ui->cbMultiSelection->onRestore();
+
+    ui->cb_useCameraDirection->onRestore();
+    ui->cb_alwaysShowLabel->onRestore();
 }
 
 /**
@@ -121,9 +132,7 @@ void DlgPrefsTechDrawGeneralImp::loadSettings()
 void DlgPrefsTechDrawGeneralImp::changeEvent(QEvent *e)
 {
     if (e->type() == QEvent::LanguageChange) {
-        saveSettings();
         ui->retranslateUi(this);
-        loadSettings();
     }
     else {
         QWidget::changeEvent(e);

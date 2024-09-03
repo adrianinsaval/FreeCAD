@@ -71,6 +71,7 @@
 #endif
 
 #include <App/Document.h>
+#include <App/GeoFeature.h>
 #include <App/ElementNamingUtils.h>
 #include <Base/Tools.h>
 #include <Base/UnitsApi.h>
@@ -396,8 +397,17 @@ void SoFCUnifiedSelection::doAction(SoAction *action)
             if (vp && (useNewSelection.getValue()||vp->useNewSelectionModel()) && vp->isSelectable()) {
                 SoDetail *detail = nullptr;
                 detailPath->truncate(0);
+                auto subName = selaction->SelChange.pSubName;
+#ifdef FC_USE_TNP_FIX
+                App::ElementNamePair elementName;;
+                App::GeoFeature::resolveElement(obj, subName, elementName);
+                if (Data::isMappedElement(subName)
+                    && !elementName.oldName.empty()) {      // If we have a shortened element name
+                    subName = elementName.oldName.c_str();  // use it.
+                }
+#endif
                 if(!selaction->SelChange.pSubName || !selaction->SelChange.pSubName[0] ||
-                    vp->getDetailPath(selaction->SelChange.pSubName,detailPath,true,detail))
+                    vp->getDetailPath(subName,detailPath,true,detail))
                 {
                     SoSelectionElementAction::Type type = SoSelectionElementAction::None;
                     if (selaction->SelChange.Type == SelectionChanges::AddSelection) {
@@ -493,7 +503,7 @@ bool SoFCUnifiedSelection::setHighlight(SoFullPath *path, const SoDetail *det,
 
     bool highlighted = false;
     if(path && path->getLength() &&
-       vpd && vpd->getObject() && vpd->getObject()->getNameInDocument())
+       vpd && vpd->getObject() && vpd->getObject()->isAttachedToDocument())
     {
         const char *docname = vpd->getObject()->getDocument()->getName();
         const char *objname = vpd->getObject()->getNameInDocument();
@@ -566,9 +576,9 @@ bool SoFCUnifiedSelection::setSelection(const std::vector<PickedInfo> &infos, bo
     auto vpd = info.vpd;
     if(!vpd)
         return false;
-    const char *objname = vpd->getObject()->getNameInDocument();
-    if(!objname)
+    if(!vpd->getObject()->isAttachedToDocument())
         return false;
+    const char *objname = vpd->getObject()->getNameInDocument();
     const char *docname = vpd->getObject()->getDocument()->getName();
 
     bool hasNext = false;
@@ -615,6 +625,17 @@ bool SoFCUnifiedSelection::setSelection(const std::vector<PickedInfo> &infos, bo
     std::string subName = info.element;
     std::string objectName = objname;
 
+#ifdef FC_USE_TNP_FIX
+    // We need to convert the short name in the selection to a full element path to look it up
+    // Ex:  Body.Pad.Face9  to Body.Pad.;g3;SKT;:H12dc,E;FAC;:H12dc:4,F;:G0;XTR;:H12dc:8,F.Face9
+    App::ElementNamePair elementName;
+    App::GeoFeature::resolveElement(vpd->getObject(), subName.c_str(), elementName);
+    if ( !elementName.newName.empty()) {      // If we have a mapped name use it
+        auto elementNameSuffix = Data::findElementName(subName.c_str()); // Only suffix
+        subName.erase(subName.find(elementNameSuffix)); // Everything except original suffix suffix
+        subName = subName.append(elementName.newName);  // Add the mapped name suffix,
+    }
+#endif
     const char *subSelected = Gui::Selection().getSelectedElement(
                                 vpd->getObject(),subName.c_str());
 
@@ -742,7 +763,8 @@ SoFCUnifiedSelection::handleEvent(SoHandleEventAction * action)
             // check to see if the mouse is over a geometry...
             auto infos = this->getPickedList(action,!Selection().needPickedList());
             bool greedySel = Gui::Selection().getSelectionStyle() == Gui::SelectionSingleton::SelectionStyle::GreedySelection;
-            if(setSelection(infos, event->wasCtrlDown() || greedySel))
+            greedySel = greedySel || event->wasCtrlDown();
+            if(setSelection(infos, greedySel) || greedySel)
                 action->setHandled();
         } // mouse release
     }
@@ -782,6 +804,7 @@ void SoHighlightElementAction::initClass()
     SO_ACTION_INIT_CLASS(SoHighlightElementAction,SoAction);
 
     SO_ENABLE(SoHighlightElementAction, SoSwitchElement);
+    SO_ENABLE(SoHighlightElementAction, SoModelMatrixElement);
 
     SO_ACTION_ADD_METHOD(SoNode,nullAction);
 
@@ -849,6 +872,7 @@ void SoSelectionElementAction::initClass()
     SO_ACTION_INIT_CLASS(SoSelectionElementAction,SoAction);
 
     SO_ENABLE(SoSelectionElementAction, SoSwitchElement);
+    SO_ENABLE(SoSelectionElementAction, SoModelMatrixElement);
 
     SO_ACTION_ADD_METHOD(SoNode,nullAction);
 
@@ -1710,7 +1734,7 @@ void SoFCPathAnnotation::GLRenderBelowPath(SoGLRenderAction * action)
 
     if(path->getLength() != tmpPath->getLength()) {
         // The auditing SoPath may be truncated due to harmless things such as
-        // fliping a SoSwitch sibling node. So we keep an unauditing SoTempPath
+        // flipping a SoSwitch sibling node. So we keep an unauditing SoTempPath
         // around to try to restore the path.
         for(int i=path->getLength()-1;i<tmpPath->getLength()-1;++i) {
             auto children = path->getNode(i)->getChildren();

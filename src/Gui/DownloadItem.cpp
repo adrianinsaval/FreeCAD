@@ -60,8 +60,8 @@ EditTableView::EditTableView(QWidget *parent)
 
 void EditTableView::keyPressEvent(QKeyEvent *event)
 {
-    if ((event->key() == Qt::Key_Delete
-        || event->key() == Qt::Key_Backspace)
+    if ((event->matches(QKeySequence::Delete)
+        || event->matches(QKeySequence::Backspace))
         && model()) {
         removeOne();
     } else {
@@ -529,9 +529,6 @@ void DownloadItem::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 
 void DownloadItem::updateInfoLabel()
 {
-    //if (m_reply->error() == QNetworkReply::NoError)
-    //    return;
-
     qint64 bytesTotal = progressBar->maximum();
     bool running = !downloadedSuccessfully();
 

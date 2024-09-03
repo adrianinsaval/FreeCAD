@@ -143,7 +143,7 @@ QList<App::SubObjectT> DlgPropertyLink::getLinksFromProperty(const App::Property
 
 QString DlgPropertyLink::formatObject(App::Document *ownerDoc, App::DocumentObject *obj, const char *sub)
 {
-    if(!obj || !obj->getNameInDocument())
+    if(!obj || !obj->isAttachedToDocument())
         return QLatin1String("?");
 
     const char *objName = obj->getNameInDocument();
@@ -241,7 +241,7 @@ void DlgPropertyLink::init(const App::DocumentObjectT &prop, bool tryFilter) {
 
     objProp  = prop;
     auto owner = objProp.getObject();
-    if(!owner || !owner->getNameInDocument())
+    if(!owner || !owner->isAttachedToDocument())
         return;
 
     ui->searchBox->setDocumentObject(owner);
@@ -362,7 +362,7 @@ void DlgPropertyLink::init(const App::DocumentObjectT &prop, bool tryFilter) {
     // For link list type property, try to auto filter type
     if(tryFilter && isLinkList) {
         Base::Type objType;
-        for(const auto& link : qAsConst(oldLinks)) {
+        for(const auto& link : std::as_const(oldLinks)) {
             auto obj = link.getSubObject();
             if(!obj)
                 continue;
@@ -525,7 +525,14 @@ void DlgPropertyLink::onItemSelectionChanged()
             auto vp = Base::freecad_dynamic_cast<Gui::ViewProviderDocumentObject>(
                     doc->getViewProvider(obj));
             if(vp) {
-                doc->setActiveView(vp, Gui::View3DInventor::getClassTypeId());
+                // If the view provider uses a special window for rendering, switch to it
+                MDIView *view = vp->getMDIView();
+                if (view) {
+                    doc->setActiveWindow(view);
+                }
+                else {
+                    doc->setActiveView(vp, Gui::View3DInventor::getClassTypeId());
+                }
             }
         }
     }
@@ -567,7 +574,7 @@ QTreeWidgetItem *DlgPropertyLink::findItem(
     if(pfound)
         *pfound = false;
 
-    if(!obj || !obj->getNameInDocument())
+    if(!obj || !obj->isAttachedToDocument())
         return nullptr;
 
     std::vector<App::DocumentObject *> sobjs;
@@ -632,17 +639,17 @@ void DlgPropertyLink::onSelectionChanged(const Gui::SelectionChanges& msg)
     bool found = false;
     auto selObj = msg.Object.getObject();
 
-    std::pair<std::string,std::string> elementName;
+    App::ElementNamePair elementName;
     const char *subname = msg.pSubName;
     if(!ui->checkSubObject->isChecked()) {
         selObj = App::GeoFeature::resolveElement(selObj,subname,elementName);
         if(!selObj)
             return;
-        subname = elementName.second.c_str();
+        subname = elementName.oldName.c_str();
     }
 
     auto item = findItem(selObj, msg.pSubName, &found);
-    if(!item || !found)
+    if(!item)
         return;
 
     if(!item->isSelected()) {
@@ -887,7 +894,7 @@ void DlgPropertyLink::itemSearch(const QString &text, bool select) {
 QTreeWidgetItem *DlgPropertyLink::createItem(
         App::DocumentObject *obj, QTreeWidgetItem *parent)
 {
-    if(!obj || !obj->getNameInDocument())
+    if(!obj || !obj->isAttachedToDocument())
         return nullptr;
 
     if(inList.find(obj)!=inList.end())

@@ -204,16 +204,20 @@ void TaskImage::scaleImage(double factor)
 
 void TaskImage::startScale()
 {
-    scale->activate();
-    ui->pushButtonScale->hide();
-    ui->groupBoxCalibration->show();
-    ui->pushButtonApply->setEnabled(false);
+    if (scale) {
+        scale->activate();
+        ui->pushButtonScale->hide();
+        ui->groupBoxCalibration->show();
+        ui->pushButtonApply->setEnabled(false);
+    }
 }
 
 void TaskImage::acceptScale()
 {
-    scaleImage(scale->getScaleFactor());
-    rejectScale();
+    if (scale) {
+        scaleImage(scale->getScaleFactor());
+        rejectScale();
+    }
 }
 
 void TaskImage::enableApplyBtn()
@@ -223,9 +227,11 @@ void TaskImage::enableApplyBtn()
 
 void TaskImage::rejectScale()
 {
-    scale->deactivate();
-    ui->pushButtonScale->show();
-    ui->groupBoxCalibration->hide();
+    if (scale) {
+        scale->deactivate();
+        ui->pushButtonScale->show();
+        ui->groupBoxCalibration->hide();
+    }
 }
 
 void TaskImage::onInteractiveScale()
@@ -634,12 +640,13 @@ SbVec3f InteractiveScale::getCoordsOnImagePlane(const SbVec3f& point)
 // ----------------------------------------------------------------------------
 
 TaskImageDialog::TaskImageDialog(Image::ImagePlane* obj)
+    : widget{new TaskImage(obj)}
 {
-    widget = new TaskImage(obj);
-    auto taskbox = new Gui::TaskView::TaskBox(
-        Gui::BitmapFactory().pixmap("image-plane"), widget->windowTitle(), true, nullptr);
-    taskbox->groupLayout()->addWidget(widget);
-    Content.push_back(taskbox);
+    addTaskBox(Gui::BitmapFactory().pixmap("image-plane"), widget);
+
+    auto doc = obj->getDocument();
+    setDocumentName(doc->getName());
+    setAutoCloseOnDeletedDocument(true);
 }
 
 void TaskImageDialog::open()

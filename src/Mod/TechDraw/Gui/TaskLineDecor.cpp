@@ -22,7 +22,6 @@
 
 #include "PreCompiled.h"
 #ifndef _PreComp_
-# include <cmath>
 #endif // #ifndef _PreComp_
 
 #include <Base/Console.h>
@@ -36,12 +35,15 @@
 #include <Mod/TechDraw/App/DrawViewPart.h>
 #include <Mod/TechDraw/App/CenterLine.h>
 #include <Mod/TechDraw/App/Geometry.h>
+#include <Mod/TechDraw/App/LineGenerator.h>
+
 
 #include "TaskLineDecor.h"
 #include "ui_TaskLineDecor.h"
 #include "ui_TaskRestoreLines.h"
 #include "QGIView.h"
 #include "ViewProviderViewPart.h"
+#include "DrawGuiUtil.h"
 
 
 using namespace Gui;
@@ -56,9 +58,11 @@ TaskLineDecor::TaskLineDecor(TechDraw::DrawViewPart* partFeat,
     m_apply(true)
 {
     initializeRejectArrays();
+    m_lineGenerator = new TechDraw::LineGenerator;
+
+    ui->setupUi(this);
 
     getDefaults();
-    ui->setupUi(this);
     initUi();
 
     connect(ui->cb_Style, qOverload<int>(&QComboBox::currentIndexChanged), this, &TaskLineDecor::onStyleChanged);
@@ -69,6 +73,7 @@ TaskLineDecor::TaskLineDecor(TechDraw::DrawViewPart* partFeat,
 
 TaskLineDecor::~TaskLineDecor()
 {
+    delete m_lineGenerator;
 }
 
 void TaskLineDecor::initUi()
@@ -87,11 +92,16 @@ void TaskLineDecor::initUi()
     }
     ui->le_Lines->setText(Base::Tools::fromStdString(temp));
 
-    ui->cb_Style->setCurrentIndex(m_style - 1);          //combobox does not have 0:NoLine choice
     ui->cc_Color->setColor(m_color.asValue<QColor>());
     ui->dsb_Weight->setValue(m_weight);
     ui->dsb_Weight->setSingleStep(0.1);
     ui->cb_Visible->setCurrentIndex(m_visible);
+
+    // line numbering starts at 1, not 0
+    DrawGuiUtil::loadLineStyleChoices(ui->cb_Style, m_lineGenerator);
+    if (ui->cb_Style->count() >= m_lineNumber ) {
+        ui->cb_Style->setCurrentIndex(m_lineNumber - 1);
+    }
 }
 
 TechDraw::LineFormat *TaskLineDecor::getFormatAccessPtr(const std::string &edgeName, std::string *newFormatTag)
@@ -133,7 +143,7 @@ TechDraw::LineFormat *TaskLineDecor::getFormatAccessPtr(const std::string &edgeN
             }
         }
     }
-    return nullptr;
+    return {};
 }
 
 void TaskLineDecor::initializeRejectArrays()
@@ -154,27 +164,29 @@ void TaskLineDecor::initializeRejectArrays()
     }
 }
 
+// get the current line tool appearance default
 void TaskLineDecor::getDefaults()
 {
 //    Base::Console().Message("TLD::getDefaults()\n");
-    m_style = LineFormat::getDefEdgeStyle();
-    m_color = LineFormat::getDefEdgeColor();
-    m_weight = LineFormat::getDefEdgeWidth();
-    m_visible = true;
+    m_color = LineFormat::getCurrentLineFormat().getColor();
+    m_weight = LineFormat::getCurrentLineFormat().getWidth();
+    m_visible = LineFormat::getCurrentLineFormat().getVisible();
+    m_lineNumber = LineFormat::getCurrentLineFormat().getLineNumber();
 
     //set defaults to format of 1st edge
     if (!m_originalFormats.empty()) {
         LineFormat &lf = m_originalFormats.front();
-        m_style = lf.m_style;
-        m_color = lf.m_color;
-        m_weight = lf.m_weight;
-        m_visible = lf.m_visible;
+        m_style = lf.getStyle();
+        m_color = lf.getColor();
+        m_weight = lf.getWidth();
+        m_visible = lf.getVisible();
+        m_lineNumber = lf.getLineNumber();
     }
 }
 
 void TaskLineDecor::onStyleChanged()
 {
-    m_style = ui->cb_Style->currentIndex() + 1;
+    m_lineNumber = ui->cb_Style->currentIndex() + 1;
     applyDecorations();
     m_partFeat->requestPaint();
 }
@@ -206,10 +218,11 @@ void TaskLineDecor::applyDecorations()
     for (auto& e: m_edges) {
         LineFormat *lf = getFormatAccessPtr(e);
         if (lf) {
-            lf->m_style = m_style;
-            lf->m_color = m_color;
-            lf->m_weight = m_weight;
-            lf->m_visible = m_visible;
+            lf->setStyle(m_style);
+            lf->setColor(m_color);
+            lf->setWidth(m_weight);
+            lf->setVisible(m_visible);
+            lf->setLineNumber(m_lineNumber);
         }
     }
 }
@@ -340,7 +353,7 @@ int TaskRestoreLines::countInvisibleGeoms()
     int iGeoms = 0;
     const std::vector<TechDraw::GeomFormat*> geoms = m_partFeat->GeomFormats.getValues();
     for (auto& g : geoms) {
-        if (!g->m_format.m_visible) {
+        if (!g->m_format.getVisible()) {
             iGeoms++;
         }
     }
@@ -352,7 +365,7 @@ int TaskRestoreLines::countInvisibleCosmetics()
     int iCosmos = 0;
     const std::vector<TechDraw::CosmeticEdge*> cosmos = m_partFeat->CosmeticEdges.getValues();
     for (auto& c : cosmos) {
-        if (!c->m_format.m_visible) {
+        if (!c->m_format.getVisible()) {
             iCosmos++;
         }
     }
@@ -364,7 +377,7 @@ int TaskRestoreLines::countInvisibleCenters()
     int iCenter = 0;
     const std::vector<TechDraw::CenterLine*> centers = m_partFeat->CenterLines.getValues();
     for (auto& c : centers) {
-        if (!c->m_format.m_visible) {
+        if (!c->m_format.getVisible()) {
             iCenter++;
         }
     }
@@ -382,8 +395,8 @@ void TaskRestoreLines::restoreInvisibleGeoms()
 {
     const std::vector<TechDraw::GeomFormat*> geoms = m_partFeat->GeomFormats.getValues();
     for (auto& g : geoms) {
-        if (!g->m_format.m_visible) {
-            g->m_format.m_visible = true;
+        if (!g->m_format.getVisible()) {
+            g->m_format.setVisible(true);
         }
     }
     m_partFeat->GeomFormats.setValues(geoms);
@@ -394,8 +407,8 @@ void TaskRestoreLines::restoreInvisibleCosmetics()
 {
     const std::vector<TechDraw::CosmeticEdge*> cosmos = m_partFeat->CosmeticEdges.getValues();
     for (auto& c : cosmos) {
-        if (!c->m_format.m_visible) {
-            c->m_format.m_visible = true;
+        if (!c->m_format.getVisible()) {
+            c->m_format.setVisible(true);
         }
     }
     m_partFeat->CosmeticEdges.setValues(cosmos);
@@ -406,8 +419,8 @@ void TaskRestoreLines::restoreInvisibleCenters()
 {
     const std::vector<TechDraw::CenterLine*> centers = m_partFeat->CenterLines.getValues();
     for (auto& c : centers) {
-        if (!c->m_format.m_visible) {
-            c->m_format.m_visible = true;
+        if (!c->m_format.getVisible()) {
+            c->m_format.setVisible(true);
         }
     }
     m_partFeat->CenterLines.setValues(centers);

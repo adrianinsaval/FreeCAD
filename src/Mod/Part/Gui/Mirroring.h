@@ -67,6 +67,7 @@ public:
 
 public:
     bool accept() override;
+    bool reject() override;
 
     QDialogButtonBox::StandardButtons getStandardButtons() const override
     { return QDialogButtonBox::Ok | QDialogButtonBox::Cancel; }
@@ -77,7 +78,6 @@ public:
 
 private:
     Mirroring* widget;
-    Gui::TaskView::TaskBox* taskbox;
 };
 
 } // namespace PartGui

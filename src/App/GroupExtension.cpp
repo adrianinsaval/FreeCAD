@@ -158,7 +158,7 @@ void GroupExtension::removeObjectsFromDocument()
 void GroupExtension::removeObjectFromDocument(DocumentObject* obj)
 {
     // check that object is not invalid
-    if (!obj || !obj->getNameInDocument())
+    if (!obj || !obj->isAttachedToDocument())
         return;
 
     // remove all children
@@ -351,7 +351,7 @@ void GroupExtension::extensionOnChanged(const Property* p) {
     if(p == &Group) {
         _Conns.clear();
         for(auto obj : Group.getValue()) {
-            if(obj && obj->getNameInDocument()) {
+            if(obj && obj->isAttachedToDocument()) {
                 //NOLINTBEGIN
                 _Conns[obj] = obj->signalChanged.connect(std::bind(
                             &GroupExtension::slotChildChanged,this,sp::_1, sp::_2));
@@ -381,7 +381,7 @@ bool GroupExtension::extensionGetSubObject(DocumentObject *&ret, const char *sub
     if(!dot)
         return false;
     if(subname[0]!='$')
-        ret = Group.find(std::string(subname,dot));
+        ret = Group.findUsingMap(std::string(subname,dot));
     else{
         std::string name = std::string(subname+1,dot);
         for(auto child : Group.getValues()) {
@@ -398,7 +398,7 @@ bool GroupExtension::extensionGetSubObject(DocumentObject *&ret, const char *sub
 
 bool GroupExtension::extensionGetSubObjects(std::vector<std::string> &ret, int) const {
     for(auto obj : Group.getValues()) {
-        if(obj && obj->getNameInDocument())
+        if(obj && obj->isAttachedToDocument())
             ret.push_back(std::string(obj->getNameInDocument())+'.');
     }
     return true;
@@ -421,7 +421,7 @@ void GroupExtension::getAllChildren(std::vector<App::DocumentObject*> &res,
         std::set<App::DocumentObject*> &rset) const
 {
     for(auto obj : Group.getValues()) {
-        if(!obj || !obj->getNameInDocument())
+        if(!obj || !obj->isAttachedToDocument())
             continue;
         if(!rset.insert(obj).second)
             continue;
