@@ -98,6 +98,7 @@ jobs:
         # MacOS_13_Conda_Intel,
         Ubuntu_20-04,
         Ubuntu_22-04_Conda,
+        Ubuntu_22-04_Conda_Qt6,
         Windows,
         # Windows_Conda,
         Lint
