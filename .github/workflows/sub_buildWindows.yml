@@ -77,13 +77,25 @@ jobs:
           mkdir ${{ env.reportdir }}
           echo "reportFile=${{ env.reportfilename }}" >> $GITHUB_OUTPUT
       - name: Get Ccache
-        uses: ./.github/workflows/actions/windows/getCcache
-        with:
-          ccachebindir: ${{ env.ccachebindir }}
+        shell: bash
+        env:
+          ccachedownloadurl: https://github.com/ccache/ccache/releases/download/v4.10.2/ccache-4.10.2-windows-x86_64.zip
+        run: |
+          curl -L -o ccache.zip "${ccachedownloadurl}"
+          7z x ccache.zip -o"ccachetemp" -r -y
+          cp -a ccachetemp/ccache*/ccache.exe ${{ env.ccachebindir }}
+          cp -a ccachetemp/ccache*/ccache.exe ${{ env.ccachebindir }}/cl.exe
+          rm ccache.zip
+          rm -rf ccachetemp
       - name: Get Libpack
-        uses: ./.github/workflows/actions/windows/getLibpack
-        with:
-          libpackdir: ${{ env.libpackdir }}
+        shell: bash
+        env:
+          libpackdownloadurl: https://github.com/FreeCAD/FreeCAD-LibPack/releases/download/3.0.0RC4/LibPack-1.0.0-v3.0.0RC4-Release.7z
+        run: |
+          curl -L -o libpack.7z ${{ env.libpackdownloadurl }}
+          7z x libpack.7z -o"libpacktemp" -r -y
+          mv libpacktemp/LibPack*/* ${{ env.libpackdir }}
+          rm -rf libpacktemp
       - name: Restore compiler cache
         uses: actions/cache@v4
         with:
