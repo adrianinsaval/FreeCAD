@@ -32,6 +32,7 @@ class QTimer;
 
 #include <Mod/Assembly/AssemblyGlobal.h>
 
+#include <App/Document.h>
 #include <App/FeaturePython.h>
 #include <App/Part.h>
 #include <App/PropertyLinks.h>
