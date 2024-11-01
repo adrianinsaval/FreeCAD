@@ -1,6 +1,6 @@
 macro(SetupBoost)
 # -------------------------------- Boost --------------------------------
-
+    cmake_policy(SET CMP0167 NEW) # use 
     set(_boost_TEST_VERSIONS ${Boost_ADDITIONAL_VERSIONS})
 
     set (BOOST_COMPONENTS filesystem program_options regex system thread date_time)
