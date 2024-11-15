@@ -3017,21 +3017,22 @@ void Application::LoadParameters()
     }
 
     try {
-        // Load parameter template 
-        std::map<std::string, std::string>::iterator it = mConfig.find("UserParameterTemplate"); 
-        if (it != mConfig.end()) { 
-            QString path = QString::fromUtf8(it->second.c_str()); 
-            if (QDir(path).isRelative()) { 
-                QString home = QString::fromUtf8(mConfig["AppHomePath"].c_str()); 
-                path = QFileInfo(QDir(home), path).absoluteFilePath(); 
-            } 
-            QFileInfo fi(path); 
-            if (fi.exists()) { 
-                _pcUserParamMngr->LoadDocument(path.toUtf8().constData()); 
-            } 
+        // Load parameter template
+        std::map<std::string, std::string>::iterator it = mConfig.find("UserParameterTemplate");
+        if (it != mConfig.end()) {
+            QString path = QString::fromUtf8(it->second.c_str());
+            if (QDir(path).isRelative()) {
+                QString home = QString::fromUtf8(mConfig["AppHomePath"].c_str());
+                path = QFileInfo(QDir(home), path).absoluteFilePath();
+            }
+            QFileInfo fi(path);
+            if (fi.exists()) {
+                _pcUserParamMngr->LoadDocument(path.toUtf8().constData());
+            }
         }
-        if (UserParamMngr->LoadOrCreateDocument() && !(mConfig["Verbose"] == "Strict")) { 
+        if (_pcUserParamMngr->LoadOrCreateDocument() && !(mConfig["Verbose"] == "Strict")) {
             // Configuration file optional when using as Python module
+            _pcUserParamMngr->LoadDocument(path.toUtf8().constData());
             if (!Py_IsInitialized()) {
                 Base::Console().Warning("   User settings do not exist, writing initial one\n");
                 Base::Console().Message("   This warning normally means that FreeCAD is running for the first time\n"
