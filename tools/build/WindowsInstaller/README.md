@@ -1,7 +1,6 @@
 # Creating a Windows installer for FreeCAD
 
-These are instructions for building an NSIS-based installer for FreeCAD. They were designed for FreeCAD 0.21 and later,
-and presume that you have cloned a copy of FreeCAD's source code, and therefore have the directory *src/WindowsInstaller*.
+These are instructions for building an NSIS-based installer for FreeCAD. They were designed for FreeCAD 0.21 and later
 
 ## Install NSIS
 To set up your system for building an NSIS installer:
@@ -15,8 +14,8 @@ To set up your system for building an NSIS installer:
 4. Download and install the nsProcess plugin from https://nsis.sourceforge.io/NsProcess_plugin -- you will need the version that supports Unicode, so make sure to follow the appropriate instructions on their site to install that one (as of this writing it involves manually copying and renaming the plugin DLL file).
 
 ## Build the installer
-Next, update the installer settings for the current version of FreeCAD. Starting from the *src/WindowsInstaller* folder in the FreeCAD source tree:
-1. Set the appropriate version strings for the release you are creating. These are used to construct the filename of the installer, among other things. If you have to upload a new version of the installer for the exact same release of FreeCAD, increment `APP_VERSION BUILD` as needed.
+Next, update the installer settings for the current version of FreeCAD. Starting from the *WindowsInstaller* folder:
+1. In*Settings.nsh* set the appropriate version strings for the release you are creating. These are used to construct the filename of the installer, among other things. If you have to upload a new version of the installer for the exact same release of FreeCAD, increment `APP_VERSION BUILD` as needed.
 ```
 !define APP_VERSION_MAJOR 0
 !define APP_VERSION_MINOR 21
@@ -24,7 +23,7 @@ Next, update the installer settings for the current version of FreeCAD. Starting
 !define APP_VERSION_EMERGENCY "RC1"
 !define APP_VERSION_BUILD 1
 ```
-2. Within the folder *src/WindowsInstaller*, create a new folder called MSVCRedist and copy the following files from your MSVC installation into it:
+2. If the installer will be made from a LibPack build create a new folder called MSVCRedist within the folder *WindowsInstaller* and copy the following files from your MSVC installation into it:
 ```
 vcruntime140.dll
 concrt140.dll
@@ -33,10 +32,10 @@ vcamp140.dll
 vccorlib140.dll
 vcomp140.dll
 ```    
-3. Open the file *Settings.nsh* with a text editor (both jEdit and Visual Studio Code are good editors for NSIS files). Edit the following paths to correspond to your system: `FILES_FREECAD` corresponds to your installation directory (e.g. `CMAKE_INSTALL_PREFIX` if you self-compiled) and `FILES_DEPS` is the folder you created with the MSVC redistributable files in it.
+3. Open the file *Settings.nsh* with a text editor (both jEdit and Visual Studio Code are good editors for NSIS files). Edit the following paths to correspond to your system: `FILES_FREECAD` corresponds to your installation directory (e.g. `CMAKE_INSTALL_PREFIX` if you self-compiled), FILES_THUMBS is the directory where the thumbnailer dll is located and `FILES_DEPS` is the folder you created with the MSVC redistributable files in it.
 ```
-!define FILES_FREECAD "C:\FreeCAD\Installer\FreeCAD"
-!define FILES_DEPS "C:\FreeCAD\Installer\MSVCRedist"
+!define FILES_FREECAD "${__FILEDIR__}\..\Ondsel_ES"
+!define FILES_THUMBS "${__FILEDIR__}\thumbnail"
 ```
 4. Ensure the FreeCAD files are in place. Here you have two options:
    * If you are working from an already-compiled version of FreeCAD provided to you by an outside source: in this case, simply ensure that `FILES_FREECAD` is set to the directory containing those files.

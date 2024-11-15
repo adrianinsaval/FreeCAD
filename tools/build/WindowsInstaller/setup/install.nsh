@@ -1,4 +1,4 @@
-﻿/*
+/*
 
 install.nsh
 
@@ -15,7 +15,7 @@ Section -ProgramFiles SecProgramFiles
   # be installed directly to C:\programs - the uninstaller will then delete the whole
   # C:\programs directory
   StrCpy $String $INSTDIR
-  StrCpy $Search ${APP_NAME}
+  StrCpy $Search "Ondsel"
   Call StrPoint # function from Utils.nsh
   ${if} $Pointer == "-1"
    StrCpy $INSTDIR "$INSTDIR\${APP_DIR}"
@@ -38,24 +38,24 @@ Section -ProgramFiles SecProgramFiles
   File /r "${FILES_FREECAD}\bin\*.*"
   
   # MSVC redistributable DLLs
-  SetOutPath "$INSTDIR\bin"
-  File "${FILES_DEPS}\*.*"
+  #${if} $FILES_DEPS != ""
+  #  SetOutPath "$INSTDIR\bin"
+  #  File "${FILES_DEPS}\*.*"
+  #${endif}
   
   # Others
   SetOutPath "$INSTDIR\data"
   File /r "${FILES_FREECAD}\data\*.*"
-  SetOutPath "$INSTDIR\doc"
-  File /r "${FILES_FREECAD}\doc\*.*"
   SetOutPath "$INSTDIR\Ext"
   File /r "${FILES_FREECAD}\Ext\*.*"
   SetOutPath "$INSTDIR\lib"
   File /r "${FILES_FREECAD}\lib\*.*"
   SetOutPath "$INSTDIR\Mod"
   File /r "${FILES_FREECAD}\Mod\*.*"
-  SetOutPath "$INSTDIR\resources"
-  File /r "${FILES_FREECAD}\resources\*.*"
   SetOutPath "$INSTDIR\translations"
   File /r "${FILES_FREECAD}\translations\*.*"
+  SetOutPath "$INSTDIR\share"
+  File /r "${FILES_FREECAD}\share\*.*"
   SetOutPath "$INSTDIR"
   File /r "${FILES_THUMBS}"
     

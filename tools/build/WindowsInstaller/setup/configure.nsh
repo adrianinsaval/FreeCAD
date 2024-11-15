@@ -45,9 +45,9 @@ Section -InstallData
   WriteRegStr SHCTX ${APP_UNINST_KEY} "DisplayVersion" "${APP_VERSION}"
   WriteRegStr SHCTX ${APP_UNINST_KEY} "DisplayIcon" "$INSTDIR\${APP_RUN}"
   WriteRegStr SHCTX ${APP_UNINST_KEY} "URLUpdateInfo" "${APP_WEBPAGE}"
-  WriteRegStr SHCTX ${APP_UNINST_KEY} "URLInfoAbout" "https://www.freecad.org/"
-  WriteRegStr SHCTX ${APP_UNINST_KEY} "Publisher" "${APP_NAME} Team"
-  WriteRegStr SHCTX ${APP_UNINST_KEY} "HelpLink" "https://forum.freecad.org/"
+  WriteRegStr SHCTX ${APP_UNINST_KEY} "URLInfoAbout" "https://www.ondsel.com/"
+  WriteRegStr SHCTX ${APP_UNINST_KEY} "Publisher" "Ondsel Inc."
+  WriteRegStr SHCTX ${APP_UNINST_KEY} "HelpLink" "https://discord.com/invite/7jmzezyyfP"
   WriteRegDWORD SHCTX ${APP_UNINST_KEY} "NoModify" 0x00000001
   WriteRegDWORD SHCTX ${APP_UNINST_KEY} "NoRepair" 0x00000001
   WriteRegStr SHCTX ${APP_UNINST_KEY} "StartMenu" "$SMPROGRAMS\$StartmenuFolder"
@@ -75,7 +75,7 @@ Section -Configure
 
   ${if} $CreateFileAssociations == "true"
    WriteRegStr SHCTX "${APP_DIR_REGKEY}" "" "$INSTDIR\${APP_RUN}"
-   WriteRegStr SHCTX "Software\Classes\${APP_REGNAME_DOC}" "" "${APP_NAME} Document"
+   WriteRegStr SHCTX "Software\Classes\${APP_REGNAME_DOC}" "" "FreeCAD Document"
    WriteRegStr SHCTX "Software\Classes\${APP_REGNAME_DOC}\DefaultIcon" "" "$INSTDIR\${APP_RUN},0"
    WriteRegStr SHCTX "Software\Classes\${APP_REGNAME_DOC}\Shell\open\command" "" '"$INSTDIR\${APP_RUN}" --single-instance "%1"'
    # we need to update also the automatically created entry about the FreeCAD.exe

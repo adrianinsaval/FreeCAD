@@ -13,7 +13,7 @@ Function InitUser
 
   # Get FreeCAD language
   
-  ReadRegStr $FCLangName SHELL_CONTEXT "${APP_REGKEY_SETUP}" "FreeCAD Language"
+  ReadRegStr $FCLangName SHELL_CONTEXT "${APP_REGKEY_SETUP}" "Ondsel ES Language"
   
   ${If} $FCLangName != ""
     StrCpy $LangName $FCLangName
