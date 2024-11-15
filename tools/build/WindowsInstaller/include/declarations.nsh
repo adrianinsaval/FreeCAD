@@ -60,7 +60,7 @@ Configuration and variables of FreeCAD installer
 
 !define SETUP_ICON "icons\FreeCAD.ico"
 !define SETUP_HEADERIMAGE "graphics\header.bmp"
-!define SETUP_WIZARDIMAGE "graphics\orange.bmp"
+!define SETUP_WIZARDIMAGE "graphics\banner.bmp"
 !define SETUP_UNINSTALLER "Uninstall-${APP_NAME}.exe"
 !define SETUP_UNINSTALLER_KEY "${APP_NAME}${APP_SERIES_KEY}"
 

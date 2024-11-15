@@ -1,7 +1,7 @@
 # Creating a Windows installer for FreeCAD
 
 These are instructions for building an NSIS-based installer for FreeCAD. They were designed for FreeCAD 0.21 and later,
-and presume that you have cloned a copy of FreeCAD's source code, and therefore have the directory *src/WindowsInstaller*.
+and presume that you have cloned a copy of FreeCAD's source code, and therefore have the directory *src/tools/build/WindowsInstaller*.
 
 ## Install NSIS
 To set up your system for building an NSIS installer:
@@ -15,7 +15,7 @@ To set up your system for building an NSIS installer:
 4. Download and install the nsProcess plugin from https://nsis.sourceforge.io/NsProcess_plugin -- you will need the version that supports Unicode, so make sure to follow the appropriate instructions on their site to install that one (as of this writing it involves manually copying and renaming the plugin DLL file).
 
 ## Build the installer
-Next, update the installer settings for the current version of FreeCAD. Starting from the *src/WindowsInstaller* folder in the FreeCAD source tree:
+Next, update the installer settings for the current version of FreeCAD. Starting from the *src/tools/build/WindowsInstaller* folder in the FreeCAD source tree:
 1. Set the appropriate version strings for the release you are creating. These are used to construct the filename of the installer, among other things. If you have to upload a new version of the installer for the exact same release of FreeCAD, increment `APP_VERSION BUILD` as needed.
 ```
 !define APP_VERSION_MAJOR 0
@@ -24,7 +24,7 @@ Next, update the installer settings for the current version of FreeCAD. Starting
 !define APP_VERSION_EMERGENCY "RC1"
 !define APP_VERSION_BUILD 1
 ```
-2. Within the folder *src/WindowsInstaller*, create a new folder called MSVCRedist and copy the following files from your MSVC installation into it:
+2. Within the folder *src/tools/build/WindowsInstaller*, create a new folder called MSVCRedist and copy the following files from your MSVC installation into it:
 ```
 vcruntime140.dll
 concrt140.dll
