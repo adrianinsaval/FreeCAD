@@ -8,6 +8,7 @@ Installation of program files, dictionaries and external components
 
 #--------------------------------
 # Program files
+!include LogicLib.nsh
 
 Section -ProgramFiles SecProgramFiles
 
@@ -38,10 +39,10 @@ Section -ProgramFiles SecProgramFiles
   File /r "${FILES_FREECAD}\bin\*.*"
   
   # MSVC redistributable DLLs
-  ${If} ${Defined} FILES_DEPS
-    SetOutPath "$INSTDIR\bin"
-    File "${FILES_DEPS}\*.*"
-  ${EndIf}
+  #${if} $FILES_DEPS != ""
+  #  SetOutPath "$INSTDIR\bin"
+  #  File "${FILES_DEPS}\*.*"
+  #${endif}
   
   # Others
   SetOutPath "$INSTDIR\data"
@@ -54,8 +55,6 @@ Section -ProgramFiles SecProgramFiles
   File /r "${FILES_FREECAD}\lib\*.*"
   SetOutPath "$INSTDIR\Mod"
   File /r "${FILES_FREECAD}\Mod\*.*"
-  SetOutPath "$INSTDIR\resources"
-  File /r "${FILES_FREECAD}\resources\*.*"
   SetOutPath "$INSTDIR\translations"
   File /r "${FILES_FREECAD}\translations\*.*"
   SetOutPath "$INSTDIR"
