@@ -102,6 +102,7 @@ jobs:
         run: >
           cmake -B"${{ env.builddir }}" .
           --preset release
+          -CMAKE_VS_GLOBALS="CLToolExe=ccashe.exe CLToolPath=${{ env.ccachebindir }} TrackFileAccess=false UseMultiToolTask=true DebugInformationFormat=OldStyle"
           -DCMAKE_VS_NO_COMPILE_BATCHING=ON
           -DCMAKE_BUILD_TYPE=Release
           -DFREECAD_USE_PCH=OFF
@@ -115,7 +116,7 @@ jobs:
       - name: Compiling sources
         run: |
           cd $env:builddir
-          msbuild ALL_BUILD.vcxproj /m /p:Configuration=Release /p:TrackFileAccess=false /p:CLToolPath=${{ env.ccachebindir }}
+          cmake --build ${{ env.builddir }} --config=Release
       - name: Print Ccache statistics after build
         run: |
           . $env:ccachebindir\ccache -s
