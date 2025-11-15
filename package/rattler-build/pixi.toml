@@ -50,7 +50,7 @@ sed = "*"
 ## Windows dependencies (x86-64)
 [feature.package.target.win-64.dependencies]
 git = "*"
-nsis = { version = "*", build = "*_log*" }
+nsis = { path = "./windows/nsis-largestring-advancedlogging" }
 7zip = "*"
 vs2022_win-64 = "*"
 
