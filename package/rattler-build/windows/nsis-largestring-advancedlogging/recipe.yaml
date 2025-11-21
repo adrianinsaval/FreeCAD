@@ -1,7 +1,7 @@
 # SPDX-license-identifier: CC0-1.0
 
 package:
-  name: nsis-largestring-advancedlogging
+  name: nsis
   version: "3.11.0"
 
 build:
@@ -27,12 +27,7 @@ requirements:
       then:
         - python
         - scons
-        - vs2022_win-64
-
-  run:
-    - if: win
-      then:
-        - vs2022_win-64
+        - compilers
 
 about:
   homepage: https://nsis.sourceforge.io/Main_Page
