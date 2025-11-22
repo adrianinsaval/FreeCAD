@@ -9,6 +9,7 @@ echo PREFIX=%PREFIX%
 
 set "NSIS_SRC=%SRC_DIR%\nsis-src"
 set "ZLIB_STAGE=%SRC_DIR%\zlib-w32"
+set "CPPUNIT_MSVC=%SRC_DIR%\cppunit-msvc"
 
 if not exist "%NSIS_SRC%\SConstruct" (
     echo "ERROR: Could not find NSIS source at '%NSIS_SRC%' (SConstruct missing)."
@@ -32,8 +33,13 @@ echo    ZLIB_W32=%ZLIB_W32%
 echo    Install prefix: %NSIS_INSTALL_PREFIX%
 
 scons NSIS_MAX_STRLEN=8192 NSIS_CONFIG_LOG=yes ^
-    "PREFIX=%NSIS_INSTALL_PREFIX%" ^
-    install-compiler install-stubs
+    PREFIX="%NSIS_INSTALL_PREFIX%" ^
+    ZLIB_W32="%ZLIB_STAGE%" ^
+    SKIPUTILS="NSIS Menu" ^
+    APPEND_CPPPATH="%CPPUNIT_MSVC%/include" ^
+    APPEND_LIBPATH="%CPPUNIT_MSVC%/lib/release-win32" ^
+    DOCTYPES=none ^
+    install
 
 if errorlevel 1 (
     echo "ERROR: NSIS build failed."

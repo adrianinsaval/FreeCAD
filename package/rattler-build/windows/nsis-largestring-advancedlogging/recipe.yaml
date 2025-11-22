@@ -20,6 +20,9 @@ source:
 
   - path: third_party/NsProcess.zip
     target_directory: nsprocess-src
+  
+  - path: third_party/cppunit-msvc-1.12.1.zip
+    target_directory: cppunit-msvc
 
 requirements:
   build:
