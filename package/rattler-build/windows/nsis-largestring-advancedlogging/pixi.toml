@@ -5,13 +5,14 @@ name = "nsis-largestring-advancedlogging"
 version = "3.11.0"
 channels = ["conda-forge"]
 platforms = ["win-64"]
+preview = ["pixi-build"]
 
-[dependencies]
-python = "*"
-scons = "*"
-cmake = "*"
-vs2022_win-64 = "*"
-rattler-build = "*"
+[package]
+name = "nsis"
+version = "3.11"
+homepage = "https://nsis.sourceforge.io/Main_Page"
+repository = "https://github.com/NSIS-dev/nsis"
+description = "NSIS with advanced loggin and large strings enabled"
 
-[tasks.build]
-cmd = "rattler-build build"
+[package.build]
+backend = { name = "pixi-build-rattler-build", version = "*" }
