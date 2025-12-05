@@ -181,6 +181,7 @@ jobs:
           totp_secret: ${{ secrets.ES_TOTP_SECRET }}
           dir_path: ${GITHUB_WORKSPACE}/package/rattler-build/windows/.bin_to_sign
           output_path: ${GITHUB_WORKSPACE}/package/rattler-build/windows/.bin_signed
+          environment_name: TEST
 
       - name: Build bundles
         id: bundle
@@ -212,6 +213,7 @@ jobs:
           totp_secret: ${{ secrets.ES_TOTP_SECRET }}
           file_path: ${{ steps.bundle.outputs.installer_path }}
           override: true
+          environment_name: TEST
 
       - name: Upload bundles
         shell: bash
