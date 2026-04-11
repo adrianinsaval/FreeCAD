@@ -1,5 +1,5 @@
 context:
-  version: "1.1.0dev"
+  version: "1.2.0dev"
 
 package:
   name: freecad
@@ -16,83 +16,55 @@ requirements:
   build:
     - ccache
     - cmake
-    - compilers>=1.10,<1.11
+    - compilers>=1.11,<1.12
     - doxygen
     - ninja
     - noqt5
-    - python>=3.11,<3.12
-    - qt6-main>=6.8,<6.9
-    - swig>=4.3,<4.4
+    - python>=3.13,<3.14
+    - qt6-main>=6.10,<6.11
+    - swig>=4.4,<4.5
 
-    - if: linux and x86_64
+    - if: linux
       then:
         - clang
         - clangxx
-        - kernel-headers_linux-64
-        - libdrm-cos7-x86_64
-        - libselinux-cos7-x86_64
-        - libsepol-cos7-x86_64
-        - libspnav
-        - libx11-common-cos7-x86_64
-        - libx11-cos7-x86_64
-        - libxau-cos7-x86_64
-        - libxcb-cos7-x86_64
-        - libxdamage-cos7-x86_64
-        - libxext-cos7-x86_64
-        - libxfixes-cos7-x86_64
-        - libxi-cos7-x86_64
-        - libxi-devel-cos7-x86_64
-        - libxxf86vm-cos7-x86_64
-        - mesa-dri-drivers-cos7-x86_64
-        - mesa-libegl-cos7-x86_64
-        - mesa-libegl-devel-cos7-x86_64
-        - mesa-libgl-cos7-x86_64
-        - mesa-libgl-devel-cos7-x86_64
-        - mold
-        - pixman-cos7-x86_64
-        - sed
-        - sysroot_linux-64
-        - xcb-util-cursor==0.1.5  ## hack to address https://github.com/FreeCAD/FreeCAD/issues/26726
-        - xorg-x11-server-common-cos7-x86_64
-        - xorg-x11-server-xvfb-cos7-x86_64
+        - libgl-devel
+        - libegl-devel
+        - dbus
+        - fontconfig
+        - libxml2-devel
+        - libxkbcommon
+        - libxcb
+        - libdrm
+        - libcups
+        - alsa-lib
+        - wayland
+        - xcb-util
+        - xcb-util-wm
+        - xcb-util-keysyms
+        - xcb-util-image
+        - xcb-util-renderutil
+        - xcb-util-cursor
+        - xorg-libx11
+        - xorg-libxau
+        - xorg-libxext
+        - xorg-libxfixes
+        - xorg-libxdamage
+        - xorg-libxi
+        - xorg-libxrandr
+        - xorg-libxcomposite
+        - xorg-libxcursor
+        - xorg-libsm
+        - xorg-libice
+        - xorg-libxxf86vm
+        - xorg-libxtst
+        - xorg-xorgproto
         - xorg-xproto
-
-    - if: linux and aarch64
-      then:
-        - clang
-        - clangxx
-        - kernel-headers_linux-aarch64
-        - libdrm-cos7-aarch64
-        - libselinux-cos7-aarch64
-        - libsepol-cos7-aarch64
         - libspnav
-        - libx11-common-cos7-aarch64
-        - libx11-cos7-aarch64
-        - libxau-cos7-aarch64
-        - libxcb-cos7-aarch64
-        - libxdamage-cos7-aarch64
-        - libxext-cos7-aarch64
-        - libxfixes-cos7-aarch64
-        - libxi-cos7-aarch64
-        - libxi-devel-cos7-aarch64
-        - libxxf86vm-cos7-aarch64
-        - mesa-dri-drivers-cos7-aarch64
-        - mesa-libegl-cos7-aarch64
-        - mesa-libegl-devel-cos7-aarch64
-        - mesa-libgl-cos7-aarch64
-        - mesa-libgl-devel-cos7-aarch64
+        - llvm-openmp
         - mold
-        - pixman-cos7-aarch64
+        - qt6-wayland
         - sed
-        - sysroot_linux-aarch64
-        - xcb-util-cursor==0.1.5  ## hack to address https://github.com/FreeCAD/FreeCAD/issues/26726
-        - xorg-x11-server-common-cos7-aarch64
-        - xorg-x11-server-xvfb-cos7-aarch64
-        - xorg-xproto
-
-    - if: osx and x86_64
-      then:
-        - __osx >=10.13
 
     - if: build_platform != target_platform
       then:
@@ -100,7 +72,7 @@ requirements:
 
   host:
     - coin3d
-    - eigen >=3.3,<5
+    - eigen >=3.4,<5
     - fmt
     - freetype
     - hdf5
@@ -108,16 +80,15 @@ requirements:
     - libboost-devel
     - matplotlib-base
     - noqt5
-    - numpy>=1.26,<2
-    - occt>=7.8,<7.9
+    - numpy>=2.3,<2.4
+    - occt>=7.9,<8.0
     - pcl
     - pivy
     - ply
     - pybind11
     - pyside6
-    - python>=3.11,<3.12
-    - qt6-main>=6.8,<6.9
-    - six
+    - python>=3.13,<3.14
+    - qt6-main>=6.10,<6.11
     - smesh
     - vtk
     - xerces-c
@@ -153,8 +124,8 @@ requirements:
     - matplotlib-base
     - nine
     - noqt5
-    - numpy>=1.26,<2
-    - occt>=7.8,<7.9
+    - numpy>=2.3,<2.4
+    - occt>=7.9,<8.0
     - olefile
     - opencamlib
     - opencv
@@ -164,10 +135,10 @@ requirements:
     - ply
     - pycollada
     - pyside6
-    - python>=3.11,<3.12
+    - python>=3.13,<3.14
     - pythonocc-core
     - pyyaml
-    - qt6-main>=6.8,<6.9
+    - qt6-main>=6.10,<6.11
     - requests
     - scipy
     - sympy
@@ -179,4 +150,3 @@ requirements:
       then:
         - libspnav
         - qt6-wayland
-        - xcb-util-cursor==0.1.5  ## hack to address https://github.com/FreeCAD/FreeCAD/issues/26726
