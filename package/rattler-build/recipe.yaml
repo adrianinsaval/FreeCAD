@@ -23,6 +23,7 @@ requirements:
     - python>=3.13,<3.14
     - qt6-main>=6.10,<6.11
     - swig>=4.4,<4.5
+    - libvulkan-headers
 
     - if: linux
       then:
@@ -79,6 +80,7 @@ requirements:
     - lark
     - libboost-devel
     - matplotlib-base
+    - netgen
     - noqt5
     - numpy>=2.3,<2.4
     - occt>=7.9,<8.0
@@ -122,6 +124,7 @@ requirements:
     - lark
     - lxml
     - matplotlib-base
+    - netgen
     - nine
     - noqt5
     - numpy>=2.3,<2.4
