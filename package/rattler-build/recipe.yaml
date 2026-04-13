@@ -26,6 +26,7 @@ requirements:
     - compilers>=1.10,<1.11
     - doxygen
     - gtest
+    - netgen
     - ninja
     - noqt5
     - python>=3.13,<3.14
@@ -155,6 +156,7 @@ requirements:
     - lark
     - lxml
     - matplotlib-base
+    - netgen
     - nine
     - noqt5
     - numpy
