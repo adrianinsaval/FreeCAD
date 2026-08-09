@@ -448,35 +448,30 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/kernel-headers_linux-64-3.10.0-he073ed8_18.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/lark-1.3.1-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/libdrm-conda-x86_64-2.4.97-h4616a5c_1111.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libdrm-cos7-x86_64-2.4.97-ha675448_1106.tar.bz2
       - conda: https://conda.anaconda.org/conda-forge/noarch/libgcc-devel_linux-64-14.4.0-hd9a9cd0_101.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/libglvnd-conda-x86_64-1.0.1-h4616a5c_1111.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libglvnd-cos7-x86_64-1.0.1-ha675448_1106.tar.bz2
       - conda: https://conda.anaconda.org/conda-forge/noarch/libglvnd-glx-conda-x86_64-1.0.1-h4616a5c_1111.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libglvnd-glx-cos7-x86_64-1.0.1-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libselinux-cos7-x86_64-2.5-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libsepol-cos7-x86_64-2.5-ha675448_1106.tar.bz2
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libselinux-conda-x86_64-2.5-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libsepol-conda-x86_64-2.5-h4616a5c_1111.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/libstdcxx-devel_linux-64-14.4.0-ha5b54cb_101.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libx11-common-cos7-x86_64-1.6.7-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libx11-cos7-x86_64-1.6.7-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libxau-cos7-x86_64-1.0.8-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libxcb-cos7-x86_64-1.13-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libxdamage-cos7-x86_64-1.1.4-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libxext-cos7-x86_64-1.3.3-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libxfixes-cos7-x86_64-5.0.3-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libxi-cos7-x86_64-1.7.9-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libxi-devel-cos7-x86_64-1.7.9-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libxxf86vm-cos7-x86_64-1.1.4-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-dri-drivers-cos7-x86_64-18.3.4-ha675448_1106.tar.bz2
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libx11-common-conda-x86_64-1.6.7-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libx11-conda-x86_64-1.6.7-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libxau-conda-x86_64-1.0.8-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libxcb-conda-x86_64-1.13-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libxdamage-conda-x86_64-1.1.4-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libxext-conda-x86_64-1.3.3-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libxfixes-conda-x86_64-5.0.3-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libxi-conda-x86_64-1.7.9-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libxi-devel-conda-x86_64-1.7.9-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libxxf86vm-conda-x86_64-1.1.4-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-dri-drivers-conda-x86_64-18.3.4-h4616a5c_1111.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-khr-devel-conda-x86_64-18.3.4-h4616a5c_1111.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-khr-devel-cos7-x86_64-18.3.4-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libegl-cos7-x86_64-18.3.4-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libegl-devel-cos7-x86_64-18.3.4-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgbm-cos7-x86_64-18.3.4-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgl-cos7-x86_64-18.3.4-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgl-devel-cos7-x86_64-18.3.4-ha675448_1106.tar.bz2
+      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libegl-conda-x86_64-18.3.4-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libegl-devel-conda-x86_64-18.3.4-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgbm-conda-x86_64-18.3.4-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgl-conda-x86_64-18.3.4-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgl-devel-conda-x86_64-18.3.4-h4616a5c_1111.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libglapi-conda-x86_64-18.3.4-h4616a5c_1111.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libglapi-cos7-x86_64-18.3.4-ha675448_1106.tar.bz2
       - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libglu-conda-x86_64-9.0.0-h4616a5c_1111.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libglu-devel-conda-x86_64-9.0.0-h4616a5c_1111.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/mpmath-1.4.1-pyhd8ed1ab_0.conda
@@ -487,7 +482,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/noqt5-1.0-hd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/packaging-26.3-pyhc364b38_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/pip-26.2.1-pyh145f28c_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/pixman-cos7-x86_64-0.34.0-ha675448_1106.tar.bz2
+      - conda: https://conda.anaconda.org/conda-forge/noarch/pixman-conda-x86_64-0.34.0-h4616a5c_1111.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/platformdirs-4.11.1-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/pluggy-1.6.0-pyhf9edf01_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/ply-3.11-pyhd8ed1ab_3.conda
@@ -530,8 +525,8 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/xlrd-2.0.2-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/xlutils-2.0.0-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/xlwt-1.3.0-py_1.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/xorg-x11-server-common-cos7-x86_64-1.20.4-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/xorg-x11-server-xvfb-cos7-x86_64-1.20.4-ha675448_1106.tar.bz2
+      - conda: https://conda.anaconda.org/conda-forge/noarch/xorg-x11-server-common-conda-x86_64-1.20.4-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/xorg-x11-server-xvfb-conda-x86_64-1.20.4-h4616a5c_1111.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/zipp-4.1.0-pyhcf101f3_0.conda
       - pypi: https://files.pythonhosted.org/packages/69/76/37c0ccd5ab968a6a438f9c623aeecc84c202ab2fabc6a8fd927580c15b5a/QtPy-2.4.3-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/99/bc/cdfb911f753b4b4f8e400d66d805e5718e32632837507b574a573b3efa24/freecad_stubs-1.0.21-py3-none-any.whl
@@ -939,31 +934,31 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/jsonpointer-3.1.1-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/kernel-headers_linux-aarch64-4.18.0-h05a177a_18.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/lark-1.3.1-pyhd8ed1ab_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libdrm-cos7-aarch64-2.4.97-ha675448_1106.tar.bz2
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libdrm-conda-aarch64-2.4.97-h4616a5c_1111.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/libgcc-devel_linux-aarch64-14.4.0-ha8b83fe_101.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libglvnd-cos7-aarch64-1.0.1-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libglvnd-glx-cos7-aarch64-1.0.1-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libselinux-cos7-aarch64-2.5-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libsepol-cos7-aarch64-2.5-ha675448_1106.tar.bz2
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libglvnd-conda-aarch64-1.0.1-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libglvnd-glx-conda-aarch64-1.0.1-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libselinux-conda-aarch64-2.5-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libsepol-conda-aarch64-2.5-h4616a5c_1111.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/libstdcxx-devel_linux-aarch64-14.4.0-hc896aa5_101.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libx11-common-cos7-aarch64-1.6.7-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libx11-cos7-aarch64-1.6.7-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libxau-cos7-aarch64-1.0.8-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libxcb-cos7-aarch64-1.13-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libxdamage-cos7-aarch64-1.1.4-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libxext-cos7-aarch64-1.3.3-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libxfixes-cos7-aarch64-5.0.3-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libxi-cos7-aarch64-1.7.9-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libxi-devel-cos7-aarch64-1.7.9-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/libxxf86vm-cos7-aarch64-1.1.4-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-dri-drivers-cos7-aarch64-18.3.4-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-khr-devel-cos7-aarch64-18.3.4-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libegl-cos7-aarch64-18.3.4-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libegl-devel-cos7-aarch64-18.3.4-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgbm-cos7-aarch64-18.3.4-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgl-cos7-aarch64-18.3.4-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgl-devel-cos7-aarch64-18.3.4-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libglapi-cos7-aarch64-18.3.4-ha675448_1106.tar.bz2
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libx11-common-conda-aarch64-1.6.7-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libx11-conda-aarch64-1.6.7-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libxau-conda-aarch64-1.0.8-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libxcb-conda-aarch64-1.13-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libxdamage-conda-aarch64-1.1.4-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libxext-conda-aarch64-1.3.3-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libxfixes-conda-aarch64-5.0.3-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libxi-conda-aarch64-1.7.9-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libxi-devel-conda-aarch64-1.7.9-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/libxxf86vm-conda-aarch64-1.1.4-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-dri-drivers-conda-aarch64-18.3.4-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-khr-devel-conda-aarch64-18.3.4-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libegl-conda-aarch64-18.3.4-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libegl-devel-conda-aarch64-18.3.4-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgbm-conda-aarch64-18.3.4-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgl-conda-aarch64-18.3.4-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgl-devel-conda-aarch64-18.3.4-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libglapi-conda-aarch64-18.3.4-h4616a5c_1111.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/mpmath-1.4.1-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/munkres-1.1.4-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/nine-1.1.0-py_0.tar.bz2
@@ -972,7 +967,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/noqt5-1.0-hd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/packaging-26.3-pyhc364b38_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/pip-26.2.1-pyh145f28c_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/pixman-cos7-aarch64-0.34.0-ha675448_1106.tar.bz2
+      - conda: https://conda.anaconda.org/conda-forge/noarch/pixman-conda-aarch64-0.34.0-h4616a5c_1111.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/platformdirs-4.11.1-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/pluggy-1.6.0-pyhf9edf01_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/ply-3.11-pyhd8ed1ab_3.conda
@@ -1014,8 +1009,8 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/xlrd-2.0.2-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/xlutils-2.0.0-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/xlwt-1.3.0-py_1.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/xorg-x11-server-common-cos7-aarch64-1.20.4-ha675448_1106.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/noarch/xorg-x11-server-xvfb-cos7-aarch64-1.20.4-ha675448_1106.tar.bz2
+      - conda: https://conda.anaconda.org/conda-forge/noarch/xorg-x11-server-common-conda-aarch64-1.20.4-h4616a5c_1111.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/xorg-x11-server-xvfb-conda-aarch64-1.20.4-h4616a5c_1111.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/zipp-4.1.0-pyhcf101f3_0.conda
       - pypi: https://files.pythonhosted.org/packages/69/76/37c0ccd5ab968a6a438f9c623aeecc84c202ab2fabc6a8fd927580c15b5a/QtPy-2.4.3-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/99/bc/cdfb911f753b4b4f8e400d66d805e5718e32632837507b574a573b3efa24/freecad_stubs-1.0.21-py3-none-any.whl
@@ -14922,6 +14917,17 @@ packages:
   run_exports: {}
   size: 830747
   timestamp: 1764647922410
+- conda: https://conda.anaconda.org/conda-forge/noarch/libdrm-conda-aarch64-2.4.97-h4616a5c_1111.conda
+  sha256: 0ffdb1d370a29f613e60b740e9ba9878f748a7bbdcf3cc0017ed824e2b077c95
+  md5: 8f7af2d42b93fc5d25f63d88a07f6604
+  depends:
+  - sysroot_linux-aarch64 2.17.*
+  license: MIT
+  license_family: MIT
+  purls: []
+  run_exports: {}
+  size: 214562
+  timestamp: 1774018341552
 - conda: https://conda.anaconda.org/conda-forge/noarch/libdrm-conda-x86_64-2.4.97-h4616a5c_1111.conda
   sha256: 0aff6f26077c7a75b283dfb332ddc2b6b56413a79d5747d0ac2ed8d364598df0
   md5: 98dadf664730d9f7f9eb512d29f1a693
@@ -14933,28 +14939,6 @@ packages:
   run_exports: {}
   size: 313416
   timestamp: 1774018306416
-- conda: https://conda.anaconda.org/conda-forge/noarch/libdrm-cos7-aarch64-2.4.97-ha675448_1106.tar.bz2
-  sha256: 43ed4e6542b0f512464664ed39adcb56c31ca0eac06aa92cfb3040b29f590dc3
-  md5: 5adf3f3e00b981ec5259836b3f5db422
-  depends:
-  - sysroot_linux-aarch64 2.17.*
-  license: MIT
-  license_family: MIT
-  purls: []
-  run_exports: {}
-  size: 110468
-  timestamp: 1726571625258
-- conda: https://conda.anaconda.org/conda-forge/noarch/libdrm-cos7-x86_64-2.4.97-ha675448_1106.tar.bz2
-  sha256: 3808b928522954d1b7847e4a654b4d0f6531c75d8b50489cf0e255d2ef1914e0
-  md5: ed8be9ac257f340580c5820be02785ae
-  depends:
-  - sysroot_linux-64 2.17.*
-  license: MIT
-  license_family: MIT
-  purls: []
-  run_exports: {}
-  size: 161991
-  timestamp: 1726577302456
 - conda: https://conda.anaconda.org/conda-forge/noarch/libgcc-devel_linux-64-14.4.0-hd9a9cd0_101.conda
   sha256: dd2fd8417476a4086dc5a5ac64a884cf953c7799ac329ddea9da36f056008110
   md5: 8bd1e927275c36238cc26cc9181fd191
@@ -14995,6 +14979,17 @@ packages:
   run_exports: {}
   size: 2145699
   timestamp: 1785424143983
+- conda: https://conda.anaconda.org/conda-forge/noarch/libglvnd-conda-aarch64-1.0.1-h4616a5c_1111.conda
+  sha256: 83d8b356f3a1c3d0949a58fe07c2ded641144d14ed65b6bbe85cb1ae7a988be5
+  md5: ec1a5f4bb0b7544361a5f754c08e86b6
+  depends:
+  - sysroot_linux-aarch64 2.17.*
+  license: MIT
+  license_family: MIT
+  purls: []
+  run_exports: {}
+  size: 186190
+  timestamp: 1774018246204
 - conda: https://conda.anaconda.org/conda-forge/noarch/libglvnd-conda-x86_64-1.0.1-h4616a5c_1111.conda
   sha256: f3e05478c27d8b269acf4a2d64ab0a444b7d8c1ccdb1f9f85b938684fa8022dc
   md5: a7a72fac54960643a9008a3f8dfe978c
@@ -15006,28 +15001,18 @@ packages:
   run_exports: {}
   size: 193793
   timestamp: 1774018171976
-- conda: https://conda.anaconda.org/conda-forge/noarch/libglvnd-cos7-aarch64-1.0.1-ha675448_1106.tar.bz2
-  sha256: 7b98dad41277b130a7f49a3a46094c3d9fa54bd5adac7b46d322b4ea5eb4331c
-  md5: 252273b7e6c71f51b0db597a46b991dc
+- conda: https://conda.anaconda.org/conda-forge/noarch/libglvnd-glx-conda-aarch64-1.0.1-h4616a5c_1111.conda
+  sha256: 55e068ff0328903a4668e84d9a8002c1659c209a61f6e5b97876f264de0e2553
+  md5: 986bab3241e7a0c9f95a4664f81c9a2e
   depends:
+  - libglvnd-conda-aarch64 ==1.0.1 *_1111
   - sysroot_linux-aarch64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 127163
-  timestamp: 1726577722203
-- conda: https://conda.anaconda.org/conda-forge/noarch/libglvnd-cos7-x86_64-1.0.1-ha675448_1106.tar.bz2
-  sha256: a1c8f2323fd6264c87099aba24a88594756e661bbe1dca00cadd89c25b358c8a
-  md5: 5b6f90a0c8dbdfee4562c01a61d00074
-  depends:
-  - sysroot_linux-64 2.17.*
-  license: MIT
-  license_family: MIT
-  purls: []
-  run_exports: {}
-  size: 134338
-  timestamp: 1726576996513
+  size: 272773
+  timestamp: 1774018614527
 - conda: https://conda.anaconda.org/conda-forge/noarch/libglvnd-glx-conda-x86_64-1.0.1-h4616a5c_1111.conda
   sha256: f926830509935aa02c6468a044ba406cd42904c485d02d9cf3394cc2a6f183a5
   md5: e62e4ec0f71b1f53031c97777d89dfee
@@ -15040,76 +15025,50 @@ packages:
   run_exports: {}
   size: 268025
   timestamp: 1774018469803
-- conda: https://conda.anaconda.org/conda-forge/noarch/libglvnd-glx-cos7-aarch64-1.0.1-ha675448_1106.tar.bz2
-  sha256: e34c221c5ee2ad08789d3c656dc347f0be472a50752d1d5bc8abaf7067104d8a
-  md5: 4ffb207537e29036a555ac48aa4e138e
+- conda: https://conda.anaconda.org/conda-forge/noarch/libselinux-conda-aarch64-2.5-h4616a5c_1111.conda
+  sha256: 0bb06c7deebacbe490ef93cadf0cd8223ecb71396d684ed68311ca0ddf26df9c
+  md5: 8f36093cc228b6c13bd3ed6d5ff9b552
   depends:
-  - libglvnd-cos7-aarch64 ==1.0.1 *_1106
+  - libsepol-conda-aarch64 >=2.5 *_1111
   - sysroot_linux-aarch64 2.17.*
-  license: MIT
-  license_family: MIT
+  license: LicenseRef-Callaway-Public-Domain
   purls: []
   run_exports: {}
-  size: 176808
-  timestamp: 1726579609474
-- conda: https://conda.anaconda.org/conda-forge/noarch/libglvnd-glx-cos7-x86_64-1.0.1-ha675448_1106.tar.bz2
-  sha256: 63ee08630476f1704020aec9dd11a246b49cf08f2eb60152a806518bdc045c13
-  md5: 8e9f797d73fe13e17495474c253f8771
+  size: 207162
+  timestamp: 1774018523234
+- conda: https://conda.anaconda.org/conda-forge/noarch/libselinux-conda-x86_64-2.5-h4616a5c_1111.conda
+  sha256: 09a6ed55d04e28533de75bc1ee06df29ec186d7542c10edb86da05e643416af6
+  md5: 50eddf72d7e494e8b614489ce76a698a
   depends:
-  - libglvnd-cos7-x86_64 ==1.0.1 *_1106
+  - libsepol-conda-x86_64 >=2.5 *_1111
   - sysroot_linux-64 2.17.*
-  license: MIT
-  license_family: MIT
+  license: LicenseRef-Callaway-Public-Domain
   purls: []
   run_exports: {}
-  size: 181258
-  timestamp: 1726580316705
-- conda: https://conda.anaconda.org/conda-forge/noarch/libselinux-cos7-aarch64-2.5-ha675448_1106.tar.bz2
-  sha256: e03d71ad61215337984cfc94c7f879eeb7f84b9e5c744be616e9c16620b47f43
-  md5: 8ccebbf0b5720b707b755bc0c7148b7d
-  depends:
-  - libsepol-cos7-aarch64 >=2.5 *_1106
-  - sysroot_linux-aarch64 2.17.*
-  license: Public-Domain
-  license_family: Public-Domain
-  purls: []
-  run_exports: {}
-  size: 100583
-  timestamp: 1726578569567
-- conda: https://conda.anaconda.org/conda-forge/noarch/libselinux-cos7-x86_64-2.5-ha675448_1106.tar.bz2
-  sha256: 62c82d9ffc707ce837d509522bbedc984a6386f48fd4ea86fc6969b1888be2b4
-  md5: 6c1a9d257eeb215397f0a464a625deb8
-  depends:
-  - libsepol-cos7-x86_64 >=2.5 *_1106
-  - sysroot_linux-64 2.17.*
-  license: Public-Domain
-  license_family: Public-Domain
-  purls: []
-  run_exports: {}
-  size: 98635
-  timestamp: 1726580623631
-- conda: https://conda.anaconda.org/conda-forge/noarch/libsepol-cos7-aarch64-2.5-ha675448_1106.tar.bz2
-  sha256: 3fc531308ba36824bc482d92705666318a82b006a2a347e72b76742335fa54d7
-  md5: ac284710bb5b5ac30f58e0543dddaf5b
+  size: 206895
+  timestamp: 1774018618449
+- conda: https://conda.anaconda.org/conda-forge/noarch/libsepol-conda-aarch64-2.5-h4616a5c_1111.conda
+  sha256: 7b4dcd0dc3e29be72fcd7a4f93a906f0559069beef0ae9aefaa79cdb5eade6b7
+  md5: b6e8e7c8a5783c5faef654fc85bc9435
   depends:
   - sysroot_linux-aarch64 2.17.*
   license: LGPL-2.0-or-later
   license_family: LGPL
   purls: []
   run_exports: {}
-  size: 284363
-  timestamp: 1726576811370
-- conda: https://conda.anaconda.org/conda-forge/noarch/libsepol-cos7-x86_64-2.5-ha675448_1106.tar.bz2
-  sha256: eb9b8041fcf0487647c77fb01df681036d80bd69df0a24d0e3812038acefb9ec
-  md5: 34c44bfce2dfbe0e3f41b680951f7bfb
+  size: 551816
+  timestamp: 1774018232220
+- conda: https://conda.anaconda.org/conda-forge/noarch/libsepol-conda-x86_64-2.5-h4616a5c_1111.conda
+  sha256: f0efb3f7421a19ad9b4ef4136f109a2db36130b6c6d5ea0797dab6239b018b91
+  md5: d62b680641d118d786d08b3b65815e4e
   depends:
   - sysroot_linux-64 2.17.*
   license: LGPL-2.0-or-later
   license_family: LGPL
   purls: []
   run_exports: {}
-  size: 290182
-  timestamp: 1726573941600
+  size: 576204
+  timestamp: 1774018179882
 - conda: https://conda.anaconda.org/conda-forge/noarch/libstdcxx-devel_linux-64-14.4.0-ha5b54cb_101.conda
   sha256: 726c006d8f078a68b15d715b64e8c72a4b10907fa1a812dfcaef9ed888c03480
   md5: 774c4627558281a7f6f7ae7b39d6fac1
@@ -15132,238 +15091,238 @@ packages:
   run_exports: {}
   size: 16869397
   timestamp: 1785374163645
-- conda: https://conda.anaconda.org/conda-forge/noarch/libx11-common-cos7-aarch64-1.6.7-ha675448_1106.tar.bz2
-  sha256: 76842ec3742ade0a65beb3526e6ef8d34eb11754651d659b010bcdb0fa57426f
-  md5: 56f8f6bfdf4cde3ed766194c929b1ad5
+- conda: https://conda.anaconda.org/conda-forge/noarch/libx11-common-conda-aarch64-1.6.7-h4616a5c_1111.conda
+  sha256: 8441060cd7b155a0e496d6cf6fc2d83835bc1d930c4b3b9e8f2c6d688bc044e3
+  md5: f9ff6c0d1f4d508af6863b54796049a8
   depends:
   - sysroot_linux-aarch64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 148239
-  timestamp: 1726575499900
-- conda: https://conda.anaconda.org/conda-forge/noarch/libx11-common-cos7-x86_64-1.6.7-ha675448_1106.tar.bz2
-  sha256: dc0ad5f5dcaa57f4325a4639fb557be58c182bb017d8b7b3f7f3ca8e72df9451
-  md5: c3193d250dd4707096e2d6a3a0b07c45
+  size: 288967
+  timestamp: 1774018162141
+- conda: https://conda.anaconda.org/conda-forge/noarch/libx11-common-conda-x86_64-1.6.7-h4616a5c_1111.conda
+  sha256: 701fc1bff5c69bccf8d8fbf9a43b4fbf8054ea022a7c7e96e4248ae914973f7f
+  md5: 74b7a670e40c613ea4850d8adba129ed
   depends:
   - sysroot_linux-64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 147394
-  timestamp: 1726573231992
-- conda: https://conda.anaconda.org/conda-forge/noarch/libx11-cos7-aarch64-1.6.7-ha675448_1106.tar.bz2
-  sha256: ba0d700a3aed99e3898172855af399e1356b44cb7b146a7f43bdc97098801da6
-  md5: 5c6e07141a4d9931bea7106472c5423d
+  size: 288908
+  timestamp: 1774018248026
+- conda: https://conda.anaconda.org/conda-forge/noarch/libx11-conda-aarch64-1.6.7-h4616a5c_1111.conda
+  sha256: 4e1bc58b4f3cc61317a7f6825d3c6d686825c0e6c45202f9d690532e47b8bf53
+  md5: 7a7364b7b3ffa4a03460b3d8903d7ae8
   depends:
-  - libx11-common-cos7-aarch64 >=1.6.7 *_1106
+  - libx11-common-conda-aarch64 >=1.6.7 *_1111
   - sysroot_linux-aarch64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 739899
-  timestamp: 1726583073033
-- conda: https://conda.anaconda.org/conda-forge/noarch/libx11-cos7-x86_64-1.6.7-ha675448_1106.tar.bz2
-  sha256: 1ec9e63ae276217716881c0398b9a3a3c93f0ddc646937ab6286c9b72b4e3523
-  md5: e323fa794cd0557c2122931c4da91f7e
+  size: 1286962
+  timestamp: 1774018559467
+- conda: https://conda.anaconda.org/conda-forge/noarch/libx11-conda-x86_64-1.6.7-h4616a5c_1111.conda
+  sha256: b5084ae9c2622002c9e581b4d285071cecd7ea1872c6832c45060a46a7ccb933
+  md5: 28afbe97b1ed65b6c4ec4fbf15dfe0ac
   depends:
-  - libx11-common-cos7-x86_64 >=1.6.7 *_1106
+  - libx11-common-conda-x86_64 >=1.6.7 *_1111
   - sysroot_linux-64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 741895
-  timestamp: 1726581055055
-- conda: https://conda.anaconda.org/conda-forge/noarch/libxau-cos7-aarch64-1.0.8-ha675448_1106.tar.bz2
-  sha256: 9cbb3974097793328236afde334c4d2a7991c4059a99214f3d3978929a62b527
-  md5: 8498a7400df19ded6dac69810b7f6779
-  depends:
-  - sysroot_linux-aarch64 2.17.*
-  license: MIT
-  license_family: MIT
-  purls: []
-  run_exports: {}
-  size: 26231
-  timestamp: 1726575472110
-- conda: https://conda.anaconda.org/conda-forge/noarch/libxau-cos7-x86_64-1.0.8-ha675448_1106.tar.bz2
-  sha256: 9298ce727af232418a6f50e2de909954386aaa5b9e0ec82980531a811dea37bd
-  md5: 0999dba56e89b0aae86c0e0d5d0675b6
-  depends:
-  - sysroot_linux-64 2.17.*
-  license: MIT
-  license_family: MIT
-  purls: []
-  run_exports: {}
-  size: 26115
-  timestamp: 1726575412109
-- conda: https://conda.anaconda.org/conda-forge/noarch/libxcb-cos7-aarch64-1.13-ha675448_1106.tar.bz2
-  sha256: f2c0ab908d1922f51f0d7e5fabdc4a12b0d15fb8f992e23928ffb25bd772c3d3
-  md5: 75aee5c5c899473c267e64301ab259f8
+  size: 1314547
+  timestamp: 1774018413655
+- conda: https://conda.anaconda.org/conda-forge/noarch/libxau-conda-aarch64-1.0.8-h4616a5c_1111.conda
+  sha256: 73f365c40aa788207849276e51b1bb535cfa0d4d09dd1edcbf390e9e52fe39e7
+  md5: 9737123c39e5a05d7c8e0436c43261e6
   depends:
   - sysroot_linux-aarch64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 246027
-  timestamp: 1726576807979
-- conda: https://conda.anaconda.org/conda-forge/noarch/libxcb-cos7-x86_64-1.13-ha675448_1106.tar.bz2
-  sha256: aa45ebb9334d09439a9a812d79e397d2724aadf017a1b3e4977d999cd572f0f3
-  md5: f5f8e39455b5b54680ceecb7fbe6ec72
+  size: 51984
+  timestamp: 1774018227324
+- conda: https://conda.anaconda.org/conda-forge/noarch/libxau-conda-x86_64-1.0.8-h4616a5c_1111.conda
+  sha256: 9a0a5bcf57d5191fb0b9e0d8b19e66113d103f6e020fe1d6bb4862b11c3f59ef
+  md5: 2ccfeaba0babd864ca609f43756b2b46
   depends:
   - sysroot_linux-64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 243040
-  timestamp: 1726572124311
-- conda: https://conda.anaconda.org/conda-forge/noarch/libxdamage-cos7-aarch64-1.1.4-ha675448_1106.tar.bz2
-  sha256: 92ddc0854544f185ab0db0c52d5d013fd1dd7beacc2b71c375792e000b0020b0
-  md5: a803b17c691e0d454145b41684ba161b
+  size: 52192
+  timestamp: 1774018350912
+- conda: https://conda.anaconda.org/conda-forge/noarch/libxcb-conda-aarch64-1.13-h4616a5c_1111.conda
+  sha256: 695d9dc8df42be39abf0411572c2b22a1e3dfb7a1c08490aa5e3423c5a774ad8
+  md5: 2f6160cec7ca56ea6acb4397f128d8c4
   depends:
   - sysroot_linux-aarch64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 18453
-  timestamp: 1726575535492
-- conda: https://conda.anaconda.org/conda-forge/noarch/libxdamage-cos7-x86_64-1.1.4-ha675448_1106.tar.bz2
-  sha256: 9c2db03d0e58ed30af5959b05303214420735cdd8895b3ff735f03cc3efc00f8
-  md5: 5c43a00b284c717497ecc98ed5ff6998
+  size: 441621
+  timestamp: 1774018378074
+- conda: https://conda.anaconda.org/conda-forge/noarch/libxcb-conda-x86_64-1.13-h4616a5c_1111.conda
+  sha256: 7ae2cab8f8f54d0650d72352b9420f1e21bb7c7d38b501c13d2ae0ccfbaa9d53
+  md5: a01d58422c1a93f17945d94bc7621761
   depends:
   - sysroot_linux-64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 18234
-  timestamp: 1726577299045
-- conda: https://conda.anaconda.org/conda-forge/noarch/libxext-cos7-aarch64-1.3.3-ha675448_1106.tar.bz2
-  sha256: b407e56ce1fb4b0ebab0096504523da732781e6ffaaa5728592fd6d589a54d7e
-  md5: 3b8c8e892b9351a7a2c99e20e7455db5
+  size: 445800
+  timestamp: 1774018194877
+- conda: https://conda.anaconda.org/conda-forge/noarch/libxdamage-conda-aarch64-1.1.4-h4616a5c_1111.conda
+  sha256: 9bbac8473bb8b8b079c6b7189fc0a3907e1e5b68feb715708eced30f5cbebcdb
+  md5: 82ea72d26f8aea96b854375187f76136
   depends:
-  - libx11-cos7-aarch64 >=1.5.99.902 *_1106
   - sysroot_linux-aarch64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 39917
-  timestamp: 1726584354967
-- conda: https://conda.anaconda.org/conda-forge/noarch/libxext-cos7-x86_64-1.3.3-ha675448_1106.tar.bz2
-  sha256: 57c34d5219386716935a33a6b114e48ea1d5346cb4607ea210739103eeeb5ef0
-  md5: fc113f5f93f137f41c0eb77205f11554
+  size: 35743
+  timestamp: 1774018296379
+- conda: https://conda.anaconda.org/conda-forge/noarch/libxdamage-conda-x86_64-1.1.4-h4616a5c_1111.conda
+  sha256: 3cccae28afa9318c3636d539cb55e0ad11a5bb9198ba64a3d00ffc0a18205d23
+  md5: c3ce4d6d009eb72eb8d86693c1a5026e
   depends:
-  - libx11-cos7-x86_64 >=1.5.99.902 *_1106
   - sysroot_linux-64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 39452
-  timestamp: 1726585007809
-- conda: https://conda.anaconda.org/conda-forge/noarch/libxfixes-cos7-aarch64-5.0.3-ha675448_1106.tar.bz2
-  sha256: f6fa2ef949ad3576d9e4b258b18ea02f02c059e3d7023ed9ec7f76dae5733a08
-  md5: 1fa1e58f9a3ee0df93e36bc839072069
+  size: 36184
+  timestamp: 1774018357967
+- conda: https://conda.anaconda.org/conda-forge/noarch/libxext-conda-aarch64-1.3.3-h4616a5c_1111.conda
+  sha256: 213bececccca94673b14339ba9e7506fd32a9f38ab4c8868c453edc266321932
+  md5: 74c7ea1a9ddaca69927d17bfc508f8df
   depends:
-  - libx11-cos7-aarch64 >=1.6 *_1106
+  - libx11-conda-aarch64 >=1.5.99.902 *_1111
   - sysroot_linux-aarch64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 17024
-  timestamp: 1726585824940
-- conda: https://conda.anaconda.org/conda-forge/noarch/libxfixes-cos7-x86_64-5.0.3-ha675448_1106.tar.bz2
-  sha256: fbbfd2610f1c63dd0ff4a9eaa02e4834069d38253356aad7c837abcbdbc6a3d3
-  md5: 87d5a42c65510003f06cb6636f23c6a9
+  size: 71229
+  timestamp: 1774018629569
+- conda: https://conda.anaconda.org/conda-forge/noarch/libxext-conda-x86_64-1.3.3-h4616a5c_1111.conda
+  sha256: 44b27e9436c150fa9cfe6a7a2f4b56baeaffe75710c2eab0eb9471e4d05cafff
+  md5: f3c1425a3dad364e68839655029c97d7
   depends:
-  - libx11-cos7-x86_64 >=1.6 *_1106
+  - libx11-conda-x86_64 >=1.5.99.902 *_1111
   - sysroot_linux-64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 16862
-  timestamp: 1726582849017
-- conda: https://conda.anaconda.org/conda-forge/noarch/libxi-cos7-aarch64-1.7.9-ha675448_1106.tar.bz2
-  sha256: f665a94754fd41f372e189790d46bfb2b6174aa124f68dd64bb7773153922300
-  md5: d4a8f75382df3ed340a258170fd492eb
+  size: 72702
+  timestamp: 1774018699533
+- conda: https://conda.anaconda.org/conda-forge/noarch/libxfixes-conda-aarch64-5.0.3-h4616a5c_1111.conda
+  sha256: a7bfb9385105f2fccbd023a5416bf776168b1684adef3f8ef391160df86a00bb
+  md5: 56b2f97244133d7c57ee292c81ff073b
   depends:
-  - libx11-cos7-aarch64 >=1.5.99.902 *_1106
+  - libx11-conda-aarch64 >=1.6 *_1111
   - sysroot_linux-aarch64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 38133
-  timestamp: 1726584370851
-- conda: https://conda.anaconda.org/conda-forge/noarch/libxi-cos7-x86_64-1.7.9-ha675448_1106.tar.bz2
-  sha256: e5d333efa4e099085235917510f66654e7a80a709b0f9f9731fa1761ea8e59a4
-  md5: 416d6d75b64ce8748edd47d5bc424321
+  size: 31590
+  timestamp: 1774018690838
+- conda: https://conda.anaconda.org/conda-forge/noarch/libxfixes-conda-x86_64-5.0.3-h4616a5c_1111.conda
+  sha256: 0eee39ccabb18d3f2c0803da7de62d691cc013686f9bf04a6e57642346ff7b37
+  md5: a6e29e711181691ba8a576622b6b206c
   depends:
-  - libx11-cos7-x86_64 >=1.5.99.902 *_1106
+  - libx11-conda-x86_64 >=1.6 *_1111
   - sysroot_linux-64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 37350
-  timestamp: 1726582851188
-- conda: https://conda.anaconda.org/conda-forge/noarch/libxi-devel-cos7-aarch64-1.7.9-ha675448_1106.tar.bz2
-  sha256: b64758b9f65dbdda54ab57136dc1c35d859544c7fbc3d4ba9a62d8c3720e0778
-  md5: 03ae09a32f06f5523b38cdfbcb5f8e2c
+  size: 31851
+  timestamp: 1774018694152
+- conda: https://conda.anaconda.org/conda-forge/noarch/libxi-conda-aarch64-1.7.9-h4616a5c_1111.conda
+  sha256: 6e652ee9e872c9e9dddf32f20d49fb29b995208b35f22f62ee4c57fca3def39e
+  md5: 81e3a5e6e8fde72feb691073caa2c899
   depends:
-  - libxi-cos7-aarch64 ==1.7.9 *_1106
+  - libx11-conda-aarch64 >=1.5.99.902 *_1111
   - sysroot_linux-aarch64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 96691
-  timestamp: 1726587933486
-- conda: https://conda.anaconda.org/conda-forge/noarch/libxi-devel-cos7-x86_64-1.7.9-ha675448_1106.tar.bz2
-  sha256: 2622a3a4c3ce60572e5273ef22a8cb88eb5b30832b8ee8aea52968ff5e75a06e
-  md5: 1eaaa6b6c510a5dfd7c723575badd8f8
+  size: 69127
+  timestamp: 1774018629073
+- conda: https://conda.anaconda.org/conda-forge/noarch/libxi-conda-x86_64-1.7.9-h4616a5c_1111.conda
+  sha256: d9e57fb4a81d607ade9028492e23d4bd0e918e3199c65a318e27223a762f8938
+  md5: 11e2a3e298696f757253b3225204c3e4
   depends:
-  - libxi-cos7-x86_64 ==1.7.9 *_1106
+  - libx11-conda-x86_64 >=1.5.99.902 *_1111
   - sysroot_linux-64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 96818
-  timestamp: 1726586939346
-- conda: https://conda.anaconda.org/conda-forge/noarch/libxxf86vm-cos7-aarch64-1.1.4-ha675448_1106.tar.bz2
-  sha256: 5efd0e0c8bd5f8369585b9da30bfd1753d74230f6eb92725401a47e66ba3d5b0
-  md5: 4a97667afebc70c37ff30fb6a0de867e
+  size: 70490
+  timestamp: 1774018750317
+- conda: https://conda.anaconda.org/conda-forge/noarch/libxi-devel-conda-aarch64-1.7.9-h4616a5c_1111.conda
+  sha256: 9198156602d1cd86c55e14069a34a191ea0c87d3d4d9b8061a685ddfd27546a7
+  md5: f2b0067e741a756692e69e929eeb0a1e
   depends:
-  - libx11-cos7-aarch64 >=1.5.99.902 *_1106
+  - libxi-conda-aarch64 ==1.7.9 *_1111
   - sysroot_linux-aarch64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 16318
-  timestamp: 1726586753803
-- conda: https://conda.anaconda.org/conda-forge/noarch/libxxf86vm-cos7-x86_64-1.1.4-ha675448_1106.tar.bz2
-  sha256: fe775329d288e19e2f8725a980dd4a62590535d6c6c06db667b62efde615dc3a
-  md5: 8d947bb29e639c6c761b26d52980197f
+  size: 189388
+  timestamp: 1774018786271
+- conda: https://conda.anaconda.org/conda-forge/noarch/libxi-devel-conda-x86_64-1.7.9-h4616a5c_1111.conda
+  sha256: 4c4778672f04a0ee1d4c84a948c405d10948ee99e66dcf10a5949b0f29a03fb5
+  md5: 715553a04062b025e6db04dc3b7ac1b0
   depends:
-  - libx11-cos7-x86_64 >=1.5.99.902 *_1106
+  - libxi-conda-x86_64 ==1.7.9 *_1111
   - sysroot_linux-64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 16082
-  timestamp: 1726584117888
+  size: 189895
+  timestamp: 1774018810790
+- conda: https://conda.anaconda.org/conda-forge/noarch/libxxf86vm-conda-aarch64-1.1.4-h4616a5c_1111.conda
+  sha256: 8b81ff1f51367f11d8c7d1275e6ce4c4b3944afd26b3e8e1d7ad38833cd33210
+  md5: ffed76c2d3a100082eb92ab8d1e6ba5d
+  depends:
+  - libx11-conda-aarch64 >=1.5.99.902 *_1111
+  - sysroot_linux-aarch64 2.17.*
+  license: MIT
+  license_family: MIT
+  purls: []
+  run_exports: {}
+  size: 29735
+  timestamp: 1774018692866
+- conda: https://conda.anaconda.org/conda-forge/noarch/libxxf86vm-conda-x86_64-1.1.4-h4616a5c_1111.conda
+  sha256: 12fa2972c6d6088ea4e668344aaed2696092b8b59872274bf940f19410a0387a
+  md5: e4f9cd55544ab413bf4a720a94b43431
+  depends:
+  - libx11-conda-x86_64 >=1.5.99.902 *_1111
+  - sysroot_linux-64 2.17.*
+  license: MIT
+  license_family: MIT
+  purls: []
+  run_exports: {}
+  size: 30206
+  timestamp: 1774018737196
 - conda: https://conda.anaconda.org/conda-forge/noarch/llvm-meta-5.0.0-0.tar.bz2
   sha256: 090bbeacc3297ff579b53f55ad184f05c30e316fe9d5d7df63df1d2ad4578b79
   md5: 213b5b5ad34008147a824460e50a691c
@@ -15372,30 +15331,41 @@ packages:
   purls: []
   run_exports: {}
   size: 2667
-- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-dri-drivers-cos7-aarch64-18.3.4-ha675448_1106.tar.bz2
-  sha256: c1bf8ea45f1f624a13cc98105461a14c06d6bed176e1760f5d6fc46e83cd0a2b
-  md5: 4de51329469938463885c5ce7beaa22d
+- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-dri-drivers-conda-aarch64-18.3.4-h4616a5c_1111.conda
+  sha256: 39d279f2697c6de22c0b1a71568db48125a6773ccf7ca59563ae716fec557915
+  md5: 4d5adcf21b83f091c7b3ab022e2ff43f
   depends:
-  - libdrm-cos7-aarch64 >=2.4.83 *_1106
+  - libdrm-conda-aarch64 >=2.4.83 *_1111
   - sysroot_linux-aarch64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 43525774
-  timestamp: 1726581692498
-- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-dri-drivers-cos7-x86_64-18.3.4-ha675448_1106.tar.bz2
-  sha256: 583621eae324fb725ce78a7d0225b7d3ee3cbf92807dbfc05014199af9521cc8
-  md5: 6e93a511cb36ac76d100af86f7e04e54
+  size: 46668212
+  timestamp: 1774018443589
+- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-dri-drivers-conda-x86_64-18.3.4-h4616a5c_1111.conda
+  sha256: 28be9bc1203945ac1e146e0a503585ffe577447a28bef94417d43000bd895d2d
+  md5: b1a96a31ccc15572aa6418fa27891a22
   depends:
-  - libdrm-cos7-x86_64 >=2.4.83 *_1106
+  - libdrm-conda-x86_64 >=2.4.83 *_1111
   - sysroot_linux-64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 45675624
-  timestamp: 1726582532545
+  size: 51869084
+  timestamp: 1774018576865
+- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-khr-devel-conda-aarch64-18.3.4-h4616a5c_1111.conda
+  sha256: cac633918c24ba9c27b55dcb6678ff3dbc0bcdd905bc67c17757c0a3b3ab87b6
+  md5: 6898592a82f5a6797772524485bec806
+  depends:
+  - sysroot_linux-aarch64 2.17.*
+  license: MIT
+  license_family: MIT
+  purls: []
+  run_exports: {}
+  size: 19946
+  timestamp: 1774018193434
 - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-khr-devel-conda-x86_64-18.3.4-h4616a5c_1111.conda
   sha256: 635f40855ec6fdc7e64375752b5adf944019880f6c70547f84e93573a43255f2
   md5: 7d1f3572881b7d8f732eced9055710ba
@@ -15407,158 +15377,147 @@ packages:
   run_exports: {}
   size: 20496
   timestamp: 1774018210669
-- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-khr-devel-cos7-aarch64-18.3.4-ha675448_1106.tar.bz2
-  sha256: 5c1fae6082f2afd2587c44fec49c84032d2f4dcbbbf780bd5926d817c89e431a
-  md5: 0cb1809fea234a3523d0fd814ff5fe94
+- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libegl-conda-aarch64-18.3.4-h4616a5c_1111.conda
+  sha256: 3a141010b894b996329a1f09c40c72c6039cce9b0728ed815ba5c448d3631f68
+  md5: 0323fb23f8142d3ccf935a86536b8e1c
+  depends:
+  - mesa-libgbm-conda-aarch64 ==18.3.4 *_1111
+  - sysroot_linux-aarch64 2.17.*
+  license: MIT
+  license_family: MIT
+  purls: []
+  run_exports: {}
+  size: 213182
+  timestamp: 1774018672205
+- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libegl-conda-x86_64-18.3.4-h4616a5c_1111.conda
+  sha256: 3cf4fcf1296c6d7daa3aac4da4ec9c4fc6906cc6a68b7df5b3666051c0ea13ea
+  md5: a79e6099f9fa661dc71524ebd3113d42
+  depends:
+  - mesa-libgbm-conda-x86_64 ==18.3.4 *_1111
+  - sysroot_linux-64 2.17.*
+  license: MIT
+  license_family: MIT
+  purls: []
+  run_exports: {}
+  size: 218845
+  timestamp: 1774018679347
+- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libegl-devel-conda-aarch64-18.3.4-h4616a5c_1111.conda
+  sha256: 52bc94631b603bad56e3695b8a506f6a4d29142d6cf621d491f1e74337a50f12
+  md5: 0067935987c59d811ff83a62d404dc2c
+  depends:
+  - mesa-khr-devel-conda-aarch64 ==18.3.4 *_1111
+  - mesa-libegl-conda-aarch64 ==18.3.4 *_1111
+  - sysroot_linux-aarch64 2.17.*
+  license: MIT
+  license_family: MIT
+  purls: []
+  run_exports: {}
+  size: 46177
+  timestamp: 1774018772155
+- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libegl-devel-conda-x86_64-18.3.4-h4616a5c_1111.conda
+  sha256: 3c452d4c1e3dc6d85a2f3ba2935b337f9cb83127e057c8c5c35b3a7b0b9cdc18
+  md5: 5506a452dd4b9726ce21c58d47184b5e
+  depends:
+  - mesa-khr-devel-conda-x86_64 ==18.3.4 *_1111
+  - mesa-libegl-conda-x86_64 ==18.3.4 *_1111
+  - sysroot_linux-64 2.17.*
+  license: MIT
+  license_family: MIT
+  purls: []
+  run_exports: {}
+  size: 46709
+  timestamp: 1774018799288
+- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgbm-conda-aarch64-18.3.4-h4616a5c_1111.conda
+  sha256: 7a20f484bdabb9cb3b35745939bab15fbf16f0656b95d875a18eeb701f0afedb
+  md5: f86d1ec9aaa60d15a4d0318d863d49fd
+  depends:
+  - libdrm-conda-aarch64 >=2.4.83 *_1111
+  - mesa-libglapi-conda-aarch64 ==18.3.4 *_1111
+  - sysroot_linux-aarch64 2.17.*
+  license: MIT
+  license_family: MIT
+  purls: []
+  run_exports: {}
+  size: 59069
+  timestamp: 1774018467067
+- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgbm-conda-x86_64-18.3.4-h4616a5c_1111.conda
+  sha256: eb9a8323dbe2049e67d4243ce03f5ecbabe1cba5090e3bad645b89f68984b2a2
+  md5: ece17d3ffdbc8a728619f99ab6c037ef
+  depends:
+  - libdrm-conda-x86_64 >=2.4.83 *_1111
+  - mesa-libglapi-conda-x86_64 ==18.3.4 *_1111
+  - sysroot_linux-64 2.17.*
+  license: MIT
+  license_family: MIT
+  purls: []
+  run_exports: {}
+  size: 60798
+  timestamp: 1774018586799
+- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgl-conda-aarch64-18.3.4-h4616a5c_1111.conda
+  sha256: aa3d03c8629204e0d926198c7fca43257fa2945a67dfe468e4c9943277eae979
+  md5: 7f6d3d43c39f8d7f2e95638e0389dbe5
+  depends:
+  - libdrm-conda-aarch64 >=2.4.83 *_1111
+  - libglvnd-glx-conda-aarch64 >=1.0.1 *_1111
+  - mesa-libglapi-conda-aarch64 ==18.3.4 *_1111
+  - sysroot_linux-aarch64 2.17.*
+  license: MIT
+  license_family: MIT
+  purls: []
+  run_exports: {}
+  size: 354317
+  timestamp: 1774018698519
+- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgl-conda-x86_64-18.3.4-h4616a5c_1111.conda
+  sha256: 442362c93777e94000f32572bab3d503cd6d81bfe02d956ffe64d20d18332c1b
+  md5: c3f0dda42d0b36c9a61caa0c092f1b76
+  depends:
+  - libdrm-conda-x86_64 >=2.4.83 *_1111
+  - libglvnd-glx-conda-x86_64 >=1.0.1 *_1111
+  - mesa-libglapi-conda-x86_64 ==18.3.4 *_1111
+  - sysroot_linux-64 2.17.*
+  license: MIT
+  license_family: MIT
+  purls: []
+  run_exports: {}
+  size: 342091
+  timestamp: 1774018742545
+- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgl-devel-conda-aarch64-18.3.4-h4616a5c_1111.conda
+  sha256: 5d62dcacb3e1422a9424ba08ef850e39115dff12e334552fa2a36bb8189f032e
+  md5: fefce1e28277eca6f6c620fcd08e20a4
+  depends:
+  - mesa-khr-devel-conda-aarch64 ==18.3.4 *_1111
+  - mesa-libgl-conda-aarch64 ==18.3.4 *_1111
+  - sysroot_linux-aarch64 2.17.*
+  license: MIT
+  license_family: MIT
+  purls: []
+  run_exports: {}
+  size: 313781
+  timestamp: 1774018801742
+- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgl-devel-conda-x86_64-18.3.4-h4616a5c_1111.conda
+  sha256: 5144395b6ffe9b2aae96d96de6af2f5dea8917fbebe8b786d9ef2367300dc274
+  md5: 8ac4c732316f1c53b7b839b43caab0b9
+  depends:
+  - mesa-khr-devel-conda-x86_64 ==18.3.4 *_1111
+  - mesa-libgl-conda-x86_64 ==18.3.4 *_1111
+  - sysroot_linux-64 2.17.*
+  license: MIT
+  license_family: MIT
+  purls: []
+  run_exports: {}
+  size: 314374
+  timestamp: 1774018806427
+- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libglapi-conda-aarch64-18.3.4-h4616a5c_1111.conda
+  sha256: 7f9469c9b17a4eaf255ef28d6042928363cd637678b4302a3c157e0bf805889c
+  md5: f4f1470c8cdbf229193f9ead12026604
   depends:
   - sysroot_linux-aarch64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 8427
-  timestamp: 1726577660477
-- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-khr-devel-cos7-x86_64-18.3.4-ha675448_1106.tar.bz2
-  sha256: 1cb24f5273cd675bcb6e5da1cd7d4f1567217969bed9069dfda40a7c6baa729f
-  md5: bf8e0ce6388204f37e636a4810919897
-  depends:
-  - sysroot_linux-64 2.17.*
-  license: MIT
-  license_family: MIT
-  purls: []
-  run_exports: {}
-  size: 8402
-  timestamp: 1726574663941
-- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libegl-cos7-aarch64-18.3.4-ha675448_1106.tar.bz2
-  sha256: daf165497be0c56b9fe97bce3a601eb0069b25b51162c8cd7ec6a6b374c7a577
-  md5: d256dcf009df018c0d99170d8b0356b9
-  depends:
-  - mesa-libgbm-cos7-aarch64 ==18.3.4 *_1106
-  - sysroot_linux-aarch64 2.17.*
-  license: MIT
-  license_family: MIT
-  purls: []
-  run_exports: {}
-  size: 111719
-  timestamp: 1726586775763
-- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libegl-cos7-x86_64-18.3.4-ha675448_1106.tar.bz2
-  sha256: df0f06c6064658b179d4a6fc6652edf81258fb049ae18e0536260d8503b8fcf1
-  md5: 6c84b52d678e43a40390c549e58fa77b
-  depends:
-  - mesa-libgbm-cos7-x86_64 ==18.3.4 *_1106
-  - sysroot_linux-64 2.17.*
-  license: MIT
-  license_family: MIT
-  purls: []
-  run_exports: {}
-  size: 113264
-  timestamp: 1726585432404
-- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libegl-devel-cos7-aarch64-18.3.4-ha675448_1106.tar.bz2
-  sha256: 901b780bf076fabfc6caff58df1f41a49a13457a63feea30bc13f97268d1bb50
-  md5: 6296ae7964a7f8ccbb2633dc0055dcb9
-  depends:
-  - mesa-khr-devel-cos7-aarch64 ==18.3.4 *_1106
-  - mesa-libegl-cos7-aarch64 ==18.3.4 *_1106
-  - sysroot_linux-aarch64 2.17.*
-  license: MIT
-  license_family: MIT
-  purls: []
-  run_exports: {}
-  size: 20858
-  timestamp: 1726589972530
-- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libegl-devel-cos7-x86_64-18.3.4-ha675448_1106.tar.bz2
-  sha256: 1dbd543823b5d38e54e8638227efbd06c539142ecfc8ab5ac12f5ad120d39357
-  md5: a71e7bc7e4154b85951222baf47df523
-  depends:
-  - mesa-khr-devel-cos7-x86_64 ==18.3.4 *_1106
-  - mesa-libegl-cos7-x86_64 ==18.3.4 *_1106
-  - sysroot_linux-64 2.17.*
-  license: MIT
-  license_family: MIT
-  purls: []
-  run_exports: {}
-  size: 20864
-  timestamp: 1726585755356
-- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgbm-cos7-aarch64-18.3.4-ha675448_1106.tar.bz2
-  sha256: 743eb7d4594aaaf13c6c0cd4bf65c43dc68fa4c300ce5aee19ac1ac329e3422c
-  md5: 12d9f4962f2f0b2987a6458d7f42934b
-  depends:
-  - libdrm-cos7-aarch64 >=2.4.83 *_1106
-  - mesa-libglapi-cos7-aarch64 ==18.3.4 *_1106
-  - sysroot_linux-aarch64 2.17.*
-  license: MIT
-  license_family: MIT
-  purls: []
-  run_exports: {}
-  size: 33552
-  timestamp: 1726580055743
-- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgbm-cos7-x86_64-18.3.4-ha675448_1106.tar.bz2
-  sha256: d5881e47917c58cd8d6a61b73e6bf8d5e586a622ba6c3c86f7c774bb7336155b
-  md5: 85c57d12a7fe6a16a8979d3d2f2d7b15
-  depends:
-  - libdrm-cos7-x86_64 >=2.4.83 *_1106
-  - mesa-libglapi-cos7-x86_64 ==18.3.4 *_1106
-  - sysroot_linux-64 2.17.*
-  license: MIT
-  license_family: MIT
-  purls: []
-  run_exports: {}
-  size: 33387
-  timestamp: 1726581574491
-- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgl-cos7-aarch64-18.3.4-ha675448_1106.tar.bz2
-  sha256: a93a2604823d2a73bfc94d9224d1422d7dd314d4470bb076eb0da92c9297b053
-  md5: 61b68708c7bc04807bd1e51bb1434bcc
-  depends:
-  - libdrm-cos7-aarch64 >=2.4.83 *_1106
-  - libglvnd-glx-cos7-aarch64 >=1.0.1 *_1106
-  - mesa-libglapi-cos7-aarch64 ==18.3.4 *_1106
-  - sysroot_linux-aarch64 2.17.*
-  license: MIT
-  license_family: MIT
-  purls: []
-  run_exports: {}
-  size: 205695
-  timestamp: 1726585822546
-- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgl-cos7-x86_64-18.3.4-ha675448_1106.tar.bz2
-  sha256: 4945b5815997e467a534c97902d7aa7c66544b49d42acd4aad4129d8a75714b4
-  md5: e54179a9a595a10bb77b769561d233cf
-  depends:
-  - libdrm-cos7-x86_64 >=2.4.83 *_1106
-  - libglvnd-glx-cos7-x86_64 >=1.0.1 *_1106
-  - mesa-libglapi-cos7-x86_64 ==18.3.4 *_1106
-  - sysroot_linux-64 2.17.*
-  license: MIT
-  license_family: MIT
-  purls: []
-  run_exports: {}
-  size: 189396
-  timestamp: 1726584704133
-- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgl-devel-cos7-aarch64-18.3.4-ha675448_1106.tar.bz2
-  sha256: 974ce6b95bdcf4643cc34e78a2ff458dd792852bcdbceaf31e3b514e61cf3998
-  md5: be200abf26c4c673f40e00647016bd8e
-  depends:
-  - mesa-khr-devel-cos7-aarch64 ==18.3.4 *_1106
-  - mesa-libgl-cos7-aarch64 ==18.3.4 *_1106
-  - sysroot_linux-aarch64 2.17.*
-  license: MIT
-  license_family: MIT
-  purls: []
-  run_exports: {}
-  size: 166618
-  timestamp: 1726588682006
-- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libgl-devel-cos7-x86_64-18.3.4-ha675448_1106.tar.bz2
-  sha256: 27b6ec54fb10c8b5fc2d838e6f9ff3b1ea06e9afb85f3a1338210ccebe42ad01
-  md5: 719f4cae190336650baad4053e63043f
-  depends:
-  - mesa-khr-devel-cos7-x86_64 ==18.3.4 *_1106
-  - mesa-libgl-cos7-x86_64 ==18.3.4 *_1106
-  - sysroot_linux-64 2.17.*
-  license: MIT
-  license_family: MIT
-  purls: []
-  run_exports: {}
-  size: 166639
-  timestamp: 1726586487455
+  size: 110059
+  timestamp: 1774018283672
 - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libglapi-conda-x86_64-18.3.4-h4616a5c_1111.conda
   sha256: e92dbbcbd6096dd446d692dcd592c4abed31052678cbfd55076f2fd0a9f5c3f4
   md5: c8e1322b07fc6264d5d8056eab371682
@@ -15570,28 +15529,6 @@ packages:
   run_exports: {}
   size: 74951
   timestamp: 1774018405844
-- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libglapi-cos7-aarch64-18.3.4-ha675448_1106.tar.bz2
-  sha256: a9d4d4df5c8f9547308c45c1cbee8783a12d489c36a9ecb8a03bc132dbce3ca3
-  md5: 920b959c968eb7aae1e9dc6f2e3eb757
-  depends:
-  - sysroot_linux-aarch64 2.17.*
-  license: MIT
-  license_family: MIT
-  purls: []
-  run_exports: {}
-  size: 71737
-  timestamp: 1726573109829
-- conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libglapi-cos7-x86_64-18.3.4-ha675448_1106.tar.bz2
-  sha256: 5e3eab3a1b29f0fb33d682549eea70c58084600ccfddb5bcf10b02dd8ebc9ae5
-  md5: 49b1e8b781dc8b978617f706aa93823a
-  depends:
-  - sysroot_linux-64 2.17.*
-  license: MIT
-  license_family: MIT
-  purls: []
-  run_exports: {}
-  size: 46982
-  timestamp: 1726573576112
 - conda: https://conda.anaconda.org/conda-forge/noarch/mesa-libglu-conda-x86_64-9.0.0-h4616a5c_1111.conda
   sha256: fceda9439cd028a6a132f43065ad7a546df2e89c44d65756ff63a6d609850b3b
   md5: d14cca1a0c949a323549a717e1fc9bd1
@@ -15716,28 +15653,28 @@ packages:
   run_exports: {}
   size: 1198163
   timestamp: 1785914482439
-- conda: https://conda.anaconda.org/conda-forge/noarch/pixman-cos7-aarch64-0.34.0-ha675448_1106.tar.bz2
-  sha256: e2f7168002fd08a061ad3a1106f2e655469c70ba3c427918487a4c8be5dc3f0d
-  md5: 49bc6786bfc06d3d8ef1b576def6f53c
+- conda: https://conda.anaconda.org/conda-forge/noarch/pixman-conda-aarch64-0.34.0-h4616a5c_1111.conda
+  sha256: c96fdb5a8a3711ef1dcabd1b96a4e84ba6ab1d2b1d5b8c88b3d5b147eb9962ac
+  md5: e5a88186c583a189be3449a4f1066f9b
   depends:
   - sysroot_linux-aarch64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 177796
-  timestamp: 1726572662070
-- conda: https://conda.anaconda.org/conda-forge/noarch/pixman-cos7-x86_64-0.34.0-ha675448_1106.tar.bz2
-  sha256: 00b5e12f5687af678294d93ddc73501d502e4d8b064a481695efd0dbf64c3b12
-  md5: 03b6232b69db4edb12a97fb2ab3d671c
+  size: 305544
+  timestamp: 1774018336510
+- conda: https://conda.anaconda.org/conda-forge/noarch/pixman-conda-x86_64-0.34.0-h4616a5c_1111.conda
+  sha256: 5a5c6c00f0e9d6bea880d1e4f3a11e1b538f723e26417722a53b70424970046a
+  md5: 5607a740e9c34e2e08fd3c8dbead1e0c
   depends:
   - sysroot_linux-64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 279859
-  timestamp: 1726575398190
+  size: 528657
+  timestamp: 1774018295127
 - conda: https://conda.anaconda.org/conda-forge/noarch/platformdirs-4.11.1-pyhcf101f3_0.conda
   sha256: efa221d8ebb76e5ba98c1e8080e8ba580e59fc9f62cff54b0282efc2d05cd826
   md5: c786a34c15b34520d62affc418ae78bd
@@ -16437,54 +16374,54 @@ packages:
   run_exports: {}
   size: 85227
   timestamp: 1531611142582
-- conda: https://conda.anaconda.org/conda-forge/noarch/xorg-x11-server-common-cos7-aarch64-1.20.4-ha675448_1106.tar.bz2
-  sha256: 098c286c7d396a46a76220c5af8d001df60c200ea9bb8792707b08066da289ec
-  md5: a326ae44054c0bdab5f5554301919398
+- conda: https://conda.anaconda.org/conda-forge/noarch/xorg-x11-server-common-conda-aarch64-1.20.4-h4616a5c_1111.conda
+  sha256: 3ff6fe34c3e8a226e723c1e4afcce65d6a235bda6a65208af1e33b4c904c4ff3
+  md5: eaf91f6955ebe00ad72693a4d1a63056
   depends:
-  - pixman-cos7-aarch64 >=0.30.0 *_1106
+  - pixman-conda-aarch64 >=0.30.0 *_1111
   - sysroot_linux-aarch64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 37103
-  timestamp: 1726579230177
-- conda: https://conda.anaconda.org/conda-forge/noarch/xorg-x11-server-common-cos7-x86_64-1.20.4-ha675448_1106.tar.bz2
-  sha256: 403a277188dc1bb0b16b14c73aebb828bd50b59b3858ce3a1853e8418fcbdab5
-  md5: 93da9aa4fe4d3f4c5c6cdc60462f073d
+  size: 73200
+  timestamp: 1774018469069
+- conda: https://conda.anaconda.org/conda-forge/noarch/xorg-x11-server-common-conda-x86_64-1.20.4-h4616a5c_1111.conda
+  sha256: f55d90b61b37d2a85b2792c6ac8f37bed05fa9332e2e473dcb9bd73f68a599b3
+  md5: ab29bdc922ba3864877e850bf2903891
   depends:
-  - pixman-cos7-x86_64 >=0.30.0 *_1106
+  - pixman-conda-x86_64 >=0.30.0 *_1111
   - sysroot_linux-64 2.17.*
   license: MIT
   license_family: MIT
   purls: []
   run_exports: {}
-  size: 37140
-  timestamp: 1726581553412
-- conda: https://conda.anaconda.org/conda-forge/noarch/xorg-x11-server-xvfb-cos7-aarch64-1.20.4-ha675448_1106.tar.bz2
-  sha256: 67b6a87e18dbf2a6cad85d2f56ab645fcb0587d8eb32c8dc6d2a6974ee04c07d
-  md5: 28c076e3c354d09fd1202fd46d93a164
+  size: 73729
+  timestamp: 1774018438767
+- conda: https://conda.anaconda.org/conda-forge/noarch/xorg-x11-server-xvfb-conda-aarch64-1.20.4-h4616a5c_1111.conda
+  sha256: 3877997512e9d5d728ff55ee9038a6ccaf2d2038251d93dd786bb71be0705bef
+  md5: cd86d92da9272fe94cf3286e4edcea47
   depends:
+  - xorg-x11-server-common-conda-aarch64 >=1.20.4 *_1111
   - sysroot_linux-aarch64 2.17.*
-  - xorg-x11-server-common-cos7-aarch64 >=1.20.4 *_1106
-  license: MIT and GPLv2
-  license_family: GPL2
+  license: MIT AND GPL-2.0-only
+  license_family: GPL
   purls: []
   run_exports: {}
-  size: 914549
-  timestamp: 1726586249979
-- conda: https://conda.anaconda.org/conda-forge/noarch/xorg-x11-server-xvfb-cos7-x86_64-1.20.4-ha675448_1106.tar.bz2
-  sha256: b0739ac2c653c907e5a9d425740d2deadb11410e080c19a550324a0d2b77cb4c
-  md5: 1c9985ace5b32f9f2274ca169d1a4e64
+  size: 1732431
+  timestamp: 1774018645575
+- conda: https://conda.anaconda.org/conda-forge/noarch/xorg-x11-server-xvfb-conda-x86_64-1.20.4-h4616a5c_1111.conda
+  sha256: 567644cadc6a9294bfd99c1fac22675e6088fb4e96c23b270207a71d56aaa421
+  md5: 1ef55d28c608503ff534df22b7ddc4aa
   depends:
+  - xorg-x11-server-common-conda-x86_64 >=1.20.4 *_1111
   - sysroot_linux-64 2.17.*
-  - xorg-x11-server-common-cos7-x86_64 >=1.20.4 *_1106
-  license: MIT and GPLv2
-  license_family: GPL2
+  license: MIT AND GPL-2.0-only
+  license_family: GPL
   purls: []
   run_exports: {}
-  size: 921108
-  timestamp: 1726584648790
+  size: 1799513
+  timestamp: 1774018733777
 - conda: https://conda.anaconda.org/conda-forge/noarch/zipp-4.1.0-pyhcf101f3_0.conda
   sha256: 210bd31c22bb88f5e2a167df24c95bb5f152b2ada7502f9b8c49d1f5366db423
   md5: ba3dcdc8584155c97c648ae9c044b7a3
