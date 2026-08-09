@@ -5,6 +5,7 @@ channels = [
 ]
 platforms = ["linux-64", "linux-aarch64", "osx-64", "osx-arm64", "win-64"]
 preview = ["pixi-build"]
+requires-pixi = ">=0.68"
 
 [package]
 name = "freecad"
